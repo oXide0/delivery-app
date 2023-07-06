@@ -1,8 +1,8 @@
 # Delivery-App
 
 ## Project launch
-Change baseUrl variable in src/services/api.js file
-### `install`
+#### Change baseUrl variable in ```src/services/api.js``` file.
+### `npm install`
 
 ### `npm run dev`
 
