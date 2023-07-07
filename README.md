@@ -1,7 +1,7 @@
 # Delivery-App
 
 ## Project launch
-#### Change baseUrl variable in ```src/services/api.js``` file.
+#### Change baseUrl variable in ```src/services/api.js``` file to http://localhost:3000.
 ### `npm install`
 
 ### `npm run dev`
