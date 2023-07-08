@@ -11,7 +11,7 @@ function HistoryPage() {
 		return <CircularProgress sx={{ position: 'absolute', left: '49%', top: '49%' }} />;
 	}
 	if (error || orders.length === 0) {
-		return <NotFound title='stores' />;
+		return <NotFound title='orders' />;
 	}
 	return (
 		<div className='wrapper'>

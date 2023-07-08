@@ -14,7 +14,7 @@ function HomePage() {
 				</div>
 				<div>
 					<img
-						src='plate_food.jpg'
+						src='https://www.diabetesfoodhub.org/system/user_files/Images/1837-diabetic-pecan-crusted-chicken-breast_JulAug20DF_clean-simple_061720.jpg'
 						alt='plate_food'
 						style={{ maxWidth: '700px', borderRadius: '5%' }}
 						className='plate__food'

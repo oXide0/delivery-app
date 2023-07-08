@@ -47,7 +47,7 @@ function CartPage() {
 		return <CircularProgress sx={{ position: 'absolute', left: '49%', top: '49%' }} />;
 	}
 	if (error) {
-		return <NotFound title='stores' />;
+		return <NotFound title='goods' />;
 	}
 	return (
 		<div className='wrapper'>

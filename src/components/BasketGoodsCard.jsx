@@ -43,6 +43,7 @@ function BasketGoodsCard({ goods }) {
 						sx={{ maxWidth: '100px', fontSize: '20px' }}
 						value={goods.quantity}
 						onChange={onChangeAmount}
+						slotProps={{ input: { min: 1, max: 50 } }}
 					/>
 					<Button color='neutral' onClick={handleDelete}>
 						Delete
