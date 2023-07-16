@@ -47,3 +47,6 @@ border-spacing: 0;
 body {
     font-family: 'Arial';
 }
+.gray {
+  background: #5A5A72;
+}
