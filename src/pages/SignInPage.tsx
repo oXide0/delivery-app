@@ -4,7 +4,7 @@ import { useState } from 'react';
 import { useGetUsersQuery } from '../services/authApi';
 import { useNavigate } from 'react-router-dom';
 import { setAuth, setCredentials } from '../features/auth/authSlice';
-import { useDispatch } from 'react-redux';
+import { useAppDispatch } from '../hooks/redux-hooks';
 import { formStyles } from '../utils/formStyles';
 
 const SignInPage = () => {
@@ -12,7 +12,7 @@ const SignInPage = () => {
 	const [error, setError] = useState('');
 	const navigate = useNavigate();
 	const { data: users } = useGetUsersQuery();
-	const dispatch = useDispatch();
+	const dispatch = useAppDispatch();
 
 	const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
 		e.preventDefault();

@@ -7,13 +7,13 @@ import CircularProgress from '@mui/joy/CircularProgress';
 import MenuPanel from './MenuPanel';
 import NotFound from './NotFound';
 import { selectDisabled, selectActiveShop, setActiveShop } from '../features/shop/shopSlice';
-import { useSelector, useDispatch } from 'react-redux';
+import { useAppDispatch, useAppSelector } from '../hooks/redux-hooks';
 
 const ShopMenu = () => {
 	const { data: shops, error, isLoading, isSuccess } = useGetShopsQuery();
-	const isDisabled = useSelector(selectDisabled);
-	const activeShop = useSelector(selectActiveShop);
-	const dispatch = useDispatch();
+	const isDisabled = useAppSelector(selectDisabled);
+	const activeShop = useAppSelector(selectActiveShop);
+	const dispatch = useAppDispatch();
 
 	if (!isSuccess || isLoading) {
 		return <CircularProgress sx={{ position: 'absolute', left: '49%', top: '49%' }} />;
@@ -28,7 +28,7 @@ const ShopMenu = () => {
 		<Tabs
 			orientation='vertical'
 			value={activeShop}
-			onChange={(event, value) => dispatch(setActiveShop(value as number))}
+			onChange={(_, value) => dispatch(setActiveShop(value as number))}
 		>
 			<TabList sx={{ height: 'calc(100vh - 180px)' }}>
 				{shops.map((shop, index) => (

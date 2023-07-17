@@ -11,7 +11,7 @@ import { useAddOrderMutation } from '../services/orderApi.ts';
 import { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { setDisbaled } from '../features/shop/shopSlice.ts';
-import { useDispatch } from 'react-redux';
+import { useAppDispatch } from '../hooks/redux-hooks.ts';
 import { nanoid } from '@reduxjs/toolkit';
 import { totalPrice } from '../utils/totalPrice.ts';
 import { TypeCode } from '../types/types';
@@ -23,7 +23,7 @@ const CartPage = () => {
 	const [addOrder] = useAddOrderMutation();
 	const [removeGoods] = useRemoveGoodsMutation();
 	const navigate = useNavigate();
-	const dispatch = useDispatch();
+	const dispatch = useAppDispatch();
 	const [coupon, setCoupon] = useState<TypeCode>('');
 
 	const handleSubmit = () => {

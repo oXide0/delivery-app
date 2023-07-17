@@ -5,7 +5,7 @@ import CardContent from '@mui/joy/CardContent';
 import Typography from '@mui/joy/Typography';
 import { useAddToCartMutation, useGetCartQuery, useUpdateGoodsMutation } from '../services/cartApi';
 import { setDisbaled } from '../features/shop/shopSlice';
-import { useDispatch } from 'react-redux';
+import { useAppDispatch } from '../hooks/redux-hooks';
 import { IProduct } from '../types/types';
 
 type TypeCardType = 'history' | '';
@@ -18,7 +18,7 @@ interface IGoodsCardProps {
 const GoodsCard = ({ goods, type = '' }: IGoodsCardProps) => {
 	const [addToCart] = useAddToCartMutation();
 	const [updateGoods] = useUpdateGoodsMutation();
-	const dispatch = useDispatch();
+	const dispatch = useAppDispatch();
 	const { data } = useGetCartQuery();
 
 	const handleClick = async () => {

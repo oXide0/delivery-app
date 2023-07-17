@@ -4,7 +4,7 @@ import { useState } from 'react';
 import { useLoginMutation, useGetUsersQuery } from '../services/authApi';
 import { useNavigate } from 'react-router-dom';
 import { setAuth, setCredentials } from '../features/auth/authSlice';
-import { useDispatch } from 'react-redux';
+import { useAppDispatch } from '../hooks/redux-hooks';
 import { validate } from '../utils/validation';
 import { formStyles } from '../utils/formStyles';
 
@@ -14,7 +14,7 @@ const SignUpPage = () => {
 	const navigate = useNavigate();
 	const [login, { isLoading }] = useLoginMutation();
 	const { data: users } = useGetUsersQuery();
-	const dispatch = useDispatch();
+	const dispatch = useAppDispatch();
 
 	const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
 		e.preventDefault();

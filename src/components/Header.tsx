@@ -2,7 +2,7 @@ import Button from '@mui/joy/Button';
 import Menu from '@mui/joy/Menu';
 import MenuItem from '@mui/joy/MenuItem';
 import { NavLink } from 'react-router-dom';
-import { useDispatch, useSelector } from 'react-redux';
+import { useAppDispatch, useAppSelector } from '../hooks/redux-hooks';
 import { selectAuth, selectCredentials, logOut } from '../features/auth/authSlice';
 import { useState, useRef, useEffect } from 'react';
 import { setAuth, setCredentials } from '../features/auth/authSlice';
@@ -13,9 +13,9 @@ type TypeUserData = {
 };
 
 const Header = () => {
-	const auth = useSelector(selectAuth);
-	const credentials = useSelector(selectCredentials);
-	const dispatch = useDispatch();
+	const auth = useAppSelector(selectAuth);
+	const credentials = useAppSelector(selectCredentials);
+	const dispatch = useAppDispatch();
 	const buttonRef = useRef(null);
 	const [open, setOpen] = useState(false);
 	const [menuActive, setMenuActive] = useState(false);
