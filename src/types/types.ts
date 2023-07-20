@@ -9,7 +9,7 @@ export type TypeCode = string;
 export type TypeCredentials = { username: string; password: string };
 
 export interface IUser {
-	id: number;
+	id: string;
 	name: string;
 	password: string;
 }

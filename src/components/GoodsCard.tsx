@@ -34,7 +34,7 @@ const GoodsCard = ({ goods, type = '' }: IGoodsCardProps) => {
 	};
 
 	return (
-		<Card variant='outlined' sx={{ width: 320 }}>
+		<Card variant='outlined' sx={{ width: 305 }}>
 			<div style={{ display: 'flex', justifyContent: 'space-between' }}>
 				<Typography level='h2' fontSize='md' sx={{ mb: 0.5 }}>
 					{goods.title}

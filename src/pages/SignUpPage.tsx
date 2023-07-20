@@ -5,70 +5,65 @@ import { useLoginMutation, useGetUsersQuery } from '../services/authApi';
 import { useNavigate } from 'react-router-dom';
 import { setAuth, setCredentials } from '../features/auth/authSlice';
 import { useAppDispatch } from '../hooks/redux-hooks';
-import { validate } from '../utils/validation';
 import { formStyles } from '../utils/formStyles';
+import { useForm } from 'react-hook-form';
+import { TypeCredentials } from '../types/types';
+import { nanoid } from '@reduxjs/toolkit';
 
-const SignUpPage = () => {
-	const [userData, setUserData] = useState({ username: '', password: '' });
-	const [error, setError] = useState('');
+const SignInPage = () => {
 	const navigate = useNavigate();
-	const [login, { isLoading }] = useLoginMutation();
-	const { data: users } = useGetUsersQuery();
 	const dispatch = useAppDispatch();
+	const { data: users } = useGetUsersQuery();
+	const [login] = useLoginMutation();
+	const [errorMessage, setErrorMessage] = useState<string>('');
+	const {
+		register,
+		handleSubmit,
+		formState: { errors, isValid },
+	} = useForm<TypeCredentials>({ mode: 'onChange' });
 
-	const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
-		e.preventDefault();
-		if (users) {
-			const username = userData.username;
-			const password = userData.password;
-			const repeatName = users.find((user) => user.name === username);
-			const errorMessage = validate(username, password, repeatName as boolean | undefined);
+	const handleError = (username: string) => {
+		const user = users?.find((user) => user.name === username);
+		console.log(user);
+		if (user) {
+			setErrorMessage('User already exists');
+			return false;
+		}
+		return true;
+	};
 
-			if (errorMessage) {
-				setError(errorMessage);
-				return;
-			}
-			try {
-				login({ username, password });
-				navigate('/');
-				dispatch(setAuth(true));
-				dispatch(setCredentials({ username, password }));
-			} catch (err) {
-				alert(err);
-			}
-			setError('');
+	const onSubmit = (data: TypeCredentials) => {
+		if (handleError(data.username)) {
+			navigate('/');
+			login({ id: nanoid(), name: data.username, password: data.password });
+			dispatch(setAuth(true));
+			dispatch(setCredentials({ username: data.username, password: data.password }));
+			setErrorMessage('');
 		}
 	};
 
 	return (
 		<div className='wrapper'>
 			<h1 style={{ textAlign: 'center', paddingTop: '40px', fontSize: '40px', fontWeight: '600' }}>
-				Sign up to the app
+				Sign in to the app
 			</h1>
-			<form style={formStyles} onSubmit={handleSubmit}>
-				<p style={{ color: 'red' }}>{error ? `*${error}` : ''}</p>
-				<Input
-					placeholder='Name'
-					required
-					color={error ? 'danger' : 'neutral'}
-					name='username'
-					value={userData.username}
-					onChange={(e: React.ChangeEvent<HTMLInputElement>) =>
-						setUserData({ ...userData, username: e.target.value })
-					}
-				/>
+			<form style={formStyles} onSubmit={handleSubmit(onSubmit)}>
+				<p style={{ color: 'red' }}>{errorMessage}</p>
+				<label style={{ color: 'red' }}>{errors.username && errors.username.message}</label>
+				<Input placeholder='Name' {...register('username', { required: '*Name is required' })} />
+				<label style={{ color: 'red' }}>{errors.password && errors.password.message}</label>
 				<Input
 					placeholder='Password'
 					type='password'
-					required
-					color={error ? 'danger' : 'neutral'}
-					name='password'
-					value={userData.password}
-					onChange={(e: React.ChangeEvent<HTMLInputElement>) =>
-						setUserData({ ...userData, password: e.target.value })
-					}
+					{...register('password', {
+						required: '*Passsword is requiered',
+						minLength: {
+							value: 6,
+							message: 'Password must be at least 6 characters long',
+						},
+					})}
 				/>
-				<Button type='submit' color='neutral' loading={isLoading}>
+				<Button type='submit' color='neutral' disabled={!isValid}>
 					Submit
 				</Button>
 			</form>
@@ -76,4 +71,4 @@ const SignUpPage = () => {
 	);
 };
 
-export default SignUpPage;
+export default SignInPage;

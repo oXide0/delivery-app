@@ -1,6 +1,5 @@
 import { api } from './api';
 import { IUser } from '../types/types';
-import { TypeCredentials } from '../types/types';
 
 export const authApi = api.injectEndpoints({
 	endpoints: (builder) => ({
@@ -9,7 +8,7 @@ export const authApi = api.injectEndpoints({
 			providesTags: () => [{ type: 'User' }],
 		}),
 		login: builder.mutation({
-			query: (credentials: TypeCredentials) => ({
+			query: (credentials: IUser) => ({
 				url: '/users',
 				method: 'POST',
 				body: credentials,

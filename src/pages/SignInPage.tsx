@@ -6,34 +6,41 @@ import { useNavigate } from 'react-router-dom';
 import { setAuth, setCredentials } from '../features/auth/authSlice';
 import { useAppDispatch } from '../hooks/redux-hooks';
 import { formStyles } from '../utils/formStyles';
+import { useForm } from 'react-hook-form';
+import { TypeCredentials } from '../types/types';
 
 const SignInPage = () => {
-	const [userData, setUserData] = useState({ username: '', password: '' });
-	const [error, setError] = useState('');
 	const navigate = useNavigate();
-	const { data: users } = useGetUsersQuery();
 	const dispatch = useAppDispatch();
+	const { data: users } = useGetUsersQuery();
+	const [errorMessage, setErrorMessage] = useState<string>('');
+	const {
+		register,
+		handleSubmit,
+		formState: { errors, isValid },
+	} = useForm<TypeCredentials>({ mode: 'onChange' });
 
-	const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
-		e.preventDefault();
-		if (users) {
-			const username = userData.username;
-			const password = userData.password;
-			const repeatName = users.find((user) => user.name === username);
-			if (repeatName && repeatName.password === password) {
-				try {
-					navigate('/');
-					dispatch(setAuth(true));
-					dispatch(setCredentials({ username, password }));
-				} catch (err) {
-					alert(err);
-				}
-				setError('');
-			} else if (!repeatName) {
-				setError('Name not found');
-			} else if (repeatName.password !== password) {
-				setError('The password is incorrect');
-			}
+	const handleError = (username: string, password: string) => {
+		const user = users?.find((user) => user.name === username);
+		const pwd = users?.find((user) => user.password === password);
+
+		if (!user) {
+			setErrorMessage('User does not exist');
+			return false;
+		}
+		if (!pwd) {
+			setErrorMessage('Password is incorrect');
+			return false;
+		}
+		return true;
+	};
+
+	const onSubmit = (data: TypeCredentials) => {
+		if (handleError(data.username, data.password)) {
+			navigate('/');
+			dispatch(setAuth(true));
+			dispatch(setCredentials({ username: data.username, password: data.password }));
+			setErrorMessage('');
 		}
 	};
 
@@ -42,30 +49,17 @@ const SignInPage = () => {
 			<h1 style={{ textAlign: 'center', paddingTop: '40px', fontSize: '40px', fontWeight: '600' }}>
 				Sign in to the app
 			</h1>
-			<form style={formStyles} onSubmit={handleSubmit}>
-				<p style={{ color: 'red' }}>{error ? `*${error}` : ''}</p>
-				<Input
-					placeholder='Name'
-					required
-					color={error ? 'danger' : 'neutral'}
-					name='username'
-					value={userData.username}
-					onChange={(e: React.ChangeEvent<HTMLInputElement>) =>
-						setUserData({ ...userData, username: e.target.value })
-					}
-				/>
+			<form style={formStyles} onSubmit={handleSubmit(onSubmit)}>
+				<p style={{ color: 'red' }}>{errorMessage}</p>
+				<label style={{ color: 'red' }}>{errors.username && errors.username.message}</label>
+				<Input placeholder='Name' {...register('username', { required: '*Name is required' })} />
+				<label style={{ color: 'red' }}>{errors.password && errors.password.message}</label>
 				<Input
 					placeholder='Password'
 					type='password'
-					required
-					color={error ? 'danger' : 'neutral'}
-					name='password'
-					value={userData.password}
-					onChange={(e: React.ChangeEvent<HTMLInputElement>) =>
-						setUserData({ ...userData, password: e.target.value })
-					}
+					{...register('password', { required: '*Passsword is requiered' })}
 				/>
-				<Button type='submit' color='neutral'>
+				<Button type='submit' color='neutral' disabled={!isValid}>
 					Submit
 				</Button>
 			</form>
