@@ -1,79 +1,85 @@
 {
-	"users": [],
-	"cart": [],
-	"orders": [],
-	"shops": [
-		{
-			"id": 1,
-			"name": "Mcdonalds",
-			"goods": [
-				{
-					"id": 1,
-					"title": "Burger",
-					"price": 5,
-					"img": "https://ais.kochbar.de/kbrezept/284621_878966/1200x1200/burger-rezept-bild-nr-1187.jpg"
-				},
-				{
-					"id": 2,
-					"title": "Potato fries",
-					"price": 2,
-					"img": "https://www.thespruceeats.com/thmb/X_JGM04VusvkuGqTVan4QmBRqjI=/1500x0/filters:no_upscale():max_bytes(150000):strip_icc()/how-to-make-homemade-french-fries-2215971-hero-01-02f62a016f3e4aa4b41d0c27539885c3.jpg"
-				},
-				{
-					"id": 3,
-					"title": "Coca-Cola",
-					"price": 3,
-					"img": "https://www.coca-cola-deutschland.de/content/dam/one/de/de/product-images/coca-cola-original-taste.png"
-				}
-			]
-		},
-		{
-			"id": 2,
-			"name": "KFC",
-			"goods": [
-				{
-					"id": 4,
-					"title": "Chicken Nuggets",
-					"price": 6,
-					"img": "https://www.foodandwine.com/thmb/4NTV3070a3bHclCSWpJcP7nI61Y=/1500x0/filters:no_upscale():max_bytes(150000):strip_icc()/KFC-Adding-Chicken-Nuggets-FT-BLOG0323-ea6facd26ba44923970735eb69c9b002.jpg"
-				},
-				{
-					"id": 5,
-					"title": "Potato fries",
-					"price": 2,
-					"img": "https://www.thespruceeats.com/thmb/X_JGM04VusvkuGqTVan4QmBRqjI=/1500x0/filters:no_upscale():max_bytes(150000):strip_icc()/how-to-make-homemade-french-fries-2215971-hero-01-02f62a016f3e4aa4b41d0c27539885c3.jpg"
-				},
-				{
-					"id": 6,
-					"title": "Pepsi",
-					"price": 3,
-					"img": "https://www.worldofsweets.de/out/pictures/master/product/1/pepsi-500ml-no1-0801.jpg"
-				}
-			]
-		},
-		{
-			"id": 3,
-			"name": "Burger King",
-			"goods": [
-				{
-					"id": 7,
-					"title": "Big King",
-					"price": 7,
-					"img": "https://www.burgerking-luebeck.de/files/content/produkte-xl/Big-KING.png"
-				},
-				{
-					"id": 8,
-					"title": "Potato fries",
-					"price": 2,
-					"img": "https://www.thespruceeats.com/thmb/X_JGM04VusvkuGqTVan4QmBRqjI=/1500x0/filters:no_upscale():max_bytes(150000):strip_icc()/how-to-make-homemade-french-fries-2215971-hero-01-02f62a016f3e4aa4b41d0c27539885c3.jpg"
-				},
-				{
-					"id": 9,
-					"title": "Sprite",
-					"price": 3,
-					"img": "https://brezenglueck.de/wp-content/uploads/2022/03/sprite_05l_pet.png"
-				}
-			]
-		}
-	]
+  "users": [
+    {
+      "id": "-yGEQi50rXkp7zJDwzf3F",
+      "name": "Nazar",
+      "password": "123456"
+    }
+  ],
+  "cart": [],
+  "orders": [],
+  "shops": [
+    {
+      "id": 1,
+      "name": "Mcdonalds",
+      "goods": [
+        {
+          "id": 1,
+          "title": "Burger",
+          "price": 5,
+          "img": "https://ais.kochbar.de/kbrezept/284621_878966/1200x1200/burger-rezept-bild-nr-1187.jpg"
+        },
+        {
+          "id": 2,
+          "title": "Potato fries",
+          "price": 2,
+          "img": "https://www.thespruceeats.com/thmb/X_JGM04VusvkuGqTVan4QmBRqjI=/1500x0/filters:no_upscale():max_bytes(150000):strip_icc()/how-to-make-homemade-french-fries-2215971-hero-01-02f62a016f3e4aa4b41d0c27539885c3.jpg"
+        },
+        {
+          "id": 3,
+          "title": "Coca-Cola",
+          "price": 3,
+          "img": "https://www.coca-cola-deutschland.de/content/dam/one/de/de/product-images/coca-cola-original-taste.png"
+        }
+      ]
+    },
+    {
+      "id": 2,
+      "name": "KFC",
+      "goods": [
+        {
+          "id": 4,
+          "title": "Chicken Nuggets",
+          "price": 6,
+          "img": "https://www.foodandwine.com/thmb/4NTV3070a3bHclCSWpJcP7nI61Y=/1500x0/filters:no_upscale():max_bytes(150000):strip_icc()/KFC-Adding-Chicken-Nuggets-FT-BLOG0323-ea6facd26ba44923970735eb69c9b002.jpg"
+        },
+        {
+          "id": 5,
+          "title": "Potato fries",
+          "price": 2,
+          "img": "https://www.thespruceeats.com/thmb/X_JGM04VusvkuGqTVan4QmBRqjI=/1500x0/filters:no_upscale():max_bytes(150000):strip_icc()/how-to-make-homemade-french-fries-2215971-hero-01-02f62a016f3e4aa4b41d0c27539885c3.jpg"
+        },
+        {
+          "id": 6,
+          "title": "Pepsi",
+          "price": 3,
+          "img": "https://www.worldofsweets.de/out/pictures/master/product/1/pepsi-500ml-no1-0801.jpg"
+        }
+      ]
+    },
+    {
+      "id": 3,
+      "name": "Burger King",
+      "goods": [
+        {
+          "id": 7,
+          "title": "Big King",
+          "price": 7,
+          "img": "https://www.burgerking-luebeck.de/files/content/produkte-xl/Big-KING.png"
+        },
+        {
+          "id": 8,
+          "title": "Potato fries",
+          "price": 2,
+          "img": "https://www.thespruceeats.com/thmb/X_JGM04VusvkuGqTVan4QmBRqjI=/1500x0/filters:no_upscale():max_bytes(150000):strip_icc()/how-to-make-homemade-french-fries-2215971-hero-01-02f62a016f3e4aa4b41d0c27539885c3.jpg"
+        },
+        {
+          "id": 9,
+          "title": "Sprite",
+          "price": 3,
+          "img": "https://brezenglueck.de/wp-content/uploads/2022/03/sprite_05l_pet.png"
+        }
+      ]
+    }
+  ]
 }
