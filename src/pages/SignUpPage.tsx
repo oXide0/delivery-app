@@ -24,7 +24,6 @@ const SignInPage = () => {
 
 	const handleError = (username: string) => {
 		const user = users?.find((user) => user.name === username);
-		console.log(user);
 		if (user) {
 			setErrorMessage('User already exists');
 			return false;
@@ -45,7 +44,7 @@ const SignInPage = () => {
 	return (
 		<div className='wrapper'>
 			<h1 style={{ textAlign: 'center', paddingTop: '40px', fontSize: '40px', fontWeight: '600' }}>
-				Sign in to the app
+				Create new account
 			</h1>
 			<form style={formStyles} onSubmit={handleSubmit(onSubmit)}>
 				<p style={{ color: 'red' }}>{errorMessage}</p>
