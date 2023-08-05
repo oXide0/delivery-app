@@ -1,6 +1,6 @@
-import { TypeCode, IProduct } from '../types/types';
+import { IProduct } from '../types/types';
 
-export function getTotalPrice(data: IProduct[], coupon: TypeCode | undefined) {
+export function getTotalPrice(data: IProduct[], coupon: string | undefined) {
 	let total = 0;
 	data.forEach((item: IProduct) => {
 		total += item.price;

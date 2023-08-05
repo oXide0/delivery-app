@@ -2,11 +2,10 @@ import AspectRatio from '@mui/joy/AspectRatio';
 import Button from '@mui/joy/Button';
 import Card from '@mui/joy/Card';
 import Typography from '@mui/joy/Typography';
-import { TypeCode } from '../../types/types';
 import { StyledCouponContent } from './styles';
 
 interface CouponCardProps {
-	code: TypeCode;
+	code: string;
 }
 
 const CouponCard = ({ code }: CouponCardProps) => {
