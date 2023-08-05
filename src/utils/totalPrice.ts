@@ -1,10 +1,11 @@
 import { TypeCode, IProduct } from '../types/types';
 
-export function totalPrice(data: IProduct[], coupon: TypeCode) {
+export function getTotalPrice(data: IProduct[], coupon: TypeCode | undefined) {
 	let total = 0;
 	data.forEach((item: IProduct) => {
 		total += item.price;
 	});
+	if (!coupon) return total;
 	switch (coupon) {
 		case 'CODE1':
 			total -= 2;

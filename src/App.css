@@ -3,82 +3,8 @@
     margin: 0 auto;
     padding: 0 15px;
 }
-/* --------- Header --------- */
-.header__container {
-    border-bottom: 2px solid gray;
-    background: #f1f1f1;
-}
-.header {
-    display: flex;
-    justify-content: space-between;
-    max-width: 1200px;
-    margin: 0 auto;
-    padding: 30px 15px;
-}
-.header__logo {
-    font-size: 30px;
-    font-weight: 800;
-    color: #5A5A72;
-    text-decoration: none;
-}
-.header__nav {
-    display: flex;
-    align-items: center;
-    gap: 30px;
-}
-.header__link {  
-    color: #666;
-    display: inline-block;
-    background-image: linear-gradient(#5A5A72, #5A5A72);
-    background-size: 0% 2px;
-    background-repeat: no-repeat;
-    transition: background-size 0.3s;
-    padding-bottom: 2px;
-    background-position: 0 100%;
-    text-decoration: none;
-    font-size: 17px;
-    color: #5A5A72;
-}
-.header__link:hover {
-    background-size: 100% 2px;
-}
-.header__link.active {
-    background-size: 100% 2px;
-}
-.header__acc {
-    color: #666;
-    text-decoration: none;
-}
-.header__username {
-    font-size: 17px !important;
-}
-/* -------- Burger Button -------- */
-.burger__buttons {
-    display: none;
-}
-.burger__btn {
-   background: none;
-   border: none;
-}
-.btn__img {
-    width: 25px;
-    height: 25px;
-}
-.btn__img_2 {
-    width: 20px;
-    height: 20px;
-}
-/* -------- ShopMenu -------- */
-.tab {
-    width: 200px;
-    max-height: 60px;
-    font-size: 20px;
-    font-weight: 600;
-    display: flex !important;
-    justify-content: center !important;
-}
-.tab.active {
-    background: none;
+.form__wrapper {
+    padding-top: 60px;
 }
 .row {
     display: flex;
@@ -86,33 +12,9 @@
     flex-wrap: wrap;
     padding-left: 10px;
 }
-/* -------- BasketGoodsCard -------- */
-.cart__block {
-    padding: 0 20px;
-    display: flex;
-    flex-direction: column;
-    gap: 10px;
-    width: 600px;
-    max-height: 596px;
-    overflow: auto;
-}
-/* ------ home ------- */
-.home__wrapper {
-    display: flex;
-    align-items: center;
-    padding: 30px 15px;
-    justify-content: space-between;
-}
-/* ------ cart ------- */
-.cart__wrapper {
-    display: flex;
-    justify-content: center;
-    gap: 40px;
-    padding-top: 40px;
-}
 /* media query */
 /* HomePage */
-@media (min-width: 992px) and (max-width: 1200px) {
+/* @media (min-width: 992px) and (max-width: 1200px) {
     .plate__food {
         width: 100%;
         max-width: 100%;
@@ -142,8 +44,8 @@
     .header__nav {
         gap: 20px;
     }
-}
-@media (min-width: 0) and (max-width: 768px) {
+} */
+/* @media (min-width: 0) and (max-width: 768px) {
     .home__wrapper {
         flex-direction: column;
         gap: 40px;
@@ -175,10 +77,10 @@
         padding: 30px 0 0 20px;
     }
     .header__link {
-        font-size: 22px;
+        font-size: 12px;
     }
     .show__menu {
-        transform: translateY(0);
+        transform: translateY(0) !important;
     }
     .burger__buttons {
         display: flex;
@@ -201,4 +103,4 @@
     .cart__block {
         width: 100%;
     }
-}
+} */

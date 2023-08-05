@@ -4,14 +4,20 @@ type TypeGood = {
 	price: number;
 	img: string;
 };
-
-export type TypeCode = string;
 export type TypeCredentials = { username: string; password: string };
 
 export interface IUser {
 	id: string;
 	name: string;
 	password: string;
+}
+
+export interface IUserData {
+	name: string;
+	email: string;
+	phone: string;
+	address: string;
+	coupon?: string;
 }
 
 export interface IProduct {
