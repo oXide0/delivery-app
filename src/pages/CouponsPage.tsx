@@ -1,4 +1,4 @@
-import CouponCard from '../components/CouponCard';
+import CouponCard from '../components/CouponCard/CouponCard';
 import { couponCodes } from '../utils/coupons';
 
 const CouponsPage = () => {

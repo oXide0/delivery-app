@@ -1,13 +1,13 @@
 import { Routes, Route } from 'react-router-dom';
-import Layout from './components/Layout';
+import Layout from './hoc/Layout';
 import SignInPage from './pages/SignInPage';
-import SignUpPage from './pages/SignUpPage';
+import SignUpPage from './pages/RegisterPage';
 import HomePage from './pages/HomePage';
-import RequireAuth from './components/RequireAuth';
+import RequireAuth from './hoc/RequireAuth';
 import ShopPage from './pages/ShopPage';
 import CartPage from './pages/CartPage';
 import SuccessPage from './pages/SuccessPage';
-import HistoryPage from './pages/HistoryPage';
+import OrdersPage from './pages/OrdersPage';
 import CouponsPage from './pages/CouponsPage';
 import './App.css';
 
@@ -16,13 +16,13 @@ function App() {
 		<Routes>
 			<Route path='/' element={<Layout />}>
 				<Route index element={<HomePage />} />
+				<Route path='shop' element={<ShopPage />} />
 				<Route path='sign-up' element={<SignUpPage />} />
 				<Route path='sign-in' element={<SignInPage />} />
 				<Route element={<RequireAuth />}>
-					<Route path='shop' element={<ShopPage />} />
 					<Route path='cart' element={<CartPage />} />
 					<Route path='success' element={<SuccessPage />} />
-					<Route path='history' element={<HistoryPage />} />
+					<Route path='history' element={<OrdersPage />} />
 					<Route path='coupons' element={<CouponsPage />} />
 				</Route>
 			</Route>
