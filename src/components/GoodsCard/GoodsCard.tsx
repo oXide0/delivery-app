@@ -7,6 +7,8 @@ import { setDisbaled } from '../../features/shopSlice';
 import { useAppDispatch } from '../../hooks/redux-hooks';
 import { IProduct } from '../../types/types';
 import { StyledCardContent } from './styles';
+import { useNavigate } from 'react-router-dom';
+import { useAuth } from '../../hooks/useAuth';
 
 type TypeCardType = 'history' | '';
 
@@ -16,12 +18,15 @@ interface IGoodsCardProps {
 }
 
 const GoodsCard = ({ goods, type = '' }: IGoodsCardProps) => {
+	const navigate = useNavigate();
+	const { isAuth } = useAuth();
 	const [addToCart] = useAddToCartMutation();
 	const [updateGoods] = useUpdateGoodsMutation();
 	const dispatch = useAppDispatch();
 	const { data } = useGetCartQuery();
 
 	const handleClick = async () => {
+		if (!isAuth) return navigate('/sign-up');
 		dispatch(setDisbaled(true));
 		if (data) {
 			const isGoodsInCart = data.find((item: IProduct) => item.id === goods.id);
