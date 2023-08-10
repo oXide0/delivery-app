@@ -24,6 +24,10 @@ const StyledContainer = styled('div')`
 	padding: 15px 15px;
 	display: flex;
 	justify-content: space-between;
+	@media (min-width: 0) and (max-width: 768px) {
+		flex-direction: column;
+		gap: 40px;
+	}
 `;
 
 const StyledBlock = styled('div')`
@@ -31,9 +35,26 @@ const StyledBlock = styled('div')`
 	display: flex;
 	flex-direction: column;
 	gap: 10px;
-	width: 600px;
+	width: 100%;
 	max-height: 596px;
 	overflow: auto;
 `;
 
-export { StyledTab, StyledTabRow, StyledContainer, StyledBlock };
+const StyledGoodsContainer = styled('div')`
+	width: 50%;
+	display: flex;
+	flex-direction: column;
+	align-items: center;
+	@media (min-width: 0) and (max-width: 768px) {
+		width: 100%;
+	}
+`;
+
+const StyledFormContainer = styled('div')`
+	width: 46%;
+	@media (min-width: 0) and (max-width: 768px) {
+		width: 100%;
+	}
+`;
+
+export { StyledTab, StyledTabRow, StyledContainer, StyledBlock, StyledGoodsContainer, StyledFormContainer };

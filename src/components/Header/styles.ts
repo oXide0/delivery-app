@@ -13,6 +13,9 @@ const StyledHeader = styled('header')`
 	max-width: 1200px;
 	margin: 0 auto;
 	padding: 5px 15px 0 15px;
+	@media (max-width: 768px) {
+		padding: 5px 15px 5px 15px;
+	}
 `;
 
 const StyledLogo = styled(Link)`
@@ -20,6 +23,9 @@ const StyledLogo = styled(Link)`
 	font-weight: 800;
 	color: #5a5a72;
 	text-decoration: none;
+	@media (min-width: 768px) and (max-width: 992px) {
+		font-size: 24px;
+	}
 `;
 
 const StyledNav = styled('nav')`
@@ -27,7 +33,7 @@ const StyledNav = styled('nav')`
 	align-items: center;
 	gap: 30px;
 	@media (min-width: 768px) and (max-width: 992px) {
-		gap: 20px;
+		gap: 10px;
 	}
 	@media (min-width: 0) and (max-width: 768px) {
 		flex-direction: column;

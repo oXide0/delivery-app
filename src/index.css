@@ -50,3 +50,17 @@ body {
 .gray {
   background: #5A5A72;
 }
+.wrapper {
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 0 15px;
+}
+.form__wrapper {
+  padding-top: 60px;
+}
+.row {
+  display: flex;
+  gap: 10px;
+  flex-wrap: wrap;
+  padding-left: 10px;
+}

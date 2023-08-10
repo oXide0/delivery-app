@@ -1,14 +1,12 @@
 {
-  "users": [],
-  "cart": [
+  "users": [
     {
-      "id": 1,
-      "title": "Burger",
-      "price": 5,
-      "img": "https://ais.kochbar.de/kbrezept/284621_878966/1200x1200/burger-rezept-bild-nr-1187.jpg",
-      "quantity": 1
+      "id": "yc1Tx06S5ldVladmx49rw",
+      "name": "Nazar",
+      "password": "123456"
     }
   ],
+  "cart": [],
   "orders": [],
   "shops": [
     {
