@@ -1,226 +1,103 @@
 {
-  "users": [
-    {
-      "id": "au2YTLu0fKaV0tYkvbsoN",
-      "name": "Nazar",
-      "password": "123456"
-    }
-  ],
-  "cart": [
-    {
-      "id": 1,
-      "title": "Big Mac",
-      "price": 5,
-      "img": "https://www.mcdonalds.sk/uploads/images/products/4-sk/cf3be3144fab352e53a8176241580cb7-medium_2x.webp",
-      "quantity": 2
-    }
-  ],
-  "orders": [
-    {
-      "id": "XJROoG2C_Oagtf56OWwlW",
-      "food": [
-        {
-          "id": 1,
-          "title": "Big Mac",
-          "price": 5,
-          "img": "https://www.mcdonalds.sk/uploads/images/products/4-sk/cf3be3144fab352e53a8176241580cb7-medium_2x.webp",
-          "quantity": 1
-        },
-        {
-          "id": 2,
-          "title": "McRoyal",
-          "price": 2,
-          "img": "https://www.mcdonalds.sk/uploads/images/products/7-sk/7d5b19bed507f40ae3ee09e2cc93f1be-medium_2x.webp",
-          "quantity": 2
-        },
-        {
-          "id": 3,
-          "title": "Double Cheeseburger",
-          "price": 3,
-          "img": "https://www.mcdonalds.sk/uploads/images/products/3-sk/0ebe6db93ec2b534b5c7365b71783776-medium_2x.webp",
-          "quantity": 3
-        },
-        {
-          "id": 5,
-          "title": "Pepperoni Pizza",
-          "price": 2,
-          "img": "https://www.ezcater.com/lunchrush/wp-content/uploads/sites/2/2017/10/shutterstock_514457074.jpg.webp",
-          "quantity": 2
-        },
-        {
-          "id": 6,
-          "title": "Meat Pizza",
-          "price": 3,
-          "img": "https://www.ezcater.com/lunchrush/wp-content/uploads/sites/2/2017/10/shutterstock_548340295.jpg.webp",
-          "quantity": 4
-        },
-        {
-          "id": 7,
-          "title": "Coca-Cola",
-          "price": 7,
-          "img": "https://www.mcdonalds.eg/Cms_Data/Contents/En/Media/images/Menu/large-Image/Coke.png",
-          "quantity": 2
-        },
-        {
-          "id": 10,
-          "title": "Sundae IJs",
-          "price": 7,
-          "img": "https://s7d1.scene7.com/is/image/mcdonalds/gui_nl_main_sundae_aardbei:product-header-desktop?wid=830&hei=458&dpr=off",
-          "quantity": 1
-        },
-        {
-          "id": 11,
-          "title": "Cookie Triple",
-          "price": 2,
-          "img": "https://s7d1.scene7.com/is/image/mcdonalds/gui_nl_main_mccafe_triple_chocolate_cookie:product-header-desktop?wid=830&hei=458&dpr=off",
-          "quantity": 10
-        },
-        {
-          "id": 8,
-          "title": "Orange Juice",
-          "price": 2,
-          "img": "https://www.mcdonalds.eg/Cms_Data/Contents/En/Media/images/Menu/large-Image/Orange-Juice.png",
-          "quantity": 5
-        }
-      ],
-      "user": {
-        "name": "Nazar",
-        "email": "nazar10fantom@gmail.com",
-        "phone": "+3213123123",
-        "address": "Kosice",
-        "coupon": "CODE3"
-      }
-    },
-    {
-      "id": "QQ4ksEjiwdTQGlWCcmPFl",
-      "food": [
-        {
-          "id": 10,
-          "title": "Sundae IJs",
-          "price": 7,
-          "img": "https://s7d1.scene7.com/is/image/mcdonalds/gui_nl_main_sundae_aardbei:product-header-desktop?wid=830&hei=458&dpr=off",
-          "quantity": 1
-        },
-        {
-          "id": 11,
-          "title": "Cookie Triple",
-          "price": 2,
-          "img": "https://s7d1.scene7.com/is/image/mcdonalds/gui_nl_main_mccafe_triple_chocolate_cookie:product-header-desktop?wid=830&hei=458&dpr=off",
-          "quantity": 10
-        },
-        {
-          "id": 12,
-          "title": "IJshoorn",
-          "price": 3,
-          "img": "https://s7d1.scene7.com/is/image/mcdonalds/gui_nl_main_ijshoorn:product-header-desktop?wid=830&hei=456&dpr=off",
-          "quantity": 3
-        }
-      ],
-      "user": {
-        "name": "Nazar",
-        "email": "nazar10fantom@gmail.com",
-        "phone": "0978904807",
-        "address": "Житомир",
-        "coupon": "CODE1"
-      }
-    }
-  ],
-  "shops": [
-    {
-      "id": 1,
-      "name": "Burgers",
-      "goods": [
-        {
-          "id": 1,
-          "title": "Big Mac",
-          "price": 5,
-          "img": "https://www.mcdonalds.sk/uploads/images/products/4-sk/cf3be3144fab352e53a8176241580cb7-medium_2x.webp"
-        },
-        {
-          "id": 2,
-          "title": "McRoyal",
-          "price": 2,
-          "img": "https://www.mcdonalds.sk/uploads/images/products/7-sk/7d5b19bed507f40ae3ee09e2cc93f1be-medium_2x.webp"
-        },
-        {
-          "id": 3,
-          "title": "Double Cheeseburger",
-          "price": 3,
-          "img": "https://www.mcdonalds.sk/uploads/images/products/3-sk/0ebe6db93ec2b534b5c7365b71783776-medium_2x.webp"
-        }
-      ]
-    },
-    {
-      "id": 2,
-      "name": "Pizzas",
-      "goods": [
-        {
-          "id": 4,
-          "title": "Veggie Pizza",
-          "price": 6,
-          "img": "https://www.ezcater.com/lunchrush/wp-content/uploads/sites/2/2017/10/shutterstock_570541132.jpg.webp"
-        },
-        {
-          "id": 5,
-          "title": "Pepperoni Pizza",
-          "price": 2,
-          "img": "https://www.ezcater.com/lunchrush/wp-content/uploads/sites/2/2017/10/shutterstock_514457074.jpg.webp"
-        },
-        {
-          "id": 6,
-          "title": "Meat Pizza",
-          "price": 3,
-          "img": "https://www.ezcater.com/lunchrush/wp-content/uploads/sites/2/2017/10/shutterstock_548340295.jpg.webp"
-        }
-      ]
-    },
-    {
-      "id": 3,
-      "name": "Drinks",
-      "goods": [
-        {
-          "id": 7,
-          "title": "Coca-Cola",
-          "price": 7,
-          "img": "https://www.mcdonalds.eg/Cms_Data/Contents/En/Media/images/Menu/large-Image/Coke.png"
-        },
-        {
-          "id": 8,
-          "title": "Orange Juice",
-          "price": 2,
-          "img": "https://www.mcdonalds.eg/Cms_Data/Contents/En/Media/images/Menu/large-Image/Orange-Juice.png"
-        },
-        {
-          "id": 9,
-          "title": "Fanta",
-          "price": 3,
-          "img": "https://www.mcdonalds.eg/Cms_Data/Contents/En/Media/images/Menu/large-Image/Fanta.png"
-        }
-      ]
-    },
-    {
-      "id": 4,
-      "name": "Desserts",
-      "goods": [
-        {
-          "id": 10,
-          "title": "Sundae IJs",
-          "price": 7,
-          "img": "https://s7d1.scene7.com/is/image/mcdonalds/gui_nl_main_sundae_aardbei:product-header-desktop?wid=830&hei=458&dpr=off"
-        },
-        {
-          "id": 11,
-          "title": "Cookie Triple",
-          "price": 2,
-          "img": "https://s7d1.scene7.com/is/image/mcdonalds/gui_nl_main_mccafe_triple_chocolate_cookie:product-header-desktop?wid=830&hei=458&dpr=off"
-        },
-        {
-          "id": 12,
-          "title": "IJshoorn",
-          "price": 3,
-          "img": "https://s7d1.scene7.com/is/image/mcdonalds/gui_nl_main_ijshoorn:product-header-desktop?wid=830&hei=456&dpr=off"
-        }
-      ]
-    }
-  ]
+	"users": [],
+	"cart": [],
+	"orders": [],
+	"shops": [
+		{
+			"id": 1,
+			"name": "Burgers",
+			"goods": [
+				{
+					"id": 1,
+					"title": "Big Mac",
+					"price": 5,
+					"img": "https://www.mcdonalds.sk/uploads/images/products/4-sk/cf3be3144fab352e53a8176241580cb7-medium_2x.webp"
+				},
+				{
+					"id": 2,
+					"title": "McRoyal",
+					"price": 2,
+					"img": "https://www.mcdonalds.sk/uploads/images/products/7-sk/7d5b19bed507f40ae3ee09e2cc93f1be-medium_2x.webp"
+				},
+				{
+					"id": 3,
+					"title": "Double Cheeseburger",
+					"price": 3,
+					"img": "https://www.mcdonalds.sk/uploads/images/products/3-sk/0ebe6db93ec2b534b5c7365b71783776-medium_2x.webp"
+				}
+			]
+		},
+		{
+			"id": 2,
+			"name": "Pizzas",
+			"goods": [
+				{
+					"id": 4,
+					"title": "Veggie Pizza",
+					"price": 6,
+					"img": "https://www.ezcater.com/lunchrush/wp-content/uploads/sites/2/2017/10/shutterstock_570541132.jpg.webp"
+				},
+				{
+					"id": 5,
+					"title": "Pepperoni Pizza",
+					"price": 2,
+					"img": "https://www.ezcater.com/lunchrush/wp-content/uploads/sites/2/2017/10/shutterstock_514457074.jpg.webp"
+				},
+				{
+					"id": 6,
+					"title": "Meat Pizza",
+					"price": 3,
+					"img": "https://www.ezcater.com/lunchrush/wp-content/uploads/sites/2/2017/10/shutterstock_548340295.jpg.webp"
+				}
+			]
+		},
+		{
+			"id": 3,
+			"name": "Drinks",
+			"goods": [
+				{
+					"id": 7,
+					"title": "Coca-Cola",
+					"price": 7,
+					"img": "https://www.mcdonalds.eg/Cms_Data/Contents/En/Media/images/Menu/large-Image/Coke.png"
+				},
+				{
+					"id": 8,
+					"title": "Orange Juice",
+					"price": 2,
+					"img": "https://www.mcdonalds.eg/Cms_Data/Contents/En/Media/images/Menu/large-Image/Orange-Juice.png"
+				},
+				{
+					"id": 9,
+					"title": "Fanta",
+					"price": 3,
+					"img": "https://www.mcdonalds.eg/Cms_Data/Contents/En/Media/images/Menu/large-Image/Fanta.png"
+				}
+			]
+		},
+		{
+			"id": 4,
+			"name": "Desserts",
+			"goods": [
+				{
+					"id": 10,
+					"title": "Sundae IJs",
+					"price": 7,
+					"img": "https://s7d1.scene7.com/is/image/mcdonalds/gui_nl_main_sundae_aardbei:product-header-desktop?wid=830&hei=458&dpr=off"
+				},
+				{
+					"id": 11,
+					"title": "Cookie Triple",
+					"price": 2,
+					"img": "https://s7d1.scene7.com/is/image/mcdonalds/gui_nl_main_mccafe_triple_chocolate_cookie:product-header-desktop?wid=830&hei=458&dpr=off"
+				},
+				{
+					"id": 12,
+					"title": "IJshoorn",
+					"price": 3,
+					"img": "https://s7d1.scene7.com/is/image/mcdonalds/gui_nl_main_ijshoorn:product-header-desktop?wid=830&hei=456&dpr=off"
+				}
+			]
+		}
+	]
 }
