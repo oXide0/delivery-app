@@ -20,9 +20,11 @@ import SellIcon from '@mui/icons-material/Sell';
 import HomeIcon from '@mui/icons-material/Home';
 import ShoppingCartIcon from '@mui/icons-material/ShoppingCart';
 import AccountCircleIcon from '@mui/icons-material/AccountCircle';
+import { useGetCartQuery } from '../services/cartApi';
 
 const Header = memo(() => {
 	const { isAuth, username } = useAuth();
+	const { data: cart } = useGetCartQuery();
 	const navigate = useNavigate();
 	const activeTab = useAppSelector(selectActiveTab);
 	const dispatch = useAppDispatch();
@@ -51,7 +53,10 @@ const Header = memo(() => {
 				<Tab icon={<ShoppingCartIcon />} label='SHOP' />
 				<Tab icon={<HistoryIcon />} label='ORDER HISTORY' />
 				<Tab icon={<SellIcon />} label='COUPONS' />
-				<Tab icon={<SimpleBadge icon={<ShoppingBasketIcon />} value={2} />} label='Shopping Cart' />
+				<Tab
+					icon={<SimpleBadge icon={<ShoppingBasketIcon />} value={cart ? cart.length : 0} />}
+					label='Shopping Cart'
+				/>
 			</Tabs>
 			{isAuth ? (
 				<Stack>

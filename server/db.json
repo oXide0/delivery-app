@@ -6,7 +6,15 @@
       "password": "123456"
     }
   ],
-  "cart": [],
+  "cart": [
+    {
+      "id": 1,
+      "title": "Big Mac",
+      "price": 5,
+      "img": "https://www.mcdonalds.sk/uploads/images/products/4-sk/cf3be3144fab352e53a8176241580cb7-medium_2x.webp",
+      "quantity": 2
+    }
+  ],
   "orders": [
     {
       "id": "XJROoG2C_Oagtf56OWwlW",
