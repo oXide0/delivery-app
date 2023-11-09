@@ -1,5 +1,7 @@
 # Delivery-App
 
+## P.s. Project does not work properly in prod mode due to problems with cors
+
 ## Project launch
 
 #### Change baseUrl variable in `src/services/api.js` file to http://localhost:3000.
