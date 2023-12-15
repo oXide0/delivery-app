@@ -1,7 +1,15 @@
-import { Box } from '@mui/material';
+import { Box, BoxProps } from '@mui/material';
 
-const ContentLayout = ({ children }: { children: React.ReactNode }) => {
-    return <Box sx={{ width: '100%', p: 5 }}>{children}</Box>;
+interface ContentLayoutProps extends BoxProps {
+    children: React.ReactNode;
+}
+
+const ContentLayout = ({ children, ...props }: ContentLayoutProps) => {
+    return (
+        <Box sx={{ width: '100%', p: 5 }} {...props}>
+            {children}
+        </Box>
+    );
 };
 
 export default ContentLayout;

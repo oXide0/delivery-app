@@ -1,17 +1,18 @@
 import {
+    Box,
+    Button,
     Paper,
+    Stack,
     Table,
     TableBody,
     TableCell,
     TableContainer,
     TableHead,
     TableRow,
-    Typography,
     TextField,
-    Button,
-    Stack,
+    Typography,
 } from '@mui/material';
-import ContentLayout from '../layout/ContentLayout';
+import { motion as m } from 'framer-motion';
 import Input from '../components/Input';
 
 function createData(name: string, calories: number, fat: number, carbs: number, protein: number) {
@@ -28,7 +29,13 @@ const rows = [
 
 export default function BasicTable() {
     return (
-        <ContentLayout>
+        <Box
+            sx={{ width: '100%', p: 5 }}
+            component={m.div}
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 1 }}
+            transition={{ duration: 0.8, ease: 'easeOut' }}
+        >
             <Typography variant='h3' fontWeight={700}>
                 Cart
             </Typography>
@@ -71,6 +78,6 @@ export default function BasicTable() {
                     Submit
                 </Button>
             </Stack>
-        </ContentLayout>
+        </Box>
     );
 }

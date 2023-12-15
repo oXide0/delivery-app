@@ -1,15 +1,21 @@
-import { Stack, Typography } from '@mui/material';
+import { Stack, Typography, Box } from '@mui/material';
 import FoodItemImg from '../assets/food-item.jfif';
 import ProductCard from '../components/ProductCard';
-import ContentLayout from '../layout/ContentLayout';
+import { motion as m } from 'framer-motion';
 
 const OrdersPage = () => {
     return (
-        <ContentLayout>
+        <Box
+            sx={{ width: '100%', p: 5 }}
+            component={m.div}
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 1 }}
+            transition={{ duration: 0.8, ease: 'easeOut' }}
+        >
             <Typography variant='h3' fontWeight={700}>
                 Orders History
             </Typography>
-            <Stack>
+            <Stack pt={6}>
                 <ProductCard
                     id={1}
                     img={FoodItemImg}
@@ -19,7 +25,7 @@ const OrdersPage = () => {
                     type='order'
                 />
             </Stack>
-        </ContentLayout>
+        </Box>
     );
 };
 
