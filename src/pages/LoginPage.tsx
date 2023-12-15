@@ -3,6 +3,7 @@ import { Typography, Container, Grid, Box, Divider, Stack, Button } from '@mui/m
 import Input from '../components/Input';
 import { Formik } from 'formik';
 import { Link } from 'react-router-dom';
+import { palette } from '../theme';
 
 const LoginPage = () => {
     return (
@@ -67,7 +68,7 @@ const LoginForm = () => {
                         Don't have accout yet?{' '}
                         <Link
                             to='/register'
-                            style={{ textDecoration: 'underline', color: '#EA3F30' }}
+                            style={{ textDecoration: 'underline', color: palette.primary.main }}
                         >
                             Signup
                         </Link>

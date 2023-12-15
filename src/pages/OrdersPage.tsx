@@ -1,17 +1,25 @@
-import { Box, Stack, Typography } from '@mui/material';
-import ProductCard from '../components/ProductCard';
+import { Stack, Typography } from '@mui/material';
 import FoodItemImg from '../assets/food-item.jfif';
+import ProductCard from '../components/ProductCard';
+import ContentLayout from '../layout/ContentLayout';
 
 const OrdersPage = () => {
     return (
-        <Box width='100%' sx={{ py: 9, px: 8 }}>
-            <Typography variant='h4' fontWeight={700} textAlign='center'>
+        <ContentLayout>
+            <Typography variant='h3' fontWeight={700}>
                 Orders History
             </Typography>
             <Stack>
-                <ProductCard id={1} img={FoodItemImg} price={100} title='Burger' category_id={1} />
+                <ProductCard
+                    id={1}
+                    img={FoodItemImg}
+                    price={100}
+                    title='Burger'
+                    category_id={1}
+                    type='order'
+                />
             </Stack>
-        </Box>
+        </ContentLayout>
     );
 };
 

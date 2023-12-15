@@ -8,3 +8,5 @@ export const productApi = api.injectEndpoints({
         }),
     }),
 });
+
+export const { useGetProductsQuery } = productApi;

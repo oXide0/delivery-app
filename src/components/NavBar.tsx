@@ -1,15 +1,16 @@
-import { History, Home, Sell } from '@mui/icons-material';
+import { History, Home, Sell, ShoppingCart } from '@mui/icons-material';
 import { Box, Tab, Tabs } from '@mui/material';
 import { Link, matchPath, useLocation } from 'react-router-dom';
+import { palette } from '../theme';
 
 const NavBar = () => {
-    const routeMatch = useRouteMatch(['/coupons', '/orders', '/products']);
+    const routeMatch = useRouteMatch(['/coupons', '/orders', '/products', '/cart']);
     const currentTab = routeMatch?.pattern?.path;
 
     return (
         <Box
             height='100vh'
-            bgcolor='#F3F3F3'
+            bgcolor={palette.background.paper}
             display='flex'
             flexDirection='column'
             justifyContent='center'
@@ -37,6 +38,14 @@ const NavBar = () => {
                     value='/coupons'
                     icon={<Sell sx={{ width: '30px', height: '30px' }} />}
                     to='/coupons'
+                    disableRipple
+                    sx={{ mt: 1 }}
+                />
+                <Tab
+                    component={Link}
+                    value='/cart'
+                    icon={<ShoppingCart sx={{ width: '30px', height: '30px' }} />}
+                    to='/cart'
                     disableRipple
                     sx={{ mt: 1 }}
                 />

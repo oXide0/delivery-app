@@ -14,7 +14,7 @@ interface ProductCardProps extends Product {
     price: number;
 }
 
-const ProductCard = ({ title, price, img, type }: ProductCardProps) => {
+const ProductCard = ({ title, price, img, type = 'product' }: ProductCardProps) => {
     return (
         <Card sx={{ maxWidth: 345, borderRadius: 4 }}>
             <CardMedia sx={{ height: 140 }} image={img} title={title} />

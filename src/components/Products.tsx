@@ -2,6 +2,7 @@ import { Box, Tab, Tabs, Typography } from '@mui/material';
 import { useState } from 'react';
 import FoodItemImg from '../assets/food-item.jfif';
 import ProductCard from './ProductCard';
+import ContentLayout from '../layout/ContentLayout';
 
 interface TabPanelProps {
     children?: React.ReactNode;
@@ -17,7 +18,7 @@ const Products = () => {
     };
 
     return (
-        <Box sx={{ width: '100%', p: 5 }}>
+        <ContentLayout>
             <Box sx={{ borderBottom: 1, borderColor: 'divider' }}>
                 <Tabs value={value} onChange={handleChange}>
                     <Tab label='Burgers' sx={{ fontWeight: 700, fontSize: 20 }} />
@@ -35,7 +36,7 @@ const Products = () => {
             <CustomTabPanel value={value} index={2}>
                 Item Three
             </CustomTabPanel>
-        </Box>
+        </ContentLayout>
     );
 };
 

@@ -1,14 +1,12 @@
-import { Box, Container } from '@mui/material';
-import Products from '../components/Products';
+import { Container } from '@mui/material';
 import OrderCart from '../components/OrderCart';
+import Products from '../components/Products';
 
 const ProductsPage = () => {
     return (
-        <Container>
-            <Box display='flex'>
-                <Products />
-                <OrderCart />
-            </Box>
+        <Container sx={{ display: 'flex' }}>
+            <Products />
+            <OrderCart />
         </Container>
     );
 };
