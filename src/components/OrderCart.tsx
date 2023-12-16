@@ -1,11 +1,11 @@
-import { Box, Stack, Typography, Divider, Button } from '@mui/material';
+import { Box, Stack, Typography, Divider, Button, useTheme } from '@mui/material';
 import OrderProductCard from './OrderProductCard';
-import { palette } from '../theme';
 
 const OrderCart = () => {
+    const theme = useTheme();
     return (
         <Box
-            bgcolor={palette.background.paper}
+            bgcolor={theme.palette.background.paper}
             height='100vh'
             pt={5}
             px={2}

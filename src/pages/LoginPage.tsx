@@ -1,9 +1,8 @@
 import BgFood from '../assets/bg-food.png';
-import { Typography, Container, Grid, Box, Divider, Stack, Button } from '@mui/material';
+import { Typography, Container, Grid, Box, Divider, Stack, Button, useTheme } from '@mui/material';
 import Input from '../components/Input';
 import { Formik } from 'formik';
 import { Link } from 'react-router-dom';
-import { palette } from '../theme';
 
 const LoginPage = () => {
     return (
@@ -37,6 +36,8 @@ const LoginPage = () => {
 };
 
 const LoginForm = () => {
+    const theme = useTheme();
+
     return (
         <Formik
             initialValues={{ name: '', email: '', password: '' }}
@@ -68,7 +69,10 @@ const LoginForm = () => {
                         Don't have accout yet?{' '}
                         <Link
                             to='/register'
-                            style={{ textDecoration: 'underline', color: palette.primary.main }}
+                            style={{
+                                textDecoration: 'underline',
+                                color: theme.palette.primary.main,
+                            }}
                         >
                             Signup
                         </Link>

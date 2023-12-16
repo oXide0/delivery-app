@@ -7,9 +7,10 @@ const ProductsPage = () => {
     return (
         <Container
             component={m.div}
-            initial={{ opacity: 0 }}
-            animate={{ opacity: 1 }}
-            transition={{ duration: 0.8, ease: 'easeOut' }}
+            initial={{ y: 10, opacity: 0 }}
+            animate={{ y: 0, opacity: 1 }}
+            exit={{ y: -10, opacity: 0 }}
+            transition={{ duration: 0.2 }}
         >
             <Container sx={{ display: 'flex' }}>
                 <Products />

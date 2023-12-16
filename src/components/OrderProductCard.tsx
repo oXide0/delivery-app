@@ -1,18 +1,24 @@
+import CloseIcon from '@mui/icons-material/Close';
 import {
     Card,
     CardContent,
-    Typography,
     CardMedia,
-    TextField,
     IconButton,
     Stack,
+    TextField,
+    Typography,
 } from '@mui/material';
 import BurgerImg from '../assets/burger.jfif';
-import CloseIcon from '@mui/icons-material/Close';
 
 const OrderProductCard = () => {
     return (
-        <Card sx={{ display: 'flex', p: 1, width: '400px', bgcolor: 'white' }}>
+        <Card
+            sx={{
+                display: 'flex',
+                p: 1,
+                width: '400px',
+            }}
+        >
             <CardMedia
                 component='img'
                 sx={{ width: 140, height: 140, borderRadius: '10px' }}
@@ -27,7 +33,7 @@ const OrderProductCard = () => {
                 <Stack direction='row' justifyContent='space-between' alignItems='center'>
                     <TextField type='number' sx={{ maxWidth: 100 }} />
                     <IconButton size='large'>
-                        <CloseIcon sx={{ color: '#000' }} />
+                        <CloseIcon />
                     </IconButton>
                 </Stack>
             </CardContent>

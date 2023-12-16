@@ -1,22 +1,38 @@
-import { History, Home, Sell, ShoppingCart } from '@mui/icons-material';
-import { Box, Tab, Tabs } from '@mui/material';
+import { DarkMode, History, Home, LightMode, Sell, ShoppingCart } from '@mui/icons-material';
+import { Box, IconButton, Tab, Tabs, useTheme } from '@mui/material';
 import { Link, matchPath, useLocation } from 'react-router-dom';
-import { palette } from '../theme';
+import { selectThemeMode, setMode } from '../features/themeSlice';
+import { useAppDispatch, useAppSelector } from '../redux-hooks';
 
 const NavBar = () => {
     const routeMatch = useRouteMatch(['/coupons', '/orders', '/products', '/cart']);
     const currentTab = routeMatch?.pattern?.path;
+    const mode = useAppSelector(selectThemeMode);
+    const dispatch = useAppDispatch();
+    const toggleMode = () => dispatch(setMode(mode === 'light' ? 'dark' : 'light'));
+    const theme = useTheme();
 
     return (
         <Box
             height='100vh'
-            bgcolor={palette.background.paper}
+            bgcolor={theme.palette.background.paper}
             display='flex'
             flexDirection='column'
             justifyContent='center'
             alignItems='center'
         >
-            <Tabs value={currentTab} orientation='vertical'>
+            <IconButton sx={{ position: 'absolute', top: 10 }} onClick={toggleMode}>
+                {mode === 'light' ? <LightMode /> : <DarkMode />}
+            </IconButton>
+            <Tabs
+                value={currentTab}
+                orientation='vertical'
+                sx={{
+                    '.MuiTabs-indicator': {
+                        transition: 'all 200ms cubic-bezier(0.4, 0, 0.2, 1) 0ms',
+                    },
+                }}
+            >
                 <Tab
                     component={Link}
                     value='/orders'
