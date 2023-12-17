@@ -13,12 +13,12 @@ import { useState } from 'react';
 
 interface InputProps extends Omit<MuiTextFieldProps, 'variant'> {
     readonly name: string;
-    readonly type: string;
+    readonly type?: string;
     readonly label: string;
     readonly onChange?: (event: React.ChangeEvent<HTMLInputElement>) => void;
 }
 
-const Input = ({ name, type, label, onChange, ...props }: InputProps) => {
+const Input = ({ name, type = 'text', label, onChange, ...props }: InputProps) => {
     if (type === 'password') return <PasswordField name={name} label={label} onChange={onChange} />;
 
     return <TextField name={name} onChange={onChange} label={label} {...props} />;

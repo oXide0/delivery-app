@@ -46,7 +46,6 @@ const SignupForm = () => {
                         <Input
                             name='name'
                             label='Your name'
-                            type='name'
                             value={values.name}
                             onChange={handleChange}
                         />

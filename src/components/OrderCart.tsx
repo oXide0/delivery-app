@@ -1,8 +1,11 @@
 import { Box, Stack, Typography, Divider, Button, useTheme } from '@mui/material';
 import OrderProductCard from './OrderProductCard';
+import { useNavigate } from 'react-router-dom';
 
 const OrderCart = () => {
+    const navigate = useNavigate();
     const theme = useTheme();
+
     return (
         <Box
             bgcolor={theme.palette.background.paper}
@@ -29,7 +32,9 @@ const OrderCart = () => {
                 </Typography>
             </Stack>
             <Stack pt={2}>
-                <Button variant='contained'>Check Out</Button>
+                <Button variant='contained' onClick={() => navigate('/cart')}>
+                    Check Out
+                </Button>
             </Stack>
         </Box>
     );

@@ -4,6 +4,7 @@ const config = {
     orange: '#EA3F30',
     sand: '#F3F3F3',
     gray: '#3F3F3F',
+    lightGray: '#7A7A7A',
 };
 
 export function createTheme({ mode }: { mode: 'light' | 'dark' }) {
@@ -16,7 +17,8 @@ export function createTheme({ mode }: { mode: 'light' | 'dark' }) {
                 main: config.orange,
             },
             background: {
-                paper: mode === 'light' ? config.sand : config.gray,
+                paper: mode === 'light' ? config.sand : config.lightGray,
+                default: mode === 'light' ? 'white' : config.gray,
             },
         },
         typography: {
@@ -63,6 +65,20 @@ export function createTheme({ mode }: { mode: 'light' | 'dark' }) {
                         },
                     },
                 ],
+            },
+            MuiTextField: {
+                styleOverrides: {
+                    root: {
+                        width: '100%',
+                    },
+                },
+            },
+            MuiOutlinedInput: {
+                styleOverrides: {
+                    root: {
+                        width: '100%',
+                    },
+                },
             },
         },
     });

@@ -1,18 +1,11 @@
-import { Stack, Typography, Box } from '@mui/material';
+import { Stack, Typography } from '@mui/material';
 import FoodItemImg from '../assets/food-item.jfif';
 import ProductCard from '../components/ProductCard';
-import { motion as m } from 'framer-motion';
+import PageLayout from '../layout/Pagelayout';
 
 const OrdersPage = () => {
     return (
-        <Box
-            sx={{ width: '100%', p: 5 }}
-            component={m.div}
-            initial={{ y: 10, opacity: 0 }}
-            animate={{ y: 0, opacity: 1 }}
-            exit={{ y: -10, opacity: 0 }}
-            transition={{ duration: 0.2 }}
-        >
+        <PageLayout>
             <Typography variant='h3' fontWeight={700}>
                 Orders History
             </Typography>
@@ -26,7 +19,7 @@ const OrdersPage = () => {
                     type='order'
                 />
             </Stack>
-        </Box>
+        </PageLayout>
     );
 };
 
