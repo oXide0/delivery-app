@@ -1,6 +1,7 @@
 import {
     Box,
     Button,
+    Divider,
     Grid,
     Paper,
     Stack,
@@ -132,9 +133,19 @@ const PaymentForm = () => {
                                 value={values.coupon}
                                 onChange={handleChange}
                             />
+                            <Divider sx={{ borderWidth: 2, mt: 1, color: '#000' }} />
+                            <Stack direction='row' justifyContent='space-between'>
+                                <Typography variant='h6' fontWeight={700}>
+                                    Total
+                                </Typography>
+                                <Typography variant='h6' fontWeight={700}>
+                                    Rp 100.000
+                                </Typography>
+                            </Stack>
                         </Stack>
+
                         <Button type='submit' variant='contained' sx={{ py: 1.5 }}>
-                            Submit
+                            Pay
                         </Button>
                     </Box>
                 </>
