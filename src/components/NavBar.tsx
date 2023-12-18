@@ -1,4 +1,4 @@
-import { DarkMode, History, Home, LightMode, Sell, ShoppingCart } from '@mui/icons-material';
+import { DarkMode, History, Home, LightMode, ShoppingCart } from '@mui/icons-material';
 import { Box, IconButton, Tab, Tabs, useTheme } from '@mui/material';
 import { Link, matchPath, useLocation } from 'react-router-dom';
 import { selectThemeMode, setMode } from '../features/themeSlice';
@@ -46,14 +46,6 @@ const NavBar = () => {
                     value='/products'
                     icon={<Home sx={{ width: '30px', height: '30px' }} />}
                     to='/products'
-                    disableRipple
-                    sx={{ mt: 1 }}
-                />
-                <Tab
-                    component={Link}
-                    value='/coupons'
-                    icon={<Sell sx={{ width: '30px', height: '30px' }} />}
-                    to='/coupons'
                     disableRipple
                     sx={{ mt: 1 }}
                 />

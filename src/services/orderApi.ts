@@ -12,9 +12,10 @@ export const orderApi = api.injectEndpoints({
     endpoints: (builder) => ({
         getOrder: builder.query<Order, number>({
             query: (id: number) => `/orders/${id}`,
+            providesTags: ['Order'],
         }),
-        createOrder: builder.mutation({
-            query: (body: CreateOrderBody) => ({
+        createOrder: builder.mutation<void, CreateOrderBody>({
+            query: (body) => ({
                 url: `/orders/create`,
                 method: 'POST',
                 body,

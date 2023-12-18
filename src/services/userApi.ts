@@ -13,16 +13,16 @@ interface CreateUser {
 
 export const userApi = api.injectEndpoints({
     endpoints: (builder) => ({
-        createUser: builder.mutation({
-            query: (body: CreateUser) => ({
+        createUser: builder.mutation<void, CreateUser>({
+            query: (body) => ({
                 url: `/users/create`,
                 method: 'POST',
                 body,
             }),
             invalidatesTags: ['User'],
         }),
-        loginUser: builder.mutation({
-            query: (body: LoginUser) => ({
+        loginUser: builder.mutation<void, LoginUser>({
+            query: (body) => ({
                 url: `/users/login`,
                 method: 'POST',
                 body,
