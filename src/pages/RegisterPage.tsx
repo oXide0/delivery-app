@@ -2,8 +2,21 @@ import BgFood from '../assets/bg-food.png';
 import { Typography, Container, Grid, Box, Divider, Stack, Button } from '@mui/material';
 import Input from '../components/Input';
 import { Formik } from 'formik';
+import { useCreateUserMutation } from '../services/userApi';
+
+interface SignupFormValues {
+    name: string;
+    email: string;
+    password: string;
+}
 
 const RegsiterPage = () => {
+    const [createUser, { error }] = useCreateUserMutation();
+
+    const handleSubmit = async (values: SignupFormValues) => {
+        await createUser(values);
+    };
+
     return (
         <Container>
             <Grid container height='100vh'>
@@ -25,8 +38,15 @@ const RegsiterPage = () => {
                         <Typography variant='h3' fontWeight={700}>
                             Signup
                         </Typography>
-                        <Divider sx={{ my: 5, bgcolor: '#000' }} />
-                        <SignupForm />
+                        <Stack my={5}>
+                            {error && (
+                                <Typography color='red' fontWeight={600} textAlign='center'>
+                                    User already exists
+                                </Typography>
+                            )}
+                            <Divider sx={{ bgcolor: '#000' }} />
+                        </Stack>
+                        <SignupForm onSubmit={handleSubmit} />
                     </Box>
                 </Grid>
             </Grid>
@@ -34,11 +54,11 @@ const RegsiterPage = () => {
     );
 };
 
-const SignupForm = () => {
+const SignupForm = ({ onSubmit }: { onSubmit: (values: SignupFormValues) => void }) => {
     return (
         <Formik
             initialValues={{ name: '', email: '', password: '' }}
-            onSubmit={(values) => console.log(values)}
+            onSubmit={(values) => onSubmit(values)}
         >
             {({ values, handleChange, handleSubmit }) => (
                 <Box component='form' onSubmit={handleSubmit} display='flex' flexDirection='column'>

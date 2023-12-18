@@ -4,11 +4,9 @@ import CardActions from '@mui/material/CardActions';
 import CardContent from '@mui/material/CardContent';
 import CardMedia from '@mui/material/CardMedia';
 import Typography from '@mui/material/Typography';
-import { Product } from '../types';
 
-interface ProductCardProps extends Product {
+interface ProductCardProps {
     type?: 'order' | 'product';
-    id: number;
     title: string;
     img: string;
     price: number;
@@ -17,7 +15,7 @@ interface ProductCardProps extends Product {
 const ProductCard = ({ title, price, img, type = 'product' }: ProductCardProps) => {
     return (
         <Card sx={{ maxWidth: 345, borderRadius: 4 }}>
-            <CardMedia sx={{ height: 140 }} image={img} title={title} />
+            {type === 'product' && <CardMedia sx={{ height: 140 }} image={img} title={title} />}
             <CardContent
                 sx={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between' }}
             >

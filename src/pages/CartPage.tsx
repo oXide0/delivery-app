@@ -16,7 +16,15 @@ import {
 } from '@mui/material';
 import { Formik } from 'formik';
 import Input from '../components/Input';
-import PageLayout from '../layout/Pagelayout';
+import PageLayout from '../layout/PageLayout';
+import { useCreateOrderMutation } from '../services/orderApi';
+
+interface OrderFormValues {
+    userId: number;
+    totalPrice: number;
+    status: string;
+    date: string;
+}
 
 function createData(name: string, calories: number, fat: number, carbs: number, protein: number) {
     return { name, calories, fat, carbs, protein };
@@ -30,7 +38,18 @@ const rows = [
     createData('Gingerbread', 356, 16.0, 49, 3.9),
 ];
 
-export default function BasicTable() {
+const CartPage = () => {
+    const [createOrder] = useCreateOrderMutation();
+
+    const handleSubmit = async () => {
+        await createOrder({
+            status: 'new',
+            totalPrice: 10,
+            userId: 1,
+            date: new Date().toISOString(),
+        });
+    };
+
     return (
         <PageLayout>
             <Typography variant='h3' fontWeight={700}>
@@ -46,7 +65,9 @@ export default function BasicTable() {
             </Grid>
         </PageLayout>
     );
-}
+};
+
+export default CartPage;
 
 const ProductsTable = () => {
     return (
@@ -55,9 +76,9 @@ const ProductsTable = () => {
                 <TableHead>
                     <TableRow>
                         <TableCell>Cart items</TableCell>
-                        <TableCell align='right'>Price</TableCell>
-                        <TableCell align='right'>Quantity</TableCell>
-                        <TableCell align='right'>Subtotal</TableCell>
+                        <TableCell>Price</TableCell>
+                        <TableCell>Quantity</TableCell>
+                        <TableCell>Subtotal</TableCell>
                     </TableRow>
                 </TableHead>
                 <TableBody>
@@ -69,11 +90,11 @@ const ProductsTable = () => {
                             <TableCell component='th' scope='row'>
                                 {row.name}
                             </TableCell>
-                            <TableCell align='right'>€{row.calories}</TableCell>
-                            <TableCell align='right'>
+                            <TableCell>€{row.calories}</TableCell>
+                            <TableCell>
                                 <TextField type='number' sx={{ maxWidth: 65 }} autoComplete='off' />
                             </TableCell>
-                            <TableCell align='right'>€{row.carbs}</TableCell>
+                            <TableCell>€{row.carbs}</TableCell>
                         </TableRow>
                     ))}
                 </TableBody>

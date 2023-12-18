@@ -5,6 +5,7 @@ import { BrowserRouter as Router } from 'react-router-dom';
 import { selectThemeMode } from '../features/themeSlice';
 import { useAppSelector } from '../redux-hooks';
 import { createTheme } from '../theme';
+import Snowfall from 'react-snowfall';
 
 interface AppWrapperProps {
     children: React.ReactNode;
@@ -19,6 +20,7 @@ const AppWrapper = ({ children }: AppWrapperProps) => {
             <AnimatePresence mode='wait'>
                 <ThemeProvider theme={theme}>
                     <CssBaseline />
+                    {mode === 'dark' && <Snowfall />}
                     {children}
                 </ThemeProvider>
             </AnimatePresence>

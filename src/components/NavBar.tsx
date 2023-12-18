@@ -22,7 +22,7 @@ const NavBar = () => {
             alignItems='center'
         >
             <IconButton sx={{ position: 'absolute', top: 10 }} onClick={toggleMode}>
-                {mode === 'light' ? <LightMode /> : <DarkMode />}
+                {mode === 'light' ? <DarkMode /> : <LightMode />}
             </IconButton>
             <Tabs
                 value={currentTab}

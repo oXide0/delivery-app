@@ -1,23 +1,18 @@
 import { Stack, Typography } from '@mui/material';
-import FoodItemImg from '../assets/food-item.jfif';
-import ProductCard from '../components/ProductCard';
-import PageLayout from '../layout/Pagelayout';
+import OrderCard from '../components/OrderCard';
+import PageLayout from '../layout/PageLayout';
+// import { useGetOrderQuery } from '../services/orderApi';
 
 const OrdersPage = () => {
+    // const { data, isLoading } = useGetOrderQuery(userId);
+
     return (
         <PageLayout>
             <Typography variant='h3' fontWeight={700}>
                 Orders History
             </Typography>
             <Stack pt={6}>
-                <ProductCard
-                    id={1}
-                    img={FoodItemImg}
-                    price={100}
-                    title='Burger'
-                    category_id={1}
-                    type='order'
-                />
+                <OrderCard date='2022-21-1' totalPrice={1100} />
             </Stack>
         </PageLayout>
     );

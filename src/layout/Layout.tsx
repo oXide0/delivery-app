@@ -1,13 +1,13 @@
-import { Container } from '@mui/material';
+import { Box } from '@mui/material';
 import { Outlet } from 'react-router-dom';
 import NavBar from '../components/NavBar';
 
 const Layout = () => {
     return (
-        <Container sx={{ display: 'flex' }}>
+        <Box width='100%' display='flex'>
             <NavBar />
             <Outlet />
-        </Container>
+        </Box>
     );
 };
 

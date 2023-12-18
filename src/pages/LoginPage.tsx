@@ -1,10 +1,22 @@
-import BgFood from '../assets/bg-food.png';
-import { Typography, Container, Grid, Box, Divider, Stack, Button, useTheme } from '@mui/material';
-import Input from '../components/Input';
+import { Box, Button, Container, Divider, Grid, Stack, Typography, useTheme } from '@mui/material';
 import { Formik } from 'formik';
 import { Link } from 'react-router-dom';
+import BgFood from '../assets/bg-food.png';
+import Input from '../components/Input';
+import { useLoginUserMutation } from '../services/userApi';
+
+interface LoginFormValues {
+    email: string;
+    password: string;
+}
 
 const LoginPage = () => {
+    const [loginUser, { error }] = useLoginUserMutation();
+
+    const handleSubmit = async (values: LoginFormValues) => {
+        await loginUser(values);
+    };
+
     return (
         <Container>
             <Grid container height='100vh'>
@@ -26,8 +38,16 @@ const LoginPage = () => {
                         <Typography variant='h3' fontWeight={700}>
                             Login
                         </Typography>
-                        <Divider sx={{ my: 5, bgcolor: '#000' }} />
-                        <LoginForm />
+                        <Stack my={5}>
+                            {error && (
+                                <Typography color='red' fontWeight={600} textAlign='center'>
+                                    User does not exist
+                                </Typography>
+                            )}
+                            <Divider sx={{ bgcolor: '#000' }} />
+                        </Stack>
+
+                        <LoginForm onSubmit={handleSubmit} />
                     </Box>
                 </Grid>
             </Grid>
@@ -35,13 +55,13 @@ const LoginPage = () => {
     );
 };
 
-const LoginForm = () => {
+const LoginForm = ({ onSubmit }: { onSubmit: (values: LoginFormValues) => void }) => {
     const theme = useTheme();
 
     return (
         <Formik
-            initialValues={{ name: '', email: '', password: '' }}
-            onSubmit={(values) => console.log(values)}
+            initialValues={{ email: '', password: '' }}
+            onSubmit={(values) => onSubmit({ email: values.email, password: values.password })}
         >
             {({ values, handleChange, handleSubmit }) => (
                 <Box component='form' onSubmit={handleSubmit} display='flex' flexDirection='column'>

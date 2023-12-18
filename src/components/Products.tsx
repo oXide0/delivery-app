@@ -1,6 +1,6 @@
 import { Box, Tab, Tabs, Typography } from '@mui/material';
 import { useState } from 'react';
-import FoodItemImg from '../assets/food-item.jfif';
+import { Product } from '../types';
 import ProductCard from './ProductCard';
 
 interface TabPanelProps {
@@ -9,7 +9,11 @@ interface TabPanelProps {
     value: number;
 }
 
-const Products = () => {
+interface ProductsProps {
+    prodcuts: Product[];
+}
+
+const Products = ({ prodcuts }: ProductsProps) => {
     const [value, setValue] = useState(0);
 
     const handleChange = (_: React.SyntheticEvent, newValue: number) => {
@@ -21,19 +25,62 @@ const Products = () => {
             <Box sx={{ borderBottom: 1, borderColor: 'divider' }}>
                 <Tabs value={value} onChange={handleChange}>
                     <Tab label='Burgers' sx={{ fontWeight: 700, fontSize: 20 }} />
-                    <Tab label='Pizzas' sx={{ fontWeight: 700, fontSize: 20 }} />
+                    <Tab label='Pizza' sx={{ fontWeight: 700, fontSize: 20 }} />
                     <Tab label='Drinks' sx={{ fontWeight: 700, fontSize: 20 }} />
                     <Tab label='Desserts' sx={{ fontWeight: 700, fontSize: 20 }} />
                 </Tabs>
             </Box>
             <CustomTabPanel value={value} index={0}>
-                <ProductCard id={1} img={FoodItemImg} price={100} title='Burger' category_id={1} />
+                {prodcuts.map(
+                    (prodcut) =>
+                        prodcut.category.name === 'Burgers' && (
+                            <ProductCard
+                                key={prodcut.id}
+                                title={prodcut.title}
+                                img={prodcut.img}
+                                price={prodcut.price}
+                            />
+                        )
+                )}
             </CustomTabPanel>
             <CustomTabPanel value={value} index={1}>
-                Item Two
+                {prodcuts.map(
+                    (prodcut) =>
+                        prodcut.category.name === 'Pizza' && (
+                            <ProductCard
+                                key={prodcut.id}
+                                title={prodcut.title}
+                                img={prodcut.img}
+                                price={prodcut.price}
+                            />
+                        )
+                )}
             </CustomTabPanel>
             <CustomTabPanel value={value} index={2}>
-                Item Three
+                {prodcuts.map(
+                    (prodcut) =>
+                        prodcut.category.name === 'Drinks' && (
+                            <ProductCard
+                                key={prodcut.id}
+                                title={prodcut.title}
+                                img={prodcut.img}
+                                price={prodcut.price}
+                            />
+                        )
+                )}
+            </CustomTabPanel>
+            <CustomTabPanel value={value} index={3}>
+                {prodcuts.map(
+                    (prodcut) =>
+                        prodcut.category.name === 'Desserts' && (
+                            <ProductCard
+                                key={prodcut.id}
+                                title={prodcut.title}
+                                img={prodcut.img}
+                                price={prodcut.price}
+                            />
+                        )
+                )}
             </CustomTabPanel>
         </Box>
     );

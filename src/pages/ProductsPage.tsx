@@ -1,15 +1,21 @@
-import { Container } from '@mui/material';
+import { Box } from '@mui/material';
 import OrderCart from '../components/OrderCart';
 import Products from '../components/Products';
-import PageLayout from '../layout/Pagelayout';
+import PageLayout from '../layout/PageLayout';
+import { useGetProductsQuery } from '../services/productApi';
+import Loader from '../components/Loader';
 
 const ProductsPage = () => {
+    const { data, isLoading } = useGetProductsQuery();
+
+    if (isLoading || !data) return <Loader />;
+
     return (
         <PageLayout noPadding>
-            <Container sx={{ display: 'flex' }}>
-                <Products />
+            <Box sx={{ display: 'flex' }}>
+                <Products prodcuts={data} />
                 <OrderCart />
-            </Container>
+            </Box>
         </PageLayout>
     );
 };
