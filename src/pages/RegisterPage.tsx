@@ -1,42 +1,96 @@
-import Typography from '@mui/material/Typography';
-import Box from '@mui/material/Box';
-import Form from '../components/Form';
-import { useLoginMutation } from '../services/authApi';
-import { useNavigate } from 'react-router-dom';
-import { setCredentials } from '../features/authSlice';
-import { useAppDispatch } from '../hooks/redux-hooks';
-import { useGetUsersQuery } from '../services/authApi';
-import { TypeCredentials } from '../types';
-import { nanoid } from '@reduxjs/toolkit';
+import BgFood from '../assets/bg-food.png';
+import { Typography, Container, Grid, Box, Divider, Stack, Button } from '@mui/material';
+import Input from '../components/Input';
+import { Formik } from 'formik';
+import { useCreateUserMutation } from '../services/userApi';
 
-const RegisterPage = () => {
-	const { data: users } = useGetUsersQuery();
-	const navigate = useNavigate();
-	const dispatch = useAppDispatch();
-	const [login] = useLoginMutation();
+interface SignupFormValues {
+    name: string;
+    email: string;
+    password: string;
+}
 
-	const handleError = (userData: TypeCredentials) => {
-		const user = users?.find((user) => user.name === userData.username);
-		if (user) {
-			return 'User already exists';
-		}
-		return '';
-	};
+const RegsiterPage = () => {
+    const [createUser, { error }] = useCreateUserMutation();
 
-	const onSubmit = (data: TypeCredentials) => {
-		login({ id: nanoid(), name: data.username, password: data.password });
-		dispatch(setCredentials({ username: data.username, password: data.password }));
-		navigate('/');
-	};
+    const handleSubmit = async (values: SignupFormValues) => {
+        await createUser(values);
+    };
 
-	return (
-		<Box display='flex' flexDirection='column' gap='40px' paddingTop='50px'>
-			<Typography variant='h4' textAlign='center' fontWeight='bold'>
-				Create a new account
-			</Typography>
-			<Form onSubmit={onSubmit} handleError={handleError} />
-		</Box>
-	);
+    return (
+        <Container>
+            <Grid container height='100vh'>
+                <Grid item xs={6}>
+                    <img
+                        src={BgFood}
+                        alt='food'
+                        style={{ width: '100%', height: '100%', objectFit: 'cover' }}
+                    />
+                </Grid>
+                <Grid item xs={6}>
+                    <Box
+                        display='flex'
+                        flexDirection='column'
+                        justifyContent='center'
+                        height='100%'
+                        p={6}
+                    >
+                        <Typography variant='h3' fontWeight={700}>
+                            Signup
+                        </Typography>
+                        <Stack my={5}>
+                            {error && (
+                                <Typography color='red' fontWeight={600} textAlign='center'>
+                                    User already exists
+                                </Typography>
+                            )}
+                            <Divider sx={{ bgcolor: '#000' }} />
+                        </Stack>
+                        <SignupForm onSubmit={handleSubmit} />
+                    </Box>
+                </Grid>
+            </Grid>
+        </Container>
+    );
 };
 
-export default RegisterPage;
+const SignupForm = ({ onSubmit }: { onSubmit: (values: SignupFormValues) => void }) => {
+    return (
+        <Formik
+            initialValues={{ name: '', email: '', password: '' }}
+            onSubmit={(values) => onSubmit(values)}
+        >
+            {({ values, handleChange, handleSubmit }) => (
+                <Box component='form' onSubmit={handleSubmit} display='flex' flexDirection='column'>
+                    <Stack spacing={2}>
+                        <Input
+                            name='name'
+                            label='Your name'
+                            value={values.name}
+                            onChange={handleChange}
+                        />
+                        <Input
+                            name='email'
+                            label='Email Adress'
+                            type='email'
+                            value={values.email}
+                            onChange={handleChange}
+                        />
+                        <Input
+                            name='password'
+                            label='Password'
+                            type='password'
+                            value={values.password}
+                            onChange={handleChange}
+                        />
+                    </Stack>
+                    <Button type='submit' sx={{ mt: 5, p: 1 }} variant='contained'>
+                        Signup
+                    </Button>
+                </Box>
+            )}
+        </Formik>
+    );
+};
+
+export default RegsiterPage;

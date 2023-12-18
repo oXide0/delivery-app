@@ -1,43 +1,106 @@
-import Typography from '@mui/material/Typography';
-import Box from '@mui/material/Box';
-import Form from '../components/Form';
-import { useNavigate } from 'react-router-dom';
-import { useGetUsersQuery } from '../services/authApi';
-import { setCredentials } from '../features/authSlice';
-import { useAppDispatch } from '../hooks/redux-hooks';
-import { TypeCredentials } from '../types';
+import { Box, Button, Container, Divider, Grid, Stack, Typography, useTheme } from '@mui/material';
+import { Formik } from 'formik';
+import { Link } from 'react-router-dom';
+import BgFood from '../assets/bg-food.png';
+import Input from '../components/Input';
+import { useLoginUserMutation } from '../services/userApi';
+
+interface LoginFormValues {
+    email: string;
+    password: string;
+}
 
 const LoginPage = () => {
-	const { data: users } = useGetUsersQuery();
-	const navigate = useNavigate();
-	const dispatch = useAppDispatch();
+    const [loginUser, { error }] = useLoginUserMutation();
 
-	const handleError = (userData: TypeCredentials) => {
-		const user = users?.find((user) => user.name === userData.username);
-		const pwd = users?.find((user) => user.password === userData.password);
+    const handleSubmit = async (values: LoginFormValues) => {
+        await loginUser(values);
+    };
 
-		if (!user) {
-			return 'User does not exist';
-		}
-		if (!pwd) {
-			return 'Password is incorrect';
-		}
-		return '';
-	};
+    return (
+        <Container>
+            <Grid container height='100vh'>
+                <Grid item xs={6}>
+                    <img
+                        src={BgFood}
+                        alt='food'
+                        style={{ width: '100%', height: '100%', objectFit: 'cover' }}
+                    />
+                </Grid>
+                <Grid item xs={6}>
+                    <Box
+                        display='flex'
+                        flexDirection='column'
+                        justifyContent='center'
+                        height='100%'
+                        p={6}
+                    >
+                        <Typography variant='h3' fontWeight={700}>
+                            Login
+                        </Typography>
+                        <Stack my={5}>
+                            {error && (
+                                <Typography color='red' fontWeight={600} textAlign='center'>
+                                    User does not exist
+                                </Typography>
+                            )}
+                            <Divider sx={{ bgcolor: '#000' }} />
+                        </Stack>
 
-	const onSubmit = (data: TypeCredentials) => {
-		dispatch(setCredentials({ username: data.username, password: data.password }));
-		navigate('/');
-	};
+                        <LoginForm onSubmit={handleSubmit} />
+                    </Box>
+                </Grid>
+            </Grid>
+        </Container>
+    );
+};
 
-	return (
-		<Box display='flex' flexDirection='column' gap='40px' paddingTop='50px'>
-			<Typography variant='h4' textAlign='center' fontWeight='bold'>
-				Log in to the app
-			</Typography>
-			<Form onSubmit={onSubmit} handleError={handleError} />
-		</Box>
-	);
+const LoginForm = ({ onSubmit }: { onSubmit: (values: LoginFormValues) => void }) => {
+    const theme = useTheme();
+
+    return (
+        <Formik
+            initialValues={{ email: '', password: '' }}
+            onSubmit={(values) => onSubmit({ email: values.email, password: values.password })}
+        >
+            {({ values, handleChange, handleSubmit }) => (
+                <Box component='form' onSubmit={handleSubmit} display='flex' flexDirection='column'>
+                    <Stack spacing={2}>
+                        <Input
+                            name='email'
+                            label='Email Adress'
+                            type='email'
+                            value={values.email}
+                            onChange={handleChange}
+                        />
+                        <Input
+                            name='password'
+                            label='Password'
+                            type='password'
+                            value={values.password}
+                            onChange={handleChange}
+                        />
+                    </Stack>
+                    <Button type='submit' sx={{ mt: 5, p: 1 }} variant='contained'>
+                        Login
+                    </Button>
+
+                    <Typography textAlign='center' pt={4}>
+                        Don't have accout yet?{' '}
+                        <Link
+                            to='/register'
+                            style={{
+                                textDecoration: 'underline',
+                                color: theme.palette.primary.main,
+                            }}
+                        >
+                            Signup
+                        </Link>
+                    </Typography>
+                </Box>
+            )}
+        </Formik>
+    );
 };
 
 export default LoginPage;

@@ -1,41 +1,28 @@
-export type TypeCredentials = { username: string; password: string };
-
-export interface IUser {
-	id: string;
-	name: string;
-	password: string;
+export interface User {
+    id: number;
+    name: string;
+    email: string;
+    password: string;
+    userCoupons: string[];
 }
 
-export interface IUserData {
-	name: string;
-	email: string;
-	phone: string;
-	address: string;
-	coupon?: string;
+export interface Product {
+    id: number;
+    title: string;
+    price: number;
+    img: string;
+    category: Category;
 }
 
-export interface IProduct {
-	id: number;
-	title: string;
-	price: number;
-	img: string;
-	quantity: number;
+export interface Order {
+    id: number;
+    userId: number;
+    totalPrice: number;
+    status: string;
+    date: string;
 }
 
-export interface IOrder {
-	id: string;
-	food: IProduct[];
-}
-
-export interface IGood {
-	id: number;
-	title: string;
-	price: number;
-	img: string;
-}
-
-export interface IShop {
-	id: number;
-	name: string;
-	goods: IGood[];
+interface Category {
+    id: number;
+    name: 'Drinks' | 'Pizza' | 'Burgers' | 'Desserts';
 }

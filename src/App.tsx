@@ -1,32 +1,23 @@
 import { Routes, Route } from 'react-router-dom';
-import Layout from './components/Layout';
-import HomePage from './pages/HomePage';
-import ShopPage from './pages/ShopPage';
+import Layout from './layout/Layout';
+import RegsiterPage from './pages/RegisterPage';
 import LoginPage from './pages/LoginPage';
-import RegisterPage from './pages/RegisterPage';
-import CouponPage from './pages/CouponPage';
-import CartPage from './pages/CartPage';
-import RequireAuth from './components/RequireAuth';
+import ProductsPage from './pages/ProductsPage';
 import OrdersPage from './pages/OrdersPage';
-import SuccessPage from './pages/SuccessPage';
+import CartPage from './pages/CartPage';
 
 const App = () => {
-	return (
-		<Routes>
-			<Route path='/' element={<Layout />}>
-				<Route index element={<HomePage />} />
-				<Route path='shop' element={<ShopPage />} />
-				<Route path='login' element={<LoginPage />} />
-				<Route path='register' element={<RegisterPage />} />
-				<Route element={<RequireAuth />}>
-					<Route path='coupons' element={<CouponPage />} />
-					<Route path='cart' element={<CartPage />} />
-					<Route path='history' element={<OrdersPage />} />
-					<Route path='success' element={<SuccessPage />} />
-				</Route>
-			</Route>
-		</Routes>
-	);
+    return (
+        <Routes>
+            <Route path='register' element={<RegsiterPage />} />
+            <Route path='login' element={<LoginPage />} />
+            <Route path='/' element={<Layout />}>
+                <Route path='products' element={<ProductsPage />} />
+                <Route path='orders' element={<OrdersPage />} />
+                <Route path='cart' element={<CartPage />} />
+            </Route>
+        </Routes>
+    );
 };
 
 export default App;

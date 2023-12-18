@@ -1,41 +1,21 @@
-import { useGetOrdersQuery } from '../services/orderApi';
-import GoodsCard from '../components/GoodsCard';
-import Typography from '@mui/material/Typography';
-import BarLoader from '../components/BarLoader';
-import Box from '@mui/material/Box';
+import { Stack, Typography } from '@mui/material';
+import OrderCard from '../components/OrderCard';
+import PageLayout from '../layout/PageLayout';
+// import { useGetOrderQuery } from '../services/orderApi';
 
 const OrdersPage = () => {
-	const { data: orders, error, isSuccess } = useGetOrdersQuery();
+    // const { data, isLoading } = useGetOrderQuery(userId);
 
-	if (!isSuccess) {
-		return <BarLoader />;
-	}
-	if (error || !orders.length) {
-		return (
-			<Box className='wrapper'>
-				<Typography variant='h3' fontWeight='bold' textAlign='center' paddingTop='40px'>
-					Orders not found!
-				</Typography>
-			</Box>
-		);
-	}
-
-	return (
-		<div className='wrapper'>
-			{orders.map((item, index) => {
-				return (
-					<div key={item.id} style={{ paddingTop: '40px' }}>
-						<Typography variant='h5'>Order {index + 1}</Typography>
-						<div style={{ display: 'flex', gap: '20px', flexWrap: 'wrap', paddingTop: '10px' }}>
-							{item.food.map((f) => (
-								<GoodsCard key={f.id} goods={f} type='history' />
-							))}
-						</div>
-					</div>
-				);
-			})}
-		</div>
-	);
+    return (
+        <PageLayout>
+            <Typography variant='h3' fontWeight={700}>
+                Orders History
+            </Typography>
+            <Stack pt={6}>
+                <OrderCard date='2022-21-1' totalPrice={1100} />
+            </Stack>
+        </PageLayout>
+    );
 };
 
 export default OrdersPage;
