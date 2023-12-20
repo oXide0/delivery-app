@@ -25,14 +25,6 @@ export function createTheme({ mode }: { mode: 'light' | 'dark' }) {
             fontFamily: ['Montserrat', 'sans-serif'].join(','),
         },
         components: {
-            MuiCssBaseline: {
-                styleOverrides: {
-                    body: {
-                        overflowY: 'hidden',
-                        transition: '.2s',
-                    },
-                },
-            },
             MuiContainer: {
                 defaultProps: {
                     maxWidth: 'xl',

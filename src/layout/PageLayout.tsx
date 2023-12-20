@@ -11,9 +11,9 @@ const PageLayout = ({ children, noPadding = false, ...props }: PageLayoutProps) 
         <Box
             sx={{ width: '100%', p: noPadding ? 0 : 5 }}
             component={m.div}
-            initial={{ y: 10, opacity: 0 }}
-            animate={{ y: 0, opacity: 1 }}
-            exit={{ y: -10, opacity: 0 }}
+            initial={{ scale: 0.98, opacity: 0 }}
+            animate={{ scale: 1, opacity: 1 }}
+            exit={{ scale: 0.98, opacity: 0 }}
             transition={{ duration: 0.2 }}
             {...props}
         >
