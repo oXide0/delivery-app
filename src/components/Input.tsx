@@ -1,6 +1,7 @@
 import { Visibility, VisibilityOff } from '@mui/icons-material';
 import {
     FormControl,
+    FormHelperText,
     IconButton,
     InputAdornment,
     InputLabel,
@@ -9,7 +10,7 @@ import {
     OutlinedInput,
     OutlinedInputProps,
 } from '@mui/material';
-import { useState } from 'react';
+import { ReactNode, useState } from 'react';
 
 interface InputProps extends Omit<MuiTextFieldProps, 'variant'> {
     readonly name: string;
@@ -18,10 +19,36 @@ interface InputProps extends Omit<MuiTextFieldProps, 'variant'> {
     readonly onChange?: (event: React.ChangeEvent<HTMLInputElement>) => void;
 }
 
-const Input = ({ name, type = 'text', label, onChange, ...props }: InputProps) => {
-    if (type === 'password') return <PasswordField name={name} label={label} onChange={onChange} />;
+const Input = ({
+    name,
+    type = 'text',
+    label,
+    onChange,
+    helperText,
+    error,
+    ...props
+}: InputProps) => {
+    if (type === 'password')
+        return (
+            <PasswordField
+                name={name}
+                label={label}
+                onChange={onChange}
+                helperText={helperText}
+                error={error}
+            />
+        );
 
-    return <TextField name={name} onChange={onChange} label={label} {...props} />;
+    return (
+        <TextField
+            name={name}
+            onChange={onChange}
+            label={label}
+            helperText={helperText}
+            error={error}
+            {...props}
+        />
+    );
 };
 
 const TextField = (props: MuiTextFieldProps) => {
@@ -30,9 +57,10 @@ const TextField = (props: MuiTextFieldProps) => {
 
 interface PasswordFieldProps extends Omit<OutlinedInputProps, 'variant'> {
     label: string;
+    helperText?: ReactNode;
 }
 
-const PasswordField = ({ label, name, ...props }: PasswordFieldProps) => {
+const PasswordField = ({ label, name, helperText, error, ...props }: PasswordFieldProps) => {
     const [showPassword, setShowPassword] = useState(false);
 
     const handleClickShowPassword = () => setShowPassword((show) => !show);
@@ -42,7 +70,7 @@ const PasswordField = ({ label, name, ...props }: PasswordFieldProps) => {
     };
 
     return (
-        <FormControl variant='outlined'>
+        <FormControl variant='outlined' error={error}>
             <InputLabel htmlFor={name}>{label}</InputLabel>
             <OutlinedInput
                 name={name}
@@ -63,6 +91,7 @@ const PasswordField = ({ label, name, ...props }: PasswordFieldProps) => {
                 }
                 {...props}
             />
+            <FormHelperText>{helperText}</FormHelperText>
         </FormControl>
     );
 };

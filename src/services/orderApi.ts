@@ -4,7 +4,7 @@ import { Order } from '../types';
 export const orderApi = api.injectEndpoints({
     endpoints: (builder) => ({
         getOrders: builder.query<Order[], number>({
-            query: (id: number) => `orders?userId=${id}`,
+            query: (id: number) => `/orders?userId=${id}`,
             providesTags: ['Order'],
         }),
         createOrder: builder.mutation<void, number>({
@@ -15,7 +15,7 @@ export const orderApi = api.injectEndpoints({
                     userId: 1,
                     totalPrice,
                     status: 'new',
-                    date: new Date().toLocaleDateString(),
+                    date: new Date(),
                 },
             }),
             invalidatesTags: ['Order'],

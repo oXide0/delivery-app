@@ -21,20 +21,14 @@ import { useGetCartQuery } from '../services/cartApi';
 import { useCreateOrderMutation } from '../services/orderApi';
 import { CartProduct } from '../types';
 import { getTotalPrice } from '../utils';
-
-interface OrderFormValues {
-    userId: number;
-    totalPrice: number;
-    status: string;
-    date: string;
-}
+import { paymentValidationSchema } from '../utils';
 
 const CartPage = () => {
     const [createOrder] = useCreateOrderMutation();
     const { data, isLoading } = useGetCartQuery(1);
 
     const handleSubmit = async () => {
-        await createOrder(10);
+        await createOrder(getTotalPrice(data!));
     };
 
     if (isLoading || !data) return <Loader />;
@@ -92,19 +86,14 @@ const ProductsTable = ({ products }: { products: CartProduct[] }) => {
     );
 };
 
-const PaymentForm = ({
-    onSubmit,
-    products,
-}: {
-    onSubmit: (value: number) => void;
-    products: CartProduct[];
-}) => {
+const PaymentForm = ({ onSubmit, products }: { onSubmit: () => void; products: CartProduct[] }) => {
     return (
         <Formik
             initialValues={{ cardNumber: '', date: '', cvc: '', name: '', coupon: '' }}
-            onSubmit={() => onSubmit(100)}
+            onSubmit={() => onSubmit()}
+            validationSchema={paymentValidationSchema}
         >
-            {({ values, handleChange, handleSubmit }) => (
+            {({ values, handleChange, handleSubmit, errors, touched, isValid }) => (
                 <>
                     <Box
                         component='form'
@@ -116,12 +105,14 @@ const PaymentForm = ({
                         <Typography variant='h4' fontWeight={700} textAlign='center' gutterBottom>
                             Payment Form
                         </Typography>
-                        <Stack flex='1 1 auto' display='flex' gap={2} pt={3} flexDirection='column'>
+                        <Stack flex='1 1 auto' display='flex' gap={2} flexDirection='column'>
                             <Input
                                 name='cardNumber'
                                 label='Credit card number'
                                 value={values.cardNumber}
                                 onChange={handleChange}
+                                error={touched.cardNumber && Boolean(errors.cardNumber)}
+                                helperText={touched.cardNumber && errors.cardNumber}
                             />
                             <Stack direction='row' gap={2}>
                                 <Input
@@ -129,12 +120,16 @@ const PaymentForm = ({
                                     label='Expire Date'
                                     value={values.date}
                                     onChange={handleChange}
+                                    error={touched.date && Boolean(errors.date)}
+                                    helperText={touched.date && errors.date}
                                 />
                                 <Input
                                     name='cvc'
                                     label='CVC code'
                                     value={values.cvc}
                                     onChange={handleChange}
+                                    error={touched.cvc && Boolean(errors.cvc)}
+                                    helperText={touched.cvc && errors.cvc}
                                 />
                             </Stack>
                             <Input
@@ -142,6 +137,8 @@ const PaymentForm = ({
                                 label='Name on the card'
                                 value={values.name}
                                 onChange={handleChange}
+                                error={touched.name && Boolean(errors.name)}
+                                helperText={touched.name && errors.name}
                             />
                             <Input
                                 label='Coupon'
@@ -160,7 +157,12 @@ const PaymentForm = ({
                             </Stack>
                         </Stack>
 
-                        <Button type='submit' variant='contained' sx={{ py: 1.5, mt: 1 }}>
+                        <Button
+                            type='submit'
+                            variant='contained'
+                            sx={{ py: 1.5, mt: 1 }}
+                            disabled={!isValid}
+                        >
                             Pay
                         </Button>
                     </Box>

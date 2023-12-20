@@ -1,8 +1,9 @@
-import BgFood from '../assets/bg-food.png';
-import { Typography, Container, Grid, Box, Divider, Stack, Button } from '@mui/material';
-import Input from '../components/Input';
+import { Box, Button, Container, Divider, Grid, Stack, Typography } from '@mui/material';
 import { Formik } from 'formik';
+import BgFood from '../assets/bg-food.png';
+import Input from '../components/Input';
 import { useCreateUserMutation } from '../services/userApi';
+import { registerValidationSchema } from '../utils';
 
 interface SignupFormValues {
     name: string;
@@ -59,8 +60,9 @@ const SignupForm = ({ onSubmit }: { onSubmit: (values: SignupFormValues) => void
         <Formik
             initialValues={{ name: '', email: '', password: '' }}
             onSubmit={(values) => onSubmit(values)}
+            validationSchema={registerValidationSchema}
         >
-            {({ values, handleChange, handleSubmit }) => (
+            {({ values, handleChange, handleSubmit, isValid, errors, touched }) => (
                 <Box component='form' onSubmit={handleSubmit} display='flex' flexDirection='column'>
                     <Stack spacing={2}>
                         <Input
@@ -68,6 +70,8 @@ const SignupForm = ({ onSubmit }: { onSubmit: (values: SignupFormValues) => void
                             label='Your name'
                             value={values.name}
                             onChange={handleChange}
+                            error={touched.name && Boolean(errors.name)}
+                            helperText={touched.name && errors.name}
                         />
                         <Input
                             name='email'
@@ -75,6 +79,8 @@ const SignupForm = ({ onSubmit }: { onSubmit: (values: SignupFormValues) => void
                             type='email'
                             value={values.email}
                             onChange={handleChange}
+                            error={touched.email && Boolean(errors.email)}
+                            helperText={touched.email && errors.email}
                         />
                         <Input
                             name='password'
@@ -82,9 +88,16 @@ const SignupForm = ({ onSubmit }: { onSubmit: (values: SignupFormValues) => void
                             type='password'
                             value={values.password}
                             onChange={handleChange}
+                            error={touched.password && Boolean(errors.password)}
+                            helperText={touched.password && errors.password}
                         />
                     </Stack>
-                    <Button type='submit' sx={{ mt: 5, p: 1 }} variant='contained'>
+                    <Button
+                        type='submit'
+                        sx={{ mt: 5, p: 1 }}
+                        variant='contained'
+                        disabled={!isValid}
+                    >
                         Signup
                     </Button>
                 </Box>

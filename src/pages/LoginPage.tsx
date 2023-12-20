@@ -4,6 +4,7 @@ import { Link } from 'react-router-dom';
 import BgFood from '../assets/bg-food.png';
 import Input from '../components/Input';
 import { useLoginUserMutation } from '../services/userApi';
+import { loginValidationSchema } from '../utils';
 
 interface LoginFormValues {
     email: string;
@@ -62,8 +63,9 @@ const LoginForm = ({ onSubmit }: { onSubmit: (values: LoginFormValues) => void }
         <Formik
             initialValues={{ email: '', password: '' }}
             onSubmit={(values) => onSubmit({ email: values.email, password: values.password })}
+            validationSchema={loginValidationSchema}
         >
-            {({ values, handleChange, handleSubmit }) => (
+            {({ values, handleChange, handleSubmit, errors, touched, isValid }) => (
                 <Box component='form' onSubmit={handleSubmit} display='flex' flexDirection='column'>
                     <Stack spacing={2}>
                         <Input
@@ -72,6 +74,8 @@ const LoginForm = ({ onSubmit }: { onSubmit: (values: LoginFormValues) => void }
                             type='email'
                             value={values.email}
                             onChange={handleChange}
+                            error={touched.email && Boolean(errors.email)}
+                            helperText={touched.email && errors.email}
                         />
                         <Input
                             name='password'
@@ -79,14 +83,21 @@ const LoginForm = ({ onSubmit }: { onSubmit: (values: LoginFormValues) => void }
                             type='password'
                             value={values.password}
                             onChange={handleChange}
+                            error={touched.password && Boolean(errors.password)}
+                            helperText={touched.password && errors.password}
                         />
                     </Stack>
-                    <Button type='submit' sx={{ mt: 5, p: 1 }} variant='contained'>
+                    <Button
+                        type='submit'
+                        sx={{ mt: 5, p: 1 }}
+                        variant='contained'
+                        disabled={!isValid}
+                    >
                         Login
                     </Button>
 
                     <Typography textAlign='center' pt={4}>
-                        Don't have accout yet?{' '}
+                        Don't have accout yet?
                         <Link
                             to='/register'
                             style={{
