@@ -8,31 +8,47 @@ import {
     TextField,
     Typography,
 } from '@mui/material';
-import BurgerImg from '../assets/burger.jfif';
 
-const OrderProductCard = () => {
+interface OrderProductCardProps {
+    img: string;
+    price: number;
+    title: string;
+    quantity: number;
+    onRemoveFromCart: () => void;
+    onUpdateProductQuantity: (quantity: number) => void;
+}
+
+const OrderProductCard = ({
+    img,
+    price,
+    title,
+    quantity,
+    onRemoveFromCart,
+    onUpdateProductQuantity,
+}: OrderProductCardProps) => {
     return (
         <Card
-            sx={{
-                display: 'flex',
-                p: 1,
-                width: '400px',
-            }}
+            sx={{ display: 'flex', p: 1, background: (theme) => theme.palette.background.default }}
         >
             <CardMedia
                 component='img'
                 sx={{ width: 140, height: 140, borderRadius: '10px' }}
-                image={BurgerImg}
+                image={img}
                 alt='Live from space album cover'
             />
             <CardContent>
-                <Typography variant='h6'>Burger Mozza XL</Typography>
+                <Typography variant='h6'>{title}</Typography>
                 <Typography variant='h6' component='div'>
-                    €39
+                    €{price}
                 </Typography>
                 <Stack direction='row' justifyContent='space-between' alignItems='center'>
-                    <TextField type='number' sx={{ maxWidth: 100 }} />
-                    <IconButton size='large'>
+                    <TextField
+                        type='number'
+                        sx={{ maxWidth: 100 }}
+                        value={quantity}
+                        onChange={(e) => onUpdateProductQuantity(parseInt(e.target.value))}
+                    />
+                    <IconButton size='large' onClick={onRemoveFromCart}>
                         <CloseIcon />
                     </IconButton>
                 </Stack>

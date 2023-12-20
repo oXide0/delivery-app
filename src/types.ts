@@ -3,7 +3,6 @@ export interface User {
     name: string;
     email: string;
     password: string;
-    userCoupons: string[];
 }
 
 export interface Product {
@@ -14,9 +13,15 @@ export interface Product {
     category: Category;
 }
 
+export interface CartProduct {
+    cartItemId: number;
+    product: Product;
+    quantity: number;
+}
+
 export interface Order {
     id: number;
-    userId: number;
+    user: User;
     totalPrice: number;
     status: string;
     date: string;

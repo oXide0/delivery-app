@@ -1,28 +1,26 @@
 import { api } from './api';
 import { Order } from '../types';
 
-interface CreateOrderBody {
-    userId: number;
-    totalPrice: number;
-    status: string;
-    date: string;
-}
-
 export const orderApi = api.injectEndpoints({
     endpoints: (builder) => ({
-        getOrder: builder.query<Order, number>({
-            query: (id: number) => `/orders/${id}`,
+        getOrders: builder.query<Order[], number>({
+            query: (id: number) => `orders?userId=${id}`,
             providesTags: ['Order'],
         }),
-        createOrder: builder.mutation<void, CreateOrderBody>({
-            query: (body) => ({
+        createOrder: builder.mutation<void, number>({
+            query: (totalPrice) => ({
                 url: `/orders/create`,
                 method: 'POST',
-                body,
+                body: {
+                    userId: 1,
+                    totalPrice,
+                    status: 'new',
+                    date: new Date().toLocaleDateString(),
+                },
             }),
             invalidatesTags: ['Order'],
         }),
     }),
 });
 
-export const { useGetOrderQuery, useCreateOrderMutation } = orderApi;
+export const { useGetOrdersQuery, useCreateOrderMutation } = orderApi;

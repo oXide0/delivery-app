@@ -10,9 +10,10 @@ interface ProductCardProps {
     title: string;
     img: string;
     price: number;
+    onAddToCart: () => void;
 }
 
-const ProductCard = ({ title, price, img, type = 'product' }: ProductCardProps) => {
+const ProductCard = ({ title, price, img, type = 'product', onAddToCart }: ProductCardProps) => {
     return (
         <Card sx={{ maxWidth: 345, borderRadius: 4 }}>
             {type === 'product' && <CardMedia sx={{ height: 140 }} image={img} title={title} />}
@@ -26,7 +27,7 @@ const ProductCard = ({ title, price, img, type = 'product' }: ProductCardProps) 
             </CardContent>
             {type === 'product' && (
                 <CardActions>
-                    <Button size='small' variant='contained'>
+                    <Button size='small' variant='contained' onClick={onAddToCart}>
                         Add to cart
                     </Button>
                 </CardActions>

@@ -11,9 +11,10 @@ interface TabPanelProps {
 
 interface ProductsProps {
     prodcuts: Product[];
+    addProductToCart: (productId: number) => void;
 }
 
-const Products = ({ prodcuts }: ProductsProps) => {
+const Products = ({ prodcuts, addProductToCart }: ProductsProps) => {
     const [value, setValue] = useState(0);
 
     const handleChange = (_: React.SyntheticEvent, newValue: number) => {
@@ -39,6 +40,7 @@ const Products = ({ prodcuts }: ProductsProps) => {
                                 title={prodcut.title}
                                 img={prodcut.img}
                                 price={prodcut.price}
+                                onAddToCart={() => addProductToCart(prodcut.id)}
                             />
                         )
                 )}
@@ -52,6 +54,7 @@ const Products = ({ prodcuts }: ProductsProps) => {
                                 title={prodcut.title}
                                 img={prodcut.img}
                                 price={prodcut.price}
+                                onAddToCart={() => addProductToCart(prodcut.id)}
                             />
                         )
                 )}
@@ -65,6 +68,7 @@ const Products = ({ prodcuts }: ProductsProps) => {
                                 title={prodcut.title}
                                 img={prodcut.img}
                                 price={prodcut.price}
+                                onAddToCart={() => addProductToCart(prodcut.id)}
                             />
                         )
                 )}
@@ -78,6 +82,7 @@ const Products = ({ prodcuts }: ProductsProps) => {
                                 title={prodcut.title}
                                 img={prodcut.img}
                                 price={prodcut.price}
+                                onAddToCart={() => addProductToCart(prodcut.id)}
                             />
                         )
                 )}

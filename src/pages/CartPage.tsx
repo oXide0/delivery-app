@@ -11,13 +11,16 @@ import {
     TableContainer,
     TableHead,
     TableRow,
-    TextField,
     Typography,
 } from '@mui/material';
 import { Formik } from 'formik';
 import Input from '../components/Input';
+import Loader from '../components/Loader';
 import PageLayout from '../layout/PageLayout';
+import { useGetCartQuery } from '../services/cartApi';
 import { useCreateOrderMutation } from '../services/orderApi';
+import { CartProduct } from '../types';
+import { getTotalPrice } from '../utils';
 
 interface OrderFormValues {
     userId: number;
@@ -26,29 +29,15 @@ interface OrderFormValues {
     date: string;
 }
 
-function createData(name: string, calories: number, fat: number, carbs: number, protein: number) {
-    return { name, calories, fat, carbs, protein };
-}
-
-const rows = [
-    createData('Frozen yoghurt', 159, 6.0, 24, 4.0),
-    createData('Ice cream sandwich', 237, 9.0, 37, 4.3),
-    createData('Eclair', 262, 16.0, 24, 6.0),
-    createData('Cupcake', 305, 3.7, 67, 4.3),
-    createData('Gingerbread', 356, 16.0, 49, 3.9),
-];
-
 const CartPage = () => {
     const [createOrder] = useCreateOrderMutation();
+    const { data, isLoading } = useGetCartQuery(1);
 
     const handleSubmit = async () => {
-        await createOrder({
-            status: 'new',
-            totalPrice: 10,
-            userId: 1,
-            date: new Date().toISOString(),
-        });
+        await createOrder(10);
     };
+
+    if (isLoading || !data) return <Loader />;
 
     return (
         <PageLayout>
@@ -57,10 +46,10 @@ const CartPage = () => {
             </Typography>
             <Grid container pt={5} columnSpacing={4}>
                 <Grid item xs={12} sm={9}>
-                    <ProductsTable />
+                    <ProductsTable products={data} />
                 </Grid>
                 <Grid item xs={12} sm={3}>
-                    <PaymentForm />
+                    <PaymentForm onSubmit={handleSubmit} products={data} />
                 </Grid>
             </Grid>
         </PageLayout>
@@ -69,32 +58,32 @@ const CartPage = () => {
 
 export default CartPage;
 
-const ProductsTable = () => {
+const ProductsTable = ({ products }: { products: CartProduct[] }) => {
     return (
         <TableContainer component={Paper} sx={{ maxHeight: '500px' }}>
             <Table>
                 <TableHead>
                     <TableRow>
                         <TableCell>Cart items</TableCell>
-                        <TableCell>Price</TableCell>
-                        <TableCell>Quantity</TableCell>
-                        <TableCell>Subtotal</TableCell>
+                        <TableCell align='center'>Price</TableCell>
+                        <TableCell align='center'>Quantity</TableCell>
+                        <TableCell align='center'>Subtotal</TableCell>
                     </TableRow>
                 </TableHead>
                 <TableBody>
-                    {rows.map((row) => (
+                    {products.map((item) => (
                         <TableRow
-                            key={row.name}
+                            key={item.cartItemId}
                             sx={{ '&:last-child td, &:last-child th': { border: 0 } }}
                         >
                             <TableCell component='th' scope='row'>
-                                {row.name}
+                                {item.product.title}
                             </TableCell>
-                            <TableCell>€{row.calories}</TableCell>
-                            <TableCell>
-                                <TextField type='number' sx={{ maxWidth: 65 }} autoComplete='off' />
+                            <TableCell align='center'>€{item.product.price}</TableCell>
+                            <TableCell align='center'>{item.quantity}</TableCell>
+                            <TableCell align='center'>
+                                €{item.quantity * item.product.price}
                             </TableCell>
-                            <TableCell>€{row.carbs}</TableCell>
                         </TableRow>
                     ))}
                 </TableBody>
@@ -103,11 +92,17 @@ const ProductsTable = () => {
     );
 };
 
-const PaymentForm = () => {
+const PaymentForm = ({
+    onSubmit,
+    products,
+}: {
+    onSubmit: (value: number) => void;
+    products: CartProduct[];
+}) => {
     return (
         <Formik
             initialValues={{ cardNumber: '', date: '', cvc: '', name: '', coupon: '' }}
-            onSubmit={(values) => console.log(values)}
+            onSubmit={() => onSubmit(100)}
         >
             {({ values, handleChange, handleSubmit }) => (
                 <>
@@ -160,12 +155,12 @@ const PaymentForm = () => {
                                     Total
                                 </Typography>
                                 <Typography variant='h6' fontWeight={700}>
-                                    Rp 100.000
+                                    €{getTotalPrice(products)}
                                 </Typography>
                             </Stack>
                         </Stack>
 
-                        <Button type='submit' variant='contained' sx={{ py: 1.5 }}>
+                        <Button type='submit' variant='contained' sx={{ py: 1.5, mt: 1 }}>
                             Pay
                         </Button>
                     </Box>
