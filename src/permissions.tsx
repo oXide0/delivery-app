@@ -1,10 +1,10 @@
-import { Route, RouteProps } from 'react-router-dom';
-import Loader from './components/Loader';
+// import { Route, RouteProps } from 'react-router-dom';
+// import Loader from './components/Loader';
 
-const SafeRoute = (props: RouteProps) => {
-    return <div>SafeRoute</div>;
-};
+// const SafeRoute = (props: RouteProps) => {
+//     return <div>SafeRoute</div>;
+// };
 
-const useIdentity = () => {};
+// const useIdentity = () => {};
 
-export { SafeRoute, useIdentity };
+// export { SafeRoute, useIdentity };

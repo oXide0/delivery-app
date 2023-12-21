@@ -5,8 +5,8 @@ import { selectThemeMode, setMode } from '../features/themeSlice';
 import { useAppDispatch, useAppSelector } from '../redux-hooks';
 
 const NavBar = () => {
-    const routeMatch = useRouteMatch(['/coupons', '/orders', '/products', '/cart']);
-    const currentTab = routeMatch?.pattern?.path;
+    const routeMatch = useRouteMatch(['/orders', '/products', '/cart']);
+    const currentTab = routeMatch?.pattern?.path || false;
     const mode = useAppSelector(selectThemeMode);
     const dispatch = useAppDispatch();
     const toggleMode = () => dispatch(setMode(mode === 'light' ? 'dark' : 'light'));
