@@ -1,16 +1,19 @@
-import { DarkMode, History, Home, LightMode, ShoppingCart } from '@mui/icons-material';
+import { DarkMode, History, Home, LightMode, ShoppingCart, Logout } from '@mui/icons-material';
 import { Box, IconButton, Tab, Tabs, useTheme } from '@mui/material';
 import { Link, matchPath, useLocation } from 'react-router-dom';
 import { selectThemeMode, setMode } from '../features/themeSlice';
 import { useAppDispatch, useAppSelector } from '../redux-hooks';
+import { logOut } from '../features/authSlice';
 
 const NavBar = () => {
     const routeMatch = useRouteMatch(['/orders', '/products', '/cart']);
     const currentTab = routeMatch?.pattern?.path || false;
     const mode = useAppSelector(selectThemeMode);
     const dispatch = useAppDispatch();
-    const toggleMode = () => dispatch(setMode(mode === 'light' ? 'dark' : 'light'));
     const theme = useTheme();
+
+    const toggleMode = () => dispatch(setMode(mode === 'light' ? 'dark' : 'light'));
+    const onLogout = () => dispatch(logOut());
 
     return (
         <Box
@@ -58,6 +61,9 @@ const NavBar = () => {
                     sx={{ mt: 1 }}
                 />
             </Tabs>
+            <IconButton sx={{ position: 'absolute', bottom: 10 }} onClick={onLogout}>
+                <Logout />
+            </IconButton>
         </Box>
     );
 };

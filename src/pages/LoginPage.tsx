@@ -1,8 +1,11 @@
 import { Box, Button, Container, Divider, Grid, Stack, Typography, useTheme } from '@mui/material';
 import { Formik } from 'formik';
-import { Link } from 'react-router-dom';
+import { useState } from 'react';
+import { Link, useNavigate } from 'react-router-dom';
 import BgFood from '../assets/bg-food.png';
 import Input from '../components/Input';
+import { setCredentials } from '../features/authSlice';
+import { useAppDispatch } from '../redux-hooks';
 import { useLoginUserMutation } from '../services/userApi';
 import { loginValidationSchema } from '../utils';
 
@@ -12,10 +15,24 @@ interface LoginFormValues {
 }
 
 const LoginPage = () => {
-    const [loginUser, { error }] = useLoginUserMutation();
+    const dispatch = useAppDispatch();
+    const navigate = useNavigate();
+    const [errorMessage, setErrorMessage] = useState('');
+    const [loginUser] = useLoginUserMutation();
 
     const handleSubmit = async (values: LoginFormValues) => {
-        await loginUser(values);
+        try {
+            const userToken = await loginUser(values).unwrap();
+            dispatch(
+                setCredentials({
+                    user: { email: values.email, password: values.password },
+                    token: userToken,
+                })
+            );
+            navigate('/products');
+        } catch (err) {
+            setErrorMessage('Invalid email or password');
+        }
     };
 
     return (
@@ -40,9 +57,9 @@ const LoginPage = () => {
                             Login
                         </Typography>
                         <Stack my={5}>
-                            {error && (
+                            {errorMessage && (
                                 <Typography color='red' fontWeight={600} textAlign='center'>
-                                    User does not exist
+                                    {errorMessage}
                                 </Typography>
                             )}
                             <Divider sx={{ bgcolor: '#000' }} />

@@ -1,15 +1,15 @@
 import { Box } from '@mui/material';
+import Loader from '../components/Loader';
 import OrderCart from '../components/OrderCart';
 import Products from '../components/Products';
 import PageLayout from '../layout/PageLayout';
-import { useGetProductsQuery } from '../services/productApi';
 import {
-    useGetCartQuery,
     useAddToCartMutation,
+    useGetCartQuery,
     useRemoveProductFromCartMutation,
     useUpdateProductQuantityMutation,
 } from '../services/cartApi';
-import Loader from '../components/Loader';
+import { useGetProductsQuery } from '../services/productApi';
 
 const ProductsPage = () => {
     const { data, isLoading } = useGetProductsQuery();

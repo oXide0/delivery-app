@@ -21,11 +21,14 @@ export const userApi = api.injectEndpoints({
             }),
             invalidatesTags: ['User'],
         }),
-        loginUser: builder.mutation<void, LoginUser>({
+        loginUser: builder.mutation<string, LoginUser>({
             query: (body) => ({
-                url: `/users/login`,
+                url: `/users/authenticate`,
                 method: 'POST',
-                body,
+                body: {
+                    username: 'Kyrylo',
+                    password: body.password,
+                },
             }),
             invalidatesTags: ['User'],
         }),
