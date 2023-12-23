@@ -1,13 +1,11 @@
 import { configureStore } from '@reduxjs/toolkit';
 import { setupListeners } from '@reduxjs/toolkit/query';
 import themeModeReducer from '../features/themeSlice';
-import authReducer from '../features/authSlice';
 import { api } from '../services/api';
 
 export const store = configureStore({
     reducer: {
         theme: themeModeReducer,
-        auth: authReducer,
         [api.reducerPath]: api.reducer,
     },
     middleware: (getDefaultMiddleware) => getDefaultMiddleware().concat(api.middleware),

@@ -10,10 +10,15 @@ import {
     useUpdateProductQuantityMutation,
 } from '../services/cartApi';
 import { useGetProductsQuery } from '../services/productApi';
+import { handleError } from '../utils';
 
 const ProductsPage = () => {
-    const { data, isLoading } = useGetProductsQuery();
-    const { data: cartData, isLoading: cartLoading } = useGetCartQuery(1);
+    const {
+        data: products,
+        isLoading: isProductsLoading,
+        error: productsError,
+    } = useGetProductsQuery();
+    const { data: cart, isLoading: isCartLoading, error: cartError } = useGetCartQuery();
 
     const [addToCart] = useAddToCartMutation();
     const [removeFromCart] = useRemoveProductFromCartMutation();
@@ -23,14 +28,15 @@ const ProductsPage = () => {
     const updateProduct = (cartItemId: number, quantity: number) =>
         updateProductQuantity({ cartItemId, quantity });
 
-    if (isLoading || !data || cartLoading || !cartData) return <Loader />;
-
+    if (productsError) return handleError(productsError);
+    if (cartError) return handleError(cartError);
+    if (isProductsLoading || isCartLoading || !products || !cart) return <Loader />;
     return (
         <PageLayout noPadding>
             <Box sx={{ display: 'flex' }}>
-                <Products prodcuts={data} addProductToCart={addProductToCart} />
+                <Products products={products} addProductToCart={addProductToCart} />
                 <OrderCart
-                    products={cartData}
+                    products={cart}
                     removeProduct={removeFromCart}
                     updateProductQuantity={updateProduct}
                 />

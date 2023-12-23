@@ -4,8 +4,6 @@ import { useState } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
 import BgFood from '../assets/bg-food.png';
 import Input from '../components/Input';
-import { setCredentials } from '../features/authSlice';
-import { useAppDispatch } from '../redux-hooks';
 import { useLoginUserMutation } from '../services/userApi';
 import { loginValidationSchema } from '../utils';
 
@@ -15,20 +13,14 @@ interface LoginFormValues {
 }
 
 const LoginPage = () => {
-    const dispatch = useAppDispatch();
     const navigate = useNavigate();
     const [errorMessage, setErrorMessage] = useState('');
     const [loginUser] = useLoginUserMutation();
 
     const handleSubmit = async (values: LoginFormValues) => {
         try {
-            const userToken = await loginUser(values).unwrap();
-            dispatch(
-                setCredentials({
-                    user: { email: values.email, password: values.password },
-                    token: userToken,
-                })
-            );
+            const user = await loginUser(values).unwrap();
+            localStorage.setItem('userId', JSON.stringify(user.userId));
             navigate('/products');
         } catch (err) {
             setErrorMessage('Invalid email or password');
@@ -87,7 +79,7 @@ const LoginForm = ({ onSubmit }: { onSubmit: (values: LoginFormValues) => void }
                     <Stack spacing={2}>
                         <Input
                             name='email'
-                            label='Email Adress'
+                            label='Email Address'
                             type='email'
                             value={values.email}
                             onChange={handleChange}
@@ -114,7 +106,7 @@ const LoginForm = ({ onSubmit }: { onSubmit: (values: LoginFormValues) => void }
                     </Button>
 
                     <Typography textAlign='center' pt={4}>
-                        Don't have accout yet?
+                        Don't have account yet?
                         <Link
                             to='/register'
                             style={{
@@ -122,7 +114,7 @@ const LoginForm = ({ onSubmit }: { onSubmit: (values: LoginFormValues) => void }
                                 color: theme.palette.primary.main,
                             }}
                         >
-                            Signup
+                            Sign up
                         </Link>
                     </Typography>
                 </Box>

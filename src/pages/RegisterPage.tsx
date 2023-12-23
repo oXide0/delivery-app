@@ -1,21 +1,28 @@
 import { Box, Button, Container, Divider, Grid, Stack, Typography } from '@mui/material';
 import { Formik } from 'formik';
+import { useNavigate } from 'react-router-dom';
 import BgFood from '../assets/bg-food.png';
 import Input from '../components/Input';
 import { useCreateUserMutation } from '../services/userApi';
 import { registerValidationSchema } from '../utils';
 
-interface SignupFormValues {
+interface SignUpFormValues {
     name: string;
     email: string;
     password: string;
 }
 
-const RegsiterPage = () => {
+const RegisterPage = () => {
+    const navigate = useNavigate();
     const [createUser, { error }] = useCreateUserMutation();
 
-    const handleSubmit = async (values: SignupFormValues) => {
-        await createUser(values);
+    const handleSubmit = async (values: SignUpFormValues) => {
+        try {
+            await createUser(values).unwrap();
+            navigate('/login');
+        } catch (err) {
+            console.log(err);
+        }
     };
 
     return (
@@ -37,7 +44,7 @@ const RegsiterPage = () => {
                         p={6}
                     >
                         <Typography variant='h3' fontWeight={700}>
-                            Signup
+                            Sign up
                         </Typography>
                         <Stack my={5}>
                             {error && (
@@ -47,7 +54,7 @@ const RegsiterPage = () => {
                             )}
                             <Divider sx={{ bgcolor: '#000' }} />
                         </Stack>
-                        <SignupForm onSubmit={handleSubmit} />
+                        <SignUpForm onSubmit={handleSubmit} />
                     </Box>
                 </Grid>
             </Grid>
@@ -55,7 +62,7 @@ const RegsiterPage = () => {
     );
 };
 
-const SignupForm = ({ onSubmit }: { onSubmit: (values: SignupFormValues) => void }) => {
+const SignUpForm = ({ onSubmit }: { onSubmit: (values: SignUpFormValues) => void }) => {
     return (
         <Formik
             initialValues={{ name: '', email: '', password: '' }}
@@ -75,7 +82,7 @@ const SignupForm = ({ onSubmit }: { onSubmit: (values: SignupFormValues) => void
                         />
                         <Input
                             name='email'
-                            label='Email Adress'
+                            label='Email Address'
                             type='email'
                             value={values.email}
                             onChange={handleChange}
@@ -98,7 +105,7 @@ const SignupForm = ({ onSubmit }: { onSubmit: (values: SignupFormValues) => void
                         variant='contained'
                         disabled={!isValid}
                     >
-                        Signup
+                        Sign up
                     </Button>
                 </Box>
             )}
@@ -106,4 +113,4 @@ const SignupForm = ({ onSubmit }: { onSubmit: (values: SignupFormValues) => void
     );
 };
 
-export default RegsiterPage;
+export default RegisterPage;

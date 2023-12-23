@@ -1,10 +1,13 @@
-import { api } from './api';
 import { Order } from '../types';
+import { getUserId } from '../utils';
+import { api } from './api';
+
+const userId = getUserId();
 
 export const orderApi = api.injectEndpoints({
     endpoints: (builder) => ({
         getOrders: builder.query<Order[], number>({
-            query: (id: number) => `/orders?userId=${id}`,
+            query: () => `/orders?userId=${userId}`,
             providesTags: ['Order'],
         }),
         createOrder: builder.mutation<void, number>({
@@ -12,7 +15,7 @@ export const orderApi = api.injectEndpoints({
                 url: `/orders/create`,
                 method: 'POST',
                 body: {
-                    userId: 1,
+                    userId,
                     totalPrice,
                     status: 'new',
                     date: new Date(),

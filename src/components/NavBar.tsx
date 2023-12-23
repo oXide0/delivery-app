@@ -3,17 +3,21 @@ import { Box, IconButton, Tab, Tabs, useTheme } from '@mui/material';
 import { Link, matchPath, useLocation } from 'react-router-dom';
 import { selectThemeMode, setMode } from '../features/themeSlice';
 import { useAppDispatch, useAppSelector } from '../redux-hooks';
-import { logOut } from '../features/authSlice';
+import { useNavigate } from 'react-router-dom';
 
 const NavBar = () => {
     const routeMatch = useRouteMatch(['/orders', '/products', '/cart']);
     const currentTab = routeMatch?.pattern?.path || false;
     const mode = useAppSelector(selectThemeMode);
     const dispatch = useAppDispatch();
+    const navigate = useNavigate();
     const theme = useTheme();
 
     const toggleMode = () => dispatch(setMode(mode === 'light' ? 'dark' : 'light'));
-    const onLogout = () => dispatch(logOut());
+    const onLogout = () => {
+        localStorage.removeItem('userId');
+        navigate('/login');
+    };
 
     return (
         <Box

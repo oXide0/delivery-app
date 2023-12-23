@@ -1,3 +1,4 @@
+import { User } from '../types';
 import { api } from './api';
 
 interface LoginUser {
@@ -11,22 +12,29 @@ interface CreateUser {
     password: string;
 }
 
+interface LoginUserResponse {
+    userId: number;
+}
+
 export const userApi = api.injectEndpoints({
     endpoints: (builder) => ({
-        createUser: builder.mutation<void, CreateUser>({
+        createUser: builder.mutation<User, CreateUser>({
             query: (body) => ({
                 url: `/users/create`,
                 method: 'POST',
-                body,
+                body: {
+                    roles: 'USER',
+                    ...body,
+                },
             }),
             invalidatesTags: ['User'],
         }),
-        loginUser: builder.mutation<string, LoginUser>({
+        loginUser: builder.mutation<LoginUserResponse, LoginUser>({
             query: (body) => ({
                 url: `/users/authenticate`,
                 method: 'POST',
                 body: {
-                    username: 'Kyrylo',
+                    username: body.email,
                     password: body.password,
                 },
             }),

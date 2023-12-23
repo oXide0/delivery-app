@@ -20,19 +20,22 @@ import PageLayout from '../layout/PageLayout';
 import { useGetCartQuery } from '../services/cartApi';
 import { useCreateOrderMutation } from '../services/orderApi';
 import { CartProduct } from '../types';
-import { getTotalPrice } from '../utils';
-import { paymentValidationSchema } from '../utils';
+import { getTotalPrice, handleError, paymentValidationSchema } from '../utils';
+import { useRemoveProductFromCartMutation } from '../services/cartApi';
 
 const CartPage = () => {
     const [createOrder] = useCreateOrderMutation();
-    const { data, isLoading } = useGetCartQuery(1);
+    const [removeProduct] = useRemoveProductFromCartMutation();
+    const { data, isLoading, error } = useGetCartQuery();
 
     const handleSubmit = async () => {
-        await createOrder(getTotalPrice(data!));
+        if (!data) return;
+        await createOrder(getTotalPrice(data));
+        data.forEach((item) => removeProduct(item.cartItemId));
     };
 
+    if (error) return handleError(error);
     if (isLoading || !data) return <Loader />;
-
     return (
         <PageLayout>
             <Typography variant='h3' fontWeight={700}>

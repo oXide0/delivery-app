@@ -1,14 +1,15 @@
 import { Stack, Typography } from '@mui/material';
+import Loader from '../components/Loader';
 import OrderCard from '../components/OrderCard';
 import PageLayout from '../layout/PageLayout';
 import { useGetOrdersQuery } from '../services/orderApi';
-import Loader from '../components/Loader';
+import { handleError } from '../utils';
 
 const OrdersPage = () => {
-    const { data, isLoading } = useGetOrdersQuery(1);
+    const { data, isLoading, error } = useGetOrdersQuery(1);
 
+    if (error) return handleError(error);
     if (isLoading || !data) return <Loader />;
-
     return (
         <PageLayout>
             <Typography variant='h3' fontWeight={700}>
