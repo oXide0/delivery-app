@@ -69,7 +69,7 @@ const SignUpForm = ({ onSubmit }: { onSubmit: (values: SignUpFormValues) => void
             onSubmit={(values) => onSubmit(values)}
             validationSchema={registerValidationSchema}
         >
-            {({ values, handleChange, handleSubmit, isValid, errors, touched }) => (
+            {({ values, handleChange, handleSubmit, errors, touched }) => (
                 <Box component='form' onSubmit={handleSubmit} display='flex' flexDirection='column'>
                     <Stack spacing={2}>
                         <Input
@@ -99,12 +99,7 @@ const SignUpForm = ({ onSubmit }: { onSubmit: (values: SignUpFormValues) => void
                             helperText={touched.password && errors.password}
                         />
                     </Stack>
-                    <Button
-                        type='submit'
-                        sx={{ mt: 5, p: 1 }}
-                        variant='contained'
-                        disabled={!isValid}
-                    >
+                    <Button type='submit' sx={{ mt: 5, p: 1 }} variant='contained'>
                         Sign up
                     </Button>
                 </Box>

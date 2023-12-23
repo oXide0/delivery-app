@@ -74,7 +74,7 @@ const LoginForm = ({ onSubmit }: { onSubmit: (values: LoginFormValues) => void }
             onSubmit={(values) => onSubmit({ email: values.email, password: values.password })}
             validationSchema={loginValidationSchema}
         >
-            {({ values, handleChange, handleSubmit, errors, touched, isValid }) => (
+            {({ values, handleChange, handleSubmit, errors, touched }) => (
                 <Box component='form' onSubmit={handleSubmit} display='flex' flexDirection='column'>
                     <Stack spacing={2}>
                         <Input
@@ -96,12 +96,7 @@ const LoginForm = ({ onSubmit }: { onSubmit: (values: LoginFormValues) => void }
                             helperText={touched.password && errors.password}
                         />
                     </Stack>
-                    <Button
-                        type='submit'
-                        sx={{ mt: 5, p: 1 }}
-                        variant='contained'
-                        disabled={!isValid}
-                    >
+                    <Button type='submit' sx={{ mt: 5, p: 1 }} variant='contained'>
                         Login
                     </Button>
 

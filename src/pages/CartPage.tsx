@@ -4,6 +4,7 @@ import {
     Divider,
     Grid,
     Paper,
+    Snackbar,
     Stack,
     Table,
     TableBody,
@@ -14,16 +15,17 @@ import {
     Typography,
 } from '@mui/material';
 import { Formik } from 'formik';
+import { useState } from 'react';
 import Input from '../components/Input';
 import Loader from '../components/Loader';
 import PageLayout from '../layout/PageLayout';
-import { useGetCartQuery } from '../services/cartApi';
+import { useGetCartQuery, useRemoveProductFromCartMutation } from '../services/cartApi';
 import { useCreateOrderMutation } from '../services/orderApi';
 import { CartProduct } from '../types';
 import { getTotalPrice, handleError, paymentValidationSchema } from '../utils';
-import { useRemoveProductFromCartMutation } from '../services/cartApi';
 
 const CartPage = () => {
+    const [open, setOpen] = useState(false);
     const [createOrder] = useCreateOrderMutation();
     const [removeProduct] = useRemoveProductFromCartMutation();
     const { data, isLoading, error } = useGetCartQuery();
@@ -32,7 +34,10 @@ const CartPage = () => {
         if (!data) return;
         await createOrder(getTotalPrice(data));
         data.forEach((item) => removeProduct(item.cartItemId));
+        setOpen(true);
     };
+
+    const handleClose = () => setOpen(false);
 
     if (error) return handleError(error);
     if (isLoading || !data) return <Loader />;
@@ -41,7 +46,7 @@ const CartPage = () => {
             <Typography variant='h3' fontWeight={700}>
                 Cart
             </Typography>
-            <Grid container pt={5} columnSpacing={4}>
+            <Grid container pt={5} columnSpacing={4} height='90%'>
                 <Grid item xs={12} sm={9}>
                     <ProductsTable products={data} />
                 </Grid>
@@ -49,6 +54,14 @@ const CartPage = () => {
                     <PaymentForm onSubmit={handleSubmit} products={data} />
                 </Grid>
             </Grid>
+            <Snackbar
+                anchorOrigin={{ vertical: 'top', horizontal: 'center' }}
+                open={open}
+                autoHideDuration={3000}
+                onClose={handleClose}
+                message='Thank you for your order!'
+                ContentProps={{ sx: { fontSize: '22px', fontWeight: 700 } }}
+            />
         </PageLayout>
     );
 };
@@ -93,83 +106,91 @@ const PaymentForm = ({ onSubmit, products }: { onSubmit: () => void; products: C
     return (
         <Formik
             initialValues={{ cardNumber: '', date: '', cvc: '', name: '', coupon: '' }}
-            onSubmit={() => onSubmit()}
+            onSubmit={(_, actions) => {
+                actions.setTouched({
+                    cardNumber: true,
+                    date: true,
+                    cvc: true,
+                    name: true,
+                    coupon: true,
+                });
+
+                onSubmit();
+                actions.resetForm();
+            }}
             validationSchema={paymentValidationSchema}
         >
-            {({ values, handleChange, handleSubmit, errors, touched, isValid }) => (
-                <>
-                    <Box
-                        component='form'
-                        display='flex'
-                        flexDirection='column'
-                        height='100%'
-                        onSubmit={handleSubmit}
-                    >
-                        <Typography variant='h4' fontWeight={700} textAlign='center' gutterBottom>
-                            Payment Form
-                        </Typography>
-                        <Stack flex='1 1 auto' display='flex' gap={2} flexDirection='column'>
+            {({ values, handleChange, handleSubmit, errors, touched }) => (
+                <Box
+                    component='form'
+                    display='flex'
+                    flexDirection='column'
+                    height='100%'
+                    onSubmit={(e) => {
+                        e.preventDefault();
+                        handleSubmit();
+                    }}
+                >
+                    <Typography variant='h4' fontWeight={700} textAlign='center' gutterBottom>
+                        Payment Form
+                    </Typography>
+                    <Stack flex='1 1 auto' display='flex' gap={2} flexDirection='column'>
+                        <Input
+                            name='cardNumber'
+                            label='Credit card number'
+                            value={values.cardNumber}
+                            onChange={handleChange}
+                            error={touched.cardNumber && Boolean(errors.cardNumber)}
+                            helperText={touched.cardNumber && errors.cardNumber}
+                        />
+                        <Stack direction='row' gap={2}>
                             <Input
-                                name='cardNumber'
-                                label='Credit card number'
-                                value={values.cardNumber}
+                                name='date'
+                                label='Expire Date'
+                                value={values.date}
                                 onChange={handleChange}
-                                error={touched.cardNumber && Boolean(errors.cardNumber)}
-                                helperText={touched.cardNumber && errors.cardNumber}
-                            />
-                            <Stack direction='row' gap={2}>
-                                <Input
-                                    name='date'
-                                    label='Expire Date'
-                                    value={values.date}
-                                    onChange={handleChange}
-                                    error={touched.date && Boolean(errors.date)}
-                                    helperText={touched.date && errors.date}
-                                />
-                                <Input
-                                    name='cvc'
-                                    label='CVC code'
-                                    value={values.cvc}
-                                    onChange={handleChange}
-                                    error={touched.cvc && Boolean(errors.cvc)}
-                                    helperText={touched.cvc && errors.cvc}
-                                />
-                            </Stack>
-                            <Input
-                                name='name'
-                                label='Name on the card'
-                                value={values.name}
-                                onChange={handleChange}
-                                error={touched.name && Boolean(errors.name)}
-                                helperText={touched.name && errors.name}
+                                error={touched.date && Boolean(errors.date)}
+                                helperText={touched.date && errors.date}
                             />
                             <Input
-                                label='Coupon'
-                                name='coupon'
-                                value={values.coupon}
+                                name='cvc'
+                                label='CVC code'
+                                value={values.cvc}
                                 onChange={handleChange}
+                                error={touched.cvc && Boolean(errors.cvc)}
+                                helperText={touched.cvc && errors.cvc}
                             />
-                            <Divider sx={{ borderWidth: 2, mt: 1, color: '#000' }} />
-                            <Stack direction='row' justifyContent='space-between'>
-                                <Typography variant='h6' fontWeight={700}>
-                                    Total
-                                </Typography>
-                                <Typography variant='h6' fontWeight={700}>
-                                    €{getTotalPrice(products)}
-                                </Typography>
-                            </Stack>
                         </Stack>
-
-                        <Button
-                            type='submit'
-                            variant='contained'
-                            sx={{ py: 1.5, mt: 1 }}
-                            disabled={!isValid}
-                        >
+                        <Input
+                            name='name'
+                            label='Name on the card'
+                            value={values.name}
+                            onChange={handleChange}
+                            error={touched.name && Boolean(errors.name)}
+                            helperText={touched.name && errors.name}
+                        />
+                        <Input
+                            label='Coupon'
+                            name='coupon'
+                            value={values.coupon}
+                            onChange={handleChange}
+                        />
+                    </Stack>
+                    <Stack direction='column' gap={1}>
+                        <Divider sx={{ borderWidth: 2, color: '#000' }} />
+                        <Stack direction='row' justifyContent='space-between'>
+                            <Typography variant='h6' fontWeight={700}>
+                                Total
+                            </Typography>
+                            <Typography variant='h6' fontWeight={700}>
+                                €{getTotalPrice(products)}
+                            </Typography>
+                        </Stack>
+                        <Button type='submit' variant='contained' sx={{ mt: 1 }}>
                             Pay
                         </Button>
-                    </Box>
-                </>
+                    </Stack>
+                </Box>
             )}
         </Formik>
     );

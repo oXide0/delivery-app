@@ -18,7 +18,7 @@ export function createTheme({ mode }: { mode: 'light' | 'dark' }) {
             },
             background: {
                 paper: mode === 'light' ? config.sand : config.lightGray,
-                default: mode === 'light' ? 'white' : config.gray,
+                default: mode === 'light' ? '#fff' : config.gray,
             },
         },
         typography: {
