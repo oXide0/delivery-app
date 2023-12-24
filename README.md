@@ -35,7 +35,7 @@ Before you begin, ensure you have met the following requirements:
 
 3. **Backend Setup:**
 
-You will find it in backend repo README
+You will find it in [backend repo](https://github.com/KyryloBulyk/delivery) README
 
 4. **Frontend Setup:**
 
