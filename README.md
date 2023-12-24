@@ -11,6 +11,8 @@ Welcome to the Delivery App Website repository. This modern web application, bui
 -   **State Management:** Utilizes Redux Toolkit for consistent and predictable state management.
 -   **Efficient Data Handling:** Employs RTK Query for efficient data fetching and caching.
 
+![main page](https://github.com/oXide0/Delivery-App/blob/main/main.png)
+
 ## Backend Repository
 
 For backend services, please refer to the following repository: [Delivery App Backend](https://github.com/KyryloBulyk/delivery).
@@ -55,6 +57,8 @@ Once the application is running, users can:
 -   Register and log in using secure authentication.
 -   Place new delivery orders.
 -   Enjoy tailored features based on user roles such as customer or admin.
+
+![dark main page](https://github.com/oXide0/Delivery-App/blob/main/dark-main.png)
 
 ## Contributing
 
