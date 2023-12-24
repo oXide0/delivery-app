@@ -1,4 +1,4 @@
-import { Box, Tab, Tabs, Typography } from '@mui/material';
+import { Box, Stack, Tab, Tabs, Typography } from '@mui/material';
 import { useState } from 'react';
 import { Product } from '../types';
 import ProductCard from './ProductCard';
@@ -36,60 +36,68 @@ const Products = ({ products, addProductToCart }: ProductsProps) => {
                 </Tabs>
             </Box>
             <CustomTabPanel value={value} index={0}>
-                {products.map(
-                    (product) =>
-                        product.category.name === 'Burgers' && (
-                            <ProductCard
-                                key={product.id}
-                                title={product.title}
-                                img={product.img}
-                                price={product.price}
-                                onAddToCart={() => onAddToCart(product.id)}
-                            />
-                        )
-                )}
+                <Stack direction='row' flexWrap='wrap' gap={3}>
+                    {products.map(
+                        (product) =>
+                            product.category.name === 'Burgers' && (
+                                <ProductCard
+                                    key={product.id}
+                                    title={product.title}
+                                    img={product.img}
+                                    price={product.price}
+                                    onAddToCart={() => onAddToCart(product.id)}
+                                />
+                            )
+                    )}
+                </Stack>
             </CustomTabPanel>
             <CustomTabPanel value={value} index={1}>
-                {products.map(
-                    (product) =>
-                        product.category.name === 'Pizza' && (
-                            <ProductCard
-                                key={product.id}
-                                title={product.title}
-                                img={product.img}
-                                price={product.price}
-                                onAddToCart={() => onAddToCart(product.id)}
-                            />
-                        )
-                )}
+                <Stack direction='row' flexWrap='wrap' gap={3}>
+                    {products.map(
+                        (product) =>
+                            product.category.name === 'Pizza' && (
+                                <ProductCard
+                                    key={product.id}
+                                    title={product.title}
+                                    img={product.img}
+                                    price={product.price}
+                                    onAddToCart={() => onAddToCart(product.id)}
+                                />
+                            )
+                    )}
+                </Stack>
             </CustomTabPanel>
             <CustomTabPanel value={value} index={2}>
-                {products.map(
-                    (product) =>
-                        product.category.name === 'Drinks' && (
-                            <ProductCard
-                                key={product.id}
-                                title={product.title}
-                                img={product.img}
-                                price={product.price}
-                                onAddToCart={() => onAddToCart(product.id)}
-                            />
-                        )
-                )}
+                <Stack direction='row' flexWrap='wrap' gap={3}>
+                    {products.map(
+                        (product) =>
+                            product.category.name === 'Drinks' && (
+                                <ProductCard
+                                    key={product.id}
+                                    title={product.title}
+                                    img={product.img}
+                                    price={product.price}
+                                    onAddToCart={() => onAddToCart(product.id)}
+                                />
+                            )
+                    )}
+                </Stack>
             </CustomTabPanel>
             <CustomTabPanel value={value} index={3}>
-                {products.map(
-                    (product) =>
-                        product.category.name === 'Desserts' && (
-                            <ProductCard
-                                key={product.id}
-                                title={product.title}
-                                img={product.img}
-                                price={product.price}
-                                onAddToCart={() => onAddToCart(product.id)}
-                            />
-                        )
-                )}
+                <Stack direction='row' flexWrap='wrap' gap={3}>
+                    {products.map(
+                        (product) =>
+                            product.category.name === 'Desserts' && (
+                                <ProductCard
+                                    key={product.id}
+                                    title={product.title}
+                                    img={product.img}
+                                    price={product.price}
+                                    onAddToCart={() => onAddToCart(product.id)}
+                                />
+                            )
+                    )}
+                </Stack>
             </CustomTabPanel>
         </Box>
     );

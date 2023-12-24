@@ -15,7 +15,7 @@ interface ProductCardProps {
 
 const ProductCard = ({ title, price, img, type = 'product', onAddToCart }: ProductCardProps) => {
     return (
-        <Card sx={{ maxWidth: 345, borderRadius: 4 }}>
+        <Card sx={{ width: 345, borderRadius: 4 }}>
             {type === 'product' && <CardMedia sx={{ height: 140 }} image={img} title={title} />}
             <CardContent
                 sx={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between' }}
