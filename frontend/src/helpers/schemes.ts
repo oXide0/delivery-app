@@ -23,3 +23,10 @@ export const paymentValidationSchema = yup.object().shape({
     cvc: yup.string().required('CVC is required'),
     name: yup.string().required('Name is required'),
 });
+
+export const accessCodeValidationSchema = yup.object().shape({
+    code: yup
+        .string()
+        .required('Access code is required')
+        .min(6, 'Access code must be 6 characters'),
+});

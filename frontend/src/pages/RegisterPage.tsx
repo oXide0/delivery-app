@@ -1,12 +1,14 @@
-import { Box, Button, Container, Divider, Grid, Stack, Typography } from '@mui/material';
+import { Box, Button, Divider, Grid, Stack, Typography } from '@mui/material';
 import { Formik } from 'formik';
 import { useNavigate } from 'react-router-dom';
 import BgFood from '../assets/bg-food.png';
 import Input from '../components/Input';
-import { useCreateUserMutation } from '../services/userApi';
-import { registerValidationSchema } from '../helpers/schemes';
-import PinField from 'react-pin-field';
+// import { useCreateUserMutation } from '../services/userApi';
+import axios from 'axios';
 import { useState } from 'react';
+import PinField from 'react-pin-field';
+import Wrapper from '../components/layouts/Wrapper';
+import { accessCodeValidationSchema, registerValidationSchema } from '../helpers/schemes';
 
 interface SignUpFormValues {
     name: string;
@@ -20,8 +22,8 @@ interface PinFormValues {
 
 const RegisterPage = () => {
     const navigate = useNavigate();
-    const [createUser] = useCreateUserMutation();
-    const [userValues, setUserValues] = useState<SignUpFormValues | null>(null);
+    // const [createUser] = useCreateUserMutation();
+    const [userValues, setUserValues] = useState<SignUpFormValues | null>();
     const [errorMes, setErrorMes] = useState<string>('');
     const [accessCode, setAccessCode] = useState<string>('');
 
@@ -31,15 +33,10 @@ const RegisterPage = () => {
             setErrorMes('User already exists');
             return;
         }
-        const response = await fetch('http://localhost:5000/access-code', {
-            method: 'POST',
-            headers: {
-                'Content-Type': 'application/json',
-            },
-            body: JSON.stringify({ email: values.email }),
+        const response = await axios.post('http://localhost:5000/access-code', {
+            email: values.email,
         });
-        const data = await response.json();
-        setAccessCode(data.code);
+        setAccessCode(response.data.code);
         setUserValues(values);
     };
 
@@ -58,16 +55,16 @@ const RegisterPage = () => {
     };
 
     return (
-        <Container>
+        <Wrapper>
             <Grid container height='100vh'>
-                <Grid item xs={6}>
+                <Grid item xs={6} display={{ xs: 'none', sm: 'grid' }}>
                     <img
                         src={BgFood}
                         alt='food'
                         style={{ width: '100%', height: '100%', objectFit: 'cover' }}
                     />
                 </Grid>
-                <Grid item xs={6}>
+                <Grid item xs={12} sm={6}>
                     <Box
                         display='flex'
                         flexDirection='column'
@@ -75,8 +72,8 @@ const RegisterPage = () => {
                         height='100%'
                         p={6}
                     >
-                        <Typography variant='h3' fontWeight={700}>
-                            {userValues ? 'Enter the code' : 'Sign up'}
+                        <Typography variant='h3' textAlign='center' fontWeight={700}>
+                            {userValues ? 'Enter the code' : 'Create an account'}
                         </Typography>
                         <Stack my={5}>
                             {errorMes && (
@@ -99,7 +96,7 @@ const RegisterPage = () => {
                     </Box>
                 </Grid>
             </Grid>
-        </Container>
+        </Wrapper>
     );
 };
 
@@ -151,8 +148,12 @@ const SignUpForm = ({ onSubmit }: { onSubmit: (values: SignUpFormValues) => void
 
 const PinCodeForm = ({ onSubmit }: { onSubmit: (value: PinFormValues) => void }) => {
     return (
-        <Formik initialValues={{ code: '' }} onSubmit={(values) => onSubmit(values)}>
-            {({ handleSubmit, setValues }) => (
+        <Formik
+            initialValues={{ code: '' }}
+            onSubmit={(values) => onSubmit(values)}
+            validationSchema={accessCodeValidationSchema}
+        >
+            {({ handleSubmit, setValues, errors, touched }) => (
                 <Box component='form' onSubmit={handleSubmit}>
                     <Stack display='flex' flexDirection='row' gap={3}>
                         <PinField
@@ -173,6 +174,11 @@ const PinCodeForm = ({ onSubmit }: { onSubmit: (value: PinFormValues) => void })
                             validate={/^[0-9]{0,6}$/}
                         />
                     </Stack>
+                    {touched.code && errors.code && (
+                        <Typography pt={2} color='red' textAlign='center'>
+                            {errors.code}
+                        </Typography>
+                    )}
                     <Button type='submit' sx={{ mt: 5, p: 1 }}>
                         Verify
                     </Button>
