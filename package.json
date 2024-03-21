@@ -1,11 +1,6 @@
 {
     "name": "delivery-app",
     "version": "1.0.0",
-    "description": "Welcome to the Delivery App Website repository. This modern web application, built with React, Redux Toolkit, and RTK Query, is designed to provide a seamless delivery service experience. It features secure authentication with JWT tokens and leverages Vite for an efficient development environment.",
-    "main": "index.js",
-    "keywords": [],
-    "author": "",
-    "license": "ISC",
     "workspaces": [
         "frontend",
         "services/*"
