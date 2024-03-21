@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="UTF-8" />
+        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+        <title>Access Code Email</title>
+        <style>
+            body {
+                font-family: Arial, sans-serif;
+                background-color: #f4f4f4;
+                margin: 0;
+                padding: 0;
+            }
+            .container {
+                max-width: 600px;
+                margin: 20px auto;
+                padding: 20px;
+                background-color: #fff;
+                border-radius: 8px;
+                box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+            }
+            h1 {
+                color: #333;
+                margin-bottom: 20px;
+            }
+            p {
+                color: #666;
+                margin-bottom: 20px;
+            }
+            .access-code {
+                background-color: #007bff;
+                color: #fff;
+                padding: 10px 30px;
+                border-radius: 4px;
+                display: inline-block;
+                font-size: 18px;
+            }
+        </style>
+    </head>
+    <body>
+        <div class="container">
+            <h1>Access Code Email</h1>
+            <p>Dear User,</p>
+            <p>Your access code is:</p>
+            <div class="access-code">{{ ACCESS_CODE }}</div>
+            <p>Please use this code to access your account.</p>
+            <p>If you did not request this code, you can safely ignore this email.</p>
+            <p>Thank you,<br />The Quick Drop Team</p>
+        </div>
+    </body>
+</html>

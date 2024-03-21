@@ -1,41 +1,13 @@
 {
     "name": "delivery-app",
-    "private": true,
-    "version": "0.0.0",
-    "type": "module",
-    "scripts": {
-        "dev": "vite",
-        "build": "tsc && vite build",
-        "lint": "eslint . --ext ts,tsx --report-unused-disable-directives --max-warnings 0",
-        "preview": "vite preview"
-    },
-    "dependencies": {
-        "@emotion/react": "^11.11.1",
-        "@emotion/styled": "^11.11.0",
-        "@mui/icons-material": "^5.15.0",
-        "@mui/material": "^5.15.0",
-        "@reduxjs/toolkit": "^2.0.1",
-        "formik": "^2.4.5",
-        "framer-motion": "^10.16.16",
-        "react": "^18.2.0",
-        "react-dnd": "^16.0.1",
-        "react-dnd-html5-backend": "^16.0.1",
-        "react-dom": "^18.2.0",
-        "react-redux": "^9.0.4",
-        "react-router-dom": "^6.21.0",
-        "react-snowfall": "^1.2.1",
-        "yup": "^1.3.3"
-    },
-    "devDependencies": {
-        "@types/react": "^18.2.43",
-        "@types/react-dom": "^18.2.17",
-        "@typescript-eslint/eslint-plugin": "^6.14.0",
-        "@typescript-eslint/parser": "^6.14.0",
-        "@vitejs/plugin-react": "^4.2.1",
-        "eslint": "^8.55.0",
-        "eslint-plugin-react-hooks": "^4.6.0",
-        "eslint-plugin-react-refresh": "^0.4.5",
-        "typescript": "^5.2.2",
-        "vite": "^5.0.8"
-    }
+    "version": "1.0.0",
+    "description": "Welcome to the Delivery App Website repository. This modern web application, built with React, Redux Toolkit, and RTK Query, is designed to provide a seamless delivery service experience. It features secure authentication with JWT tokens and leverages Vite for an efficient development environment.",
+    "main": "index.js",
+    "keywords": [],
+    "author": "",
+    "license": "ISC",
+    "workspaces": [
+        "frontend",
+        "services/*"
+    ]
 }
