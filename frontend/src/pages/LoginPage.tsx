@@ -4,7 +4,6 @@ import { useState } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
 import BgFood from '../assets/bg-food.png';
 import Input from '../components/Input';
-import { useLoginUserMutation } from '../services/userApi';
 import { loginValidationSchema } from '../helpers/schemes';
 
 interface LoginFormValues {
@@ -15,11 +14,10 @@ interface LoginFormValues {
 const LoginPage = () => {
     const navigate = useNavigate();
     const [errorMessage, setErrorMessage] = useState('');
-    const [loginUser] = useLoginUserMutation();
 
     const handleSubmit = async (values: LoginFormValues) => {
         try {
-            const user = await loginUser(values).unwrap();
+            // const user = await loginUser(values).unwrap();
             localStorage.setItem('userId', JSON.stringify(user.userId));
             navigate('/products');
         } catch (err) {

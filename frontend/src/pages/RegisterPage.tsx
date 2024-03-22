@@ -3,7 +3,6 @@ import { Formik } from 'formik';
 import { useNavigate } from 'react-router-dom';
 import BgFood from '../assets/bg-food.png';
 import Input from '../components/Input';
-// import { useCreateUserMutation } from '../services/userApi';
 import axios from 'axios';
 import { useState } from 'react';
 import PinField from 'react-pin-field';
@@ -22,7 +21,6 @@ interface PinFormValues {
 
 const RegisterPage = () => {
     const navigate = useNavigate();
-    // const [createUser] = useCreateUserMutation();
     const [userValues, setUserValues] = useState<SignUpFormValues | null>();
     const [errorMes, setErrorMes] = useState<string>('');
     const [accessCode, setAccessCode] = useState<string>('');
@@ -47,12 +45,19 @@ const RegisterPage = () => {
             setErrorMes('Invalid access code');
             return;
         }
-        try {
-            // await createUser(userValues).unwrap();
-            navigate('/');
-        } catch (err) {
-            console.log(err);
-        }
+
+        // try {
+        //     const { data } = await registerUser({
+        //         email: userValues.email,
+        //         password: userValues.password,
+        //         username: userValues.name,
+        //         roleName: 'USER',
+        //     });
+        //     localStorage.setItem('userId', data.id);
+        //     navigate('/');
+        // } catch (err) {
+        //     setErrorMes(err.message);
+        // }
     };
 
     return (
