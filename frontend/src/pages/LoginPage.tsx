@@ -18,7 +18,7 @@ const LoginPage = () => {
     const handleSubmit = async (values: LoginFormValues) => {
         try {
             // const user = await loginUser(values).unwrap();
-            localStorage.setItem('userId', JSON.stringify(user.userId));
+            // localStorage.setItem('userId', JSON.stringify(user.userId));
             navigate('/products');
         } catch (err) {
             setErrorMessage('Invalid email or password');
