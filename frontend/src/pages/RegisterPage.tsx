@@ -35,8 +35,9 @@ const RegisterPage = () => {
         }
         const response = await axios.post('http://localhost:5000/access-code', {
             email: values.email,
+            name: values.name,
         });
-        setAccessCode(response.data.code);
+        setAccessCode(response.data.accessCode);
         setUserValues(values);
     };
 

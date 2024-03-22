@@ -20,27 +20,33 @@
                 box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
             }
             h1 {
-                color: #333;
-                margin-bottom: 20px;
+                color: #ea3f30;
+                font-size: 28px;
+                margin-bottom: 30px;
+                text-align: center;
             }
             p {
                 color: #666;
+                font-size: 18px;
+                line-height: 1.6;
                 margin-bottom: 20px;
             }
             .access-code {
-                background-color: #007bff;
+                background-color: #ea3f30;
                 color: #fff;
-                padding: 10px 30px;
-                border-radius: 4px;
+                padding: 15px 40px;
+                border-radius: 10px;
                 display: inline-block;
-                font-size: 18px;
+                font-size: 24px;
+                margin-top: 20px;
+                text-align: center;
             }
         </style>
     </head>
     <body>
         <div class="container">
             <h1>Access Code Email</h1>
-            <p>Dear User,</p>
+            <p>Dear {{ USER_NAME }},</p>
             <p>Your access code is:</p>
             <div class="access-code">{{ ACCESS_CODE }}</div>
             <p>Please use this code to access your account.</p>
