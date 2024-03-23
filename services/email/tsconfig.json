@@ -1,8 +1,3 @@
 {
-    "compilerOptions": {
-        "module": "NodeNext",
-        "esModuleInterop": true,
-        "allowSyntheticDefaultImports": true,
-        "strict": true
-    }
+    "extends": "../tsconfig.base.json"
 }

@@ -1,0 +1,10 @@
+{
+    "name": "services",
+    "version": "1.0.0",
+    "scripts": {
+        "email": "cd email && npm start"
+    },
+    "workspaces": [
+        "email"
+    ]
+}
