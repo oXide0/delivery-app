@@ -16,7 +16,7 @@ export const handleAccessCode = async (req: Request, res: Response) => {
         html: modifiedHTML,
     };
 
-    transporter.sendMail(mailOptions, (error: Error, info: SentMessageInfo) => {
+    transporter.sendMail(mailOptions, (error: Error | null, info: SentMessageInfo) => {
         if (error) {
             console.error('Error sending email:', error);
         } else {
