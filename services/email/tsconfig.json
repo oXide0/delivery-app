@@ -1,3 +1,9 @@
 {
-    "extends": "../tsconfig.base.json"
+    "compilerOptions": {
+        "module": "NodeNext",
+        "esModuleInterop": true,
+        "allowSyntheticDefaultImports": true,
+        "strict": true,
+        "outDir": "./build"
+    }
 }
