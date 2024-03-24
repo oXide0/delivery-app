@@ -15,7 +15,7 @@ export const transporter = createTransport({
     },
 });
 
-export const readHTMLTemplate = (templateName) => {
+export const readHTMLTemplate = (templateName: string) => {
     const templatePath = path.join(__dirname, templateName);
     return fs.readFileSync(templatePath, 'utf-8');
 };
