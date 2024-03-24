@@ -1,24 +1,10 @@
-import cors, { CorsOptions } from 'cors';
-import { config } from 'dotenv';
 import express from 'express';
-config();
-
-import { handleAccessCode } from './controller';
+import { configureServer, startServer } from './configs/config';
+import router from './routes/routes';
 
 const app = express();
-const port = process.env.PORT;
 
-const corsOptions: CorsOptions = {
-    origin: process.env.CLIENT_URL,
-    credentials: true,
-    optionsSuccessStatus: 200,
-};
+configureServer(app);
+app.use('/api', router);
 
-app.use(express.json());
-app.use(cors(corsOptions));
-
-app.post('/access-code', handleAccessCode);
-
-app.listen(port, () => {
-    console.log(`Server is running on http://localhost:${port}`);
-});
+startServer(app);
