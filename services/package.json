@@ -3,7 +3,8 @@
     "version": "1.0.0",
     "scripts": {
         "start": "concurrently \"npm run email\"",
-        "email": "cd email && npm start"
+        "email": "cd email && npm start",
+        "email:dev": "cd email && npm run dev"
     },
     "workspaces": [
         "email"
