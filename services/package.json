@@ -1,0 +1,14 @@
+{
+    "name": "services",
+    "version": "1.0.0",
+    "scripts": {
+        "start": "concurrently \"npm run email\"",
+        "email": "cd email && npm start"
+    },
+    "workspaces": [
+        "email"
+    ],
+    "dependencies": {
+        "concurrently": "^8.2.2"
+    }
+}
