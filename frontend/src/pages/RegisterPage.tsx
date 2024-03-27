@@ -24,13 +24,13 @@ interface PinFormValues {
 const RegisterPage = () => {
     const navigate = useNavigate();
     const [userValues, setUserValues] = useState<SignUpFormValues | null>();
-    const [errorMes, setErrorMes] = useState<string>('');
+    const [errorMessage, setErrorMessage] = useState<string>('');
     const [timer, setTimer] = useState<number>(600);
 
     const handleSubmit = async (values: SignUpFormValues) => {
         const userExists = false;
         if (userExists) {
-            setErrorMes('User already exists');
+            setErrorMessage('User already exists');
             return;
         }
         await sendCode(values.email, values.name);
@@ -42,7 +42,7 @@ const RegisterPage = () => {
         try {
             await verifyCode(userValues.email, values.code);
         } catch (error: any) {
-            setErrorMes(error?.response.data.message);
+            setErrorMessage('Invalid code');
         }
 
         try {
@@ -50,7 +50,7 @@ const RegisterPage = () => {
             localStorage.setItem('userId', id.toString());
             navigate('/');
         } catch (error: any) {
-            setErrorMes(error.message);
+            setErrorMessage('Something went wrong');
         }
     };
 
@@ -88,9 +88,9 @@ const RegisterPage = () => {
                             {userValues ? 'Enter the code' : 'Create an account'}
                         </Typography>
                         <Stack my={5}>
-                            {errorMes && (
+                            {errorMessage && (
                                 <Typography color='red' fontWeight={600} textAlign='center'>
-                                    {errorMes}
+                                    {errorMessage}
                                 </Typography>
                             )}
                             {userValues && (

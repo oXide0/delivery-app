@@ -1,12 +1,23 @@
 import { Stack, Typography } from '@mui/material';
+import { useEffect, useState } from 'react';
+import { getOrders } from '../api/orderApi';
 import Loader from '../components/Loader';
 import OrderCard from '../components/OrderCard';
 import PageLayout from '../components/layouts/PageLayout';
-import { useGetOrdersQuery } from '../services/orderApi';
-import { handleError } from '../helpers/utils';
+import { handleError } from '../helpers/handleError';
+import { useQuery } from '../hooks/useQuery';
+import { Order } from '../types';
 
 const OrdersPage = () => {
-    const { data, isLoading, error } = useGetOrdersQuery(1);
+    const [data, setData] = useState<Order[]>([]);
+    const { fetch, isLoading, error } = useQuery(async () => {
+        const orders = await getOrders();
+        setData(orders);
+    });
+
+    useEffect(() => {
+        fetch();
+    }, [fetch]);
 
     if (error) return handleError(error);
     if (isLoading || !data) return <Loader />;

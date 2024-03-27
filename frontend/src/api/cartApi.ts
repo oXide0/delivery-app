@@ -6,12 +6,14 @@ interface UpdateProductParameters {
     quantity: number;
 }
 
-export const getCart = async (userId: number): Promise<CartProduct[]> => {
+export const getCart = async (): Promise<CartProduct[]> => {
+    const userId = Number(localStorage.getItem('userId'));
     const response = await $api.get(`/cart?userId=${userId}`);
     return response.data;
 };
 
-export const addToCart = async (productId: number, userId: number): Promise<CartProduct> => {
+export const addToCart = async (productId: number): Promise<CartProduct> => {
+    const userId = Number(localStorage.getItem('userId'));
     const response = await $api.post(
         `/cart/add?cartId=${userId}&productId=${productId}&quantity=1`
     );

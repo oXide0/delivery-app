@@ -15,26 +15,34 @@ import {
     Typography,
 } from '@mui/material';
 import { Formik } from 'formik';
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
+import { getCart, removeProductFromCart } from '../api/cartApi';
+import { createOrder } from '../api/orderApi';
 import Input from '../components/Input';
 import Loader from '../components/Loader';
 import PageLayout from '../components/layouts/PageLayout';
+import { handleError } from '../helpers/handleError';
 import { paymentValidationSchema } from '../helpers/schemes';
-import { getTotalPrice, handleError } from '../helpers/utils';
-import { useGetCartQuery, useRemoveProductFromCartMutation } from '../services/cartApi';
-import { useCreateOrderMutation } from '../services/orderApi';
+import { getTotalPrice } from '../helpers/utils';
+import { useQuery } from '../hooks/useQuery';
 import { CartProduct } from '../types';
 
 const CartPage = () => {
     const [open, setOpen] = useState(false);
-    const [createOrder] = useCreateOrderMutation();
-    const [removeProduct] = useRemoveProductFromCartMutation();
-    const { data, isLoading, error } = useGetCartQuery();
+    const [data, setData] = useState<CartProduct[] | null>(null);
+    const { fetch, isLoading, error } = useQuery(async () => {
+        const cart = await getCart();
+        setData(cart);
+    });
+
+    useEffect(() => {
+        fetch();
+    }, [fetch]);
 
     const handleSubmit = async () => {
         if (!data) return;
         await createOrder(getTotalPrice(data));
-        data.forEach((item) => removeProduct(item.cartItemId));
+        data.forEach((item) => removeProductFromCart(item.cartItemId));
         setOpen(true);
     };
 
