@@ -5,9 +5,10 @@ import { Link, useNavigate } from 'react-router-dom';
 import BgFood from '../assets/bg-food.png';
 import Input from '../components/Input';
 import { loginValidationSchema } from '../helpers/schemes';
+import { loginUser } from '../api/userApi';
 
 interface LoginFormValues {
-    email: string;
+    username: string;
     password: string;
 }
 
@@ -17,11 +18,11 @@ const LoginPage = () => {
 
     const handleSubmit = async (values: LoginFormValues) => {
         try {
-            // const user = await loginUser(values).unwrap();
-            // localStorage.setItem('userId', JSON.stringify(user.userId));
+            const { id } = await loginUser(values);
+            localStorage.setItem('userId', JSON.stringify(id));
             navigate('/products');
         } catch (err) {
-            setErrorMessage('Invalid email or password');
+            setErrorMessage('Invalid username or password');
         }
     };
 
@@ -68,21 +69,23 @@ const LoginForm = ({ onSubmit }: { onSubmit: (values: LoginFormValues) => void }
 
     return (
         <Formik
-            initialValues={{ email: '', password: '' }}
-            onSubmit={(values) => onSubmit({ email: values.email, password: values.password })}
+            initialValues={{ username: '', password: '' }}
+            onSubmit={(values) =>
+                onSubmit({ username: values.username, password: values.password })
+            }
             validationSchema={loginValidationSchema}
         >
             {({ values, handleChange, handleSubmit, errors, touched }) => (
                 <Box component='form' onSubmit={handleSubmit} display='flex' flexDirection='column'>
                     <Stack spacing={2}>
                         <Input
-                            name='email'
-                            label='Email Address'
-                            type='email'
-                            value={values.email}
+                            name='username'
+                            label='Username Address'
+                            type='username'
+                            value={values.username}
                             onChange={handleChange}
-                            error={touched.email && Boolean(errors.email)}
-                            helperText={touched.email && errors.email}
+                            error={touched.username && Boolean(errors.username)}
+                            helperText={touched.username && errors.username}
                         />
                         <Input
                             name='password'

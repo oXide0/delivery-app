@@ -24,9 +24,6 @@ export const paymentValidationSchema = yup.object().shape({
     name: yup.string().required('Name is required'),
 });
 
-export const accessCodeValidationSchema = yup.object().shape({
-    code: yup
-        .string()
-        .required('Access code is required')
-        .min(6, 'Access code must be 6 characters'),
+export const codeValidationSchema = yup.object().shape({
+    code: yup.string().required('Code is required').min(6, 'Code must be 6 characters'),
 });

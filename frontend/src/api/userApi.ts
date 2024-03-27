@@ -2,10 +2,9 @@ import { User } from '../types';
 import $api from './api';
 
 interface UserBody {
-    username: string;
-    password: string;
+    name: string;
     email: string;
-    roleName: string;
+    password: string;
 }
 
 interface LoginUserBody {
@@ -19,11 +18,6 @@ export const registerUser = async (body: UserBody): Promise<User> => {
 };
 
 export const loginUser = async (body: LoginUserBody): Promise<User> => {
-    const response = await $api.post('/users/login', body);
-    return response.data;
-};
-
-export const updateUser = async (userId: number, body: UserBody): Promise<User> => {
-    const response = await $api.put(`/users/${userId}`, body);
+    const response = await $api.post('/users/authenticate', body);
     return response.data;
 };

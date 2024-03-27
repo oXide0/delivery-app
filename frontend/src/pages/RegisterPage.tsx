@@ -1,13 +1,15 @@
 import { Box, Button, Divider, Grid, Stack, Typography } from '@mui/material';
 import { Formik } from 'formik';
+import { useEffect, useState } from 'react';
+import PinField from 'react-pin-field';
 import { useNavigate } from 'react-router-dom';
+import { sendCode, verifyCode } from '../api/emailApi';
+import { registerUser } from '../api/userApi';
 import BgFood from '../assets/bg-food.png';
 import Input from '../components/Input';
-import axios from 'axios';
-import { useState } from 'react';
-import PinField from 'react-pin-field';
 import Wrapper from '../components/layouts/Wrapper';
-import { accessCodeValidationSchema, registerValidationSchema } from '../helpers/schemes';
+import { codeValidationSchema, registerValidationSchema } from '../helpers/schemes';
+import { formatTime } from '../helpers/utils';
 
 interface SignUpFormValues {
     name: string;
@@ -23,7 +25,7 @@ const RegisterPage = () => {
     const navigate = useNavigate();
     const [userValues, setUserValues] = useState<SignUpFormValues | null>();
     const [errorMes, setErrorMes] = useState<string>('');
-    const [accessCode, setAccessCode] = useState<string>('');
+    const [timer, setTimer] = useState<number>(600);
 
     const handleSubmit = async (values: SignUpFormValues) => {
         const userExists = false;
@@ -31,34 +33,38 @@ const RegisterPage = () => {
             setErrorMes('User already exists');
             return;
         }
-        const response = await axios.post('http://localhost:5000/access-code', {
-            email: values.email,
-            name: values.name,
-        });
-        setAccessCode(response.data.accessCode);
+        await sendCode(values.email, values.name);
         setUserValues(values);
     };
 
     const handlePinSubmit = async (values: PinFormValues) => {
         if (!userValues) return;
-        if (values.code !== accessCode) {
-            setErrorMes('Invalid access code');
-            return;
+        try {
+            await verifyCode(userValues.email, values.code);
+        } catch (error: any) {
+            setErrorMes(error?.response.data.message);
         }
 
-        // try {
-        //     const { data } = await registerUser({
-        //         email: userValues.email,
-        //         password: userValues.password,
-        //         username: userValues.name,
-        //         roleName: 'USER',
-        //     });
-        //     localStorage.setItem('userId', data.id);
-        //     navigate('/');
-        // } catch (err) {
-        //     setErrorMes(err.message);
-        // }
+        try {
+            const { id } = await registerUser(userValues);
+            localStorage.setItem('userId', id.toString());
+            navigate('/');
+        } catch (error: any) {
+            setErrorMes(error.message);
+        }
     };
+
+    useEffect(() => {
+        let intervalId: NodeJS.Timeout;
+
+        if (userValues) {
+            intervalId = setInterval(() => {
+                setTimer((prevTimer) => prevTimer - 1);
+            }, 1000);
+        }
+
+        return () => clearInterval(intervalId);
+    }, [userValues]);
 
     return (
         <Wrapper>
@@ -89,10 +95,15 @@ const RegisterPage = () => {
                             )}
                             {userValues && (
                                 <Typography variant='h6' textAlign='center'>
-                                    We have sent a code to your email
+                                    Confirm your email address
                                 </Typography>
                             )}
                             <Divider sx={{ bgcolor: '#000' }} />
+                            {userValues && (
+                                <Typography variant='body1' textAlign='center' pt={3}>
+                                    Time remaining: {formatTime(timer)}
+                                </Typography>
+                            )}
                         </Stack>
                         {userValues ? (
                             <PinCodeForm onSubmit={handlePinSubmit} />
@@ -157,7 +168,7 @@ const PinCodeForm = ({ onSubmit }: { onSubmit: (value: PinFormValues) => void })
         <Formik
             initialValues={{ code: '' }}
             onSubmit={(values) => onSubmit(values)}
-            validationSchema={accessCodeValidationSchema}
+            validationSchema={codeValidationSchema}
         >
             {({ handleSubmit, setValues, errors, touched }) => (
                 <Box component='form' onSubmit={handleSubmit}>

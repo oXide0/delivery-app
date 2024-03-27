@@ -7,7 +7,7 @@ import { generateSixDigitCode, readHTMLTemplate } from '../utils/utils';
 
 export const sendEmail = async (req: Request, res: Response) => {
     const code = generateSixDigitCode();
-    const htmlTemplate = readHTMLTemplate('utils/template.html');
+    const htmlTemplate = readHTMLTemplate('../utils/template.html');
     const modifiedHTML = htmlTemplate
         .replace('{{ ACCESS_CODE }}', code)
         .replace('{{ USER_NAME }}', req.body.name);
@@ -33,7 +33,7 @@ export const sendEmail = async (req: Request, res: Response) => {
         }
     });
 
-    res.status(200).json({ message: 'Access code sent', code });
+    res.status(200).json({ message: 'Access code sent' });
 };
 export const verifyCode = async (req: Request, res: Response) => {
     const { email, code } = req.body;
