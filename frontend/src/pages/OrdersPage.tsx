@@ -4,7 +4,6 @@ import { getOrders } from '../api/orderApi';
 import Loader from '../components/Loader';
 import OrderCard from '../components/OrderCard';
 import PageLayout from '../components/layouts/PageLayout';
-import { handleError } from '../helpers/handleError';
 import { useQuery } from '../hooks/useQuery';
 import { Order } from '../types';
 
@@ -19,7 +18,12 @@ const OrdersPage = () => {
         fetch();
     }, [fetch]);
 
-    if (error) return handleError(error);
+    if (error)
+        return (
+            <Typography variant='h3' maxWidth='100%' margin='0 auto' fontWeight={700} pt={10}>
+                Something went wrong
+            </Typography>
+        );
     if (isLoading || !data) return <Loader />;
     return (
         <PageLayout>

@@ -21,7 +21,6 @@ import { createOrder } from '../api/orderApi';
 import Input from '../components/Input';
 import Loader from '../components/Loader';
 import PageLayout from '../components/layouts/PageLayout';
-import { handleError } from '../helpers/handleError';
 import { paymentValidationSchema } from '../helpers/schemes';
 import { getTotalPrice } from '../helpers/utils';
 import { useQuery } from '../hooks/useQuery';
@@ -48,7 +47,12 @@ const CartPage = () => {
 
     const handleClose = () => setOpen(false);
 
-    if (error) return handleError(error);
+    if (error)
+        return (
+            <Typography variant='h3' maxWidth='100%' margin='0 auto' fontWeight={700} pt={10}>
+                Something went wrong
+            </Typography>
+        );
     if (isLoading || !data) return <Loader />;
     return (
         <PageLayout>

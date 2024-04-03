@@ -1,4 +1,4 @@
-import { Box } from '@mui/material';
+import { Box, Typography } from '@mui/material';
 import { useEffect, useState } from 'react';
 import { addToCart, getCart, removeProductFromCart, updateProductQuantity } from '../api/cartApi';
 import { getProducts } from '../api/productApi';
@@ -6,7 +6,6 @@ import Loader from '../components/Loader';
 import OrderCart from '../components/OrderCart';
 import Products from '../components/Products';
 import PageLayout from '../components/layouts/PageLayout';
-import { handleError } from '../helpers/handleError';
 import { useQuery } from '../hooks/useQuery';
 import { CartProduct, Product } from '../types';
 
@@ -28,7 +27,12 @@ const ProductsPage = () => {
     const updateProduct = (cartItemId: number, quantity: number) =>
         updateProductQuantity({ cartItemId, quantity });
 
-    if (error) return handleError(error);
+    if (error)
+        return (
+            <Typography variant='h3' maxWidth='100%' margin='0 auto' fontWeight={700} pt={10}>
+                Something went wrong
+            </Typography>
+        );
     if (isLoading || !products || !cart) return <Loader />;
     return (
         <PageLayout noPadding>
