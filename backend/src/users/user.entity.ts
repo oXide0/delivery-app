@@ -1,4 +1,4 @@
-import { Entity, Column, PrimaryGeneratedColumn, CreateDateColumn } from 'typeorm';
+import { Entity, Column, PrimaryGeneratedColumn, CreateDateColumn, Unique } from 'typeorm';
 import { IsEmail, IsNotEmpty, IsString, MinLength } from 'class-validator';
 
 @Entity()
@@ -21,6 +21,7 @@ export class Customer {
     @Column()
     @IsNotEmpty()
     @IsEmail()
+    @Unique(['email'])
     email: string;
 
     @CreateDateColumn()

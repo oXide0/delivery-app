@@ -2,6 +2,7 @@ import { Injectable, UnauthorizedException } from '@nestjs/common';
 import { UsersService } from '../users/users.service';
 import { JwtService } from '@nestjs/jwt';
 import { CreateUserDto } from 'src/users/dto/create-user.dto';
+import { hash, compare } from 'bcryptjs';
 
 @Injectable()
 export class AuthService {
@@ -10,20 +11,29 @@ export class AuthService {
         private jwtService: JwtService
     ) {}
 
-    async signIn(id: string, pwd: string): Promise<{ accessToken: string }> {
-        const user = await this.usersService.findById(id);
-        if (user.password !== pwd) {
-            throw new UnauthorizedException();
+    async signIn(email: string, password: string): Promise<{ accessToken: string }> {
+        const user = await this.usersService.findByEmail(email);
+        if (!user) {
+            throw new UnauthorizedException('User not found');
         }
-        const payload = { sub: user.id, username: user.username };
+        const isPasswordValid = await compare(password, user.password);
+        if (!isPasswordValid) {
+            throw new UnauthorizedException('Invalid password');
+        }
+        const payload = { id: user.id, email: user.email };
         return {
             accessToken: await this.jwtService.signAsync(payload),
         };
     }
 
     async register(createUserDto: CreateUserDto): Promise<{ accessToken: string }> {
-        const user = await this.usersService.create({ ...createUserDto });
-        const payload = { sub: user.id, username: user.username };
+        const hashPassword = await hash(createUserDto.password, 5);
+        const user = await this.usersService.create({
+            email: createUserDto.email,
+            username: createUserDto.username,
+            password: hashPassword,
+        });
+        const payload = { id: user.id, email: user.email };
         return {
             accessToken: await this.jwtService.signAsync(payload),
         };
