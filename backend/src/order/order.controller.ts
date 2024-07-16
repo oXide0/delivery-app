@@ -1,7 +1,6 @@
 import { Controller, Get, Post, Body, Query } from '@nestjs/common';
 import { OrderService } from './order.service';
 import { Order } from './order.entity';
-import { Customer } from 'src/user/user.entity';
 import { CreateOrderDto } from './dto/create-order.dto';
 
 @Controller('orders')
@@ -16,9 +15,9 @@ export class OrderController {
     @Post('create')
     async create(@Body() createOrderDto: CreateOrderDto): Promise<Order> {
         return this.orderService.create({
-            user: { id: createOrderDto.userId } as Customer,
-            totalPrice: createOrderDto.totalPrice,
-            status: createOrderDto.status,
+            // user: { id: createOrderDto.userId },
+            // totalPrice: createOrderDto.totalPrice,
+            // status: createOrderDto.status,
             createdAt: new Date(),
         });
     }

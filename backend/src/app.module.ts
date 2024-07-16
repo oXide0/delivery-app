@@ -3,17 +3,16 @@ import { ConfigModule } from '@nestjs/config';
 import { TypeOrmModule } from '@nestjs/typeorm';
 import { DataSource } from 'typeorm';
 import { AuthModule } from './auth/auth.module';
-import { ProductController } from './product/product.controller';
+import { OrderModule } from './order/order.module';
 import { ProductModule } from './product/product.module';
-import { ProductService } from './product/product.service';
 import { Customer } from './user/user.entity';
 import { UserModule } from './user/user.module';
-import { OrderModule } from './order/order.module';
 
 @Module({
     imports: [
         ConfigModule.forRoot({
             envFilePath: '.development.env',
+            isGlobal: true,
         }),
         TypeOrmModule.forRoot({
             type: 'postgres',
@@ -31,8 +30,8 @@ import { OrderModule } from './order/order.module';
         ProductModule,
         OrderModule,
     ],
-    controllers: [ProductController],
-    providers: [ProductService],
+    controllers: [],
+    providers: [],
 })
 export class AppModule {
     constructor(private readonly dataSource: DataSource) {}

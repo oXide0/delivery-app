@@ -12,20 +12,17 @@ export class OrderService {
     ) {}
 
     async findAll(userId: string): Promise<Order[]> {
-        return this.ordersRepository.find({
-            where: { user: { id: userId } },
-            relations: ['user'],
-        });
+        return this.ordersRepository.find({});
     }
 
     async create(order: Partial<Order>): Promise<Order> {
-        const newOrder = this.ordersRepository.create({
-            id: uuid(),
-            createdAt: order.createdAt,
-            status: order.status,
-            totalPrice: order.totalPrice,
-            user: order.user,
-        });
-        return this.ordersRepository.save(newOrder);
+        // const newOrder = this.ordersRepository.create({
+        //     id: uuid(),
+        //     createdAt: order.createdAt,
+        //     status: order.status,
+        //     totalPrice: order.totalPrice,
+        //     user: order.user,
+        // });
+        return this.ordersRepository.save(order);
     }
 }

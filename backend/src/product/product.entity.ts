@@ -1,5 +1,6 @@
-import { IsNotEmpty, IsNumber, IsString, MinLength } from 'class-validator';
-import { Column, Entity, PrimaryGeneratedColumn } from 'typeorm';
+import { IsNotEmpty } from 'class-validator';
+import { Order } from 'src/order/order.entity';
+import { Column, Entity, ManyToOne, PrimaryGeneratedColumn } from 'typeorm';
 
 @Entity()
 export class Product {
@@ -8,22 +9,20 @@ export class Product {
 
     @Column()
     @IsNotEmpty()
-    @IsString()
-    @MinLength(4)
     title: string;
 
-    @Column()
+    @Column('decimal')
     @IsNotEmpty()
-    @IsNumber()
     price: number;
 
     @Column()
     @IsNotEmpty()
-    @IsString()
-    category: string;
+    category: 'burgers' | 'pizzas' | 'drinks' | 'desserts';
 
     @Column()
     @IsNotEmpty()
-    @IsString()
-    img: string;
+    imgUrl: string;
+
+    @ManyToOne(() => Order, (order) => order.products)
+    order: Order;
 }
