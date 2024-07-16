@@ -1,5 +1,13 @@
-import { Entity, Column, PrimaryGeneratedColumn, CreateDateColumn, Unique } from 'typeorm';
+import {
+    Entity,
+    Column,
+    PrimaryGeneratedColumn,
+    CreateDateColumn,
+    Unique,
+    OneToMany,
+} from 'typeorm';
 import { IsEmail, IsNotEmpty, IsString, MinLength } from 'class-validator';
+import { Order } from 'src/order/order.entity';
 
 @Entity()
 export class Customer {
@@ -26,4 +34,7 @@ export class Customer {
 
     @CreateDateColumn()
     createdAt: Date;
+
+    @OneToMany(() => Order, (order) => order.user)
+    orders: Order[];
 }

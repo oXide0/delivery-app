@@ -7,19 +7,19 @@ import { UpdateUserDto } from './dto/update-user.dto';
 import { Customer } from './user.entity';
 
 @Injectable()
-export class UsersService {
-    constructor(@InjectRepository(Customer) private usersRepository: Repository<Customer>) {}
+export class UserService {
+    constructor(@InjectRepository(Customer) private userRepository: Repository<Customer>) {}
 
     async findById(id: string): Promise<Customer> {
-        return await this.usersRepository.findOneBy({ id });
+        return await this.userRepository.findOneBy({ id });
     }
 
     async findByEmail(email: string): Promise<Customer> {
-        return await this.usersRepository.findOneBy({ email });
+        return await this.userRepository.findOneBy({ email });
     }
 
     async create(user: CreateUserDto): Promise<Customer> {
-        return await this.usersRepository.save({
+        return await this.userRepository.save({
             id: uuid(),
             username: user.username,
             password: user.password,
@@ -33,7 +33,7 @@ export class UsersService {
         if (!existingUser) {
             throw new NotFoundException(`User with ID ${user.id} not found`);
         }
-        return await this.usersRepository.save(user);
+        return await this.userRepository.save(user);
     }
 
     async delete(id: string): Promise<void> {
@@ -41,6 +41,6 @@ export class UsersService {
         if (!user) {
             throw new NotFoundException(`User with ID ${id} not found`);
         }
-        await this.usersRepository.delete(id);
+        await this.userRepository.delete(id);
     }
 }

@@ -1,10 +1,14 @@
 import { Module } from '@nestjs/common';
+import { ConfigModule } from '@nestjs/config';
 import { TypeOrmModule } from '@nestjs/typeorm';
 import { DataSource } from 'typeorm';
-import { Customer } from './users/user.entity';
-import { UsersModule } from './users/users.module';
 import { AuthModule } from './auth/auth.module';
-import { ConfigModule } from '@nestjs/config';
+import { ProductController } from './product/product.controller';
+import { ProductModule } from './product/product.module';
+import { ProductService } from './product/product.service';
+import { Customer } from './user/user.entity';
+import { UserModule } from './user/user.module';
+import { OrderModule } from './order/order.module';
 
 @Module({
     imports: [
@@ -23,10 +27,12 @@ import { ConfigModule } from '@nestjs/config';
             autoLoadEntities: true,
         }),
         AuthModule,
-        UsersModule,
+        UserModule,
+        ProductModule,
+        OrderModule,
     ],
-    controllers: [],
-    providers: [],
+    controllers: [ProductController],
+    providers: [ProductService],
 })
 export class AppModule {
     constructor(private readonly dataSource: DataSource) {}
