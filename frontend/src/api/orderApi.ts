@@ -12,7 +12,7 @@ export const createOrder = async (totalPrice: number): Promise<void> => {
     await $api.post(`/orders/create`, {
         userId,
         totalPrice,
-        status: 'new',
+        status: 'active',
         date: new Date().toISOString(),
     });
 };

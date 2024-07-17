@@ -1,12 +1,11 @@
 import { NestFactory } from '@nestjs/core';
 import { AppModule } from './app.module';
-import { ProductSeedService } from './product/product-seed.service';
+import { corsOptions } from './cors';
 
 async function bootstrap() {
     const app = await NestFactory.create(AppModule);
-    const productSeedService = app.get(ProductSeedService);
-    await productSeedService.seed();
+    app.enableCors(corsOptions);
     app.setGlobalPrefix('api');
-    await app.listen(8080);
+    await app.listen(8000);
 }
 bootstrap();

@@ -6,7 +6,8 @@
     "scripts": {
         "dev": "rsbuild dev --open",
         "build": "rsbuild build",
-        "preview": "rsbuild preview"
+        "preview": "rsbuild preview",
+        "tsc": "tsc --build ./tsconfig.json -w"
     },
     "dependencies": {
         "@emotion/react": "^11.11.1",
