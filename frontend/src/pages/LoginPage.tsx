@@ -2,7 +2,7 @@ import { Box, Button, Divider, Grid, Stack, Typography, useTheme } from '@mui/ma
 import { Formik } from 'formik';
 import { useState } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
-import { loginUser } from '../api/userApi';
+import { loginUser } from '../api/authApi';
 import BgFood from '../assets/bg-food.png';
 import Input from '../components/Input';
 import Wrapper from '../components/layouts/Wrapper';
@@ -19,9 +19,10 @@ const LoginPage = () => {
 
     const handleSubmit = async (values: LoginFormValues) => {
         try {
-            const { id } = await loginUser(values);
-            localStorage.setItem('userId', JSON.stringify(id));
-            navigate('/products');
+            const { accessToken, userId } = await loginUser(values);
+            localStorage.setItem('token', accessToken);
+            localStorage.setItem('userId', userId);
+            navigate('/');
         } catch (err) {
             setErrorMessage('Invalid email or password');
         }

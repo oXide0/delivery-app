@@ -1,16 +1,16 @@
 import { Box, Button, Divider, Stack, Typography, useTheme } from '@mui/material';
 import { useNavigate } from 'react-router-dom';
-import { CartProduct } from '../types';
+import { OrderItem } from '../types';
 import { getTotalPrice } from '../helpers/utils';
 import OrderProductCard from './OrderProductCard';
 
 interface OrderCartProps {
-    products: CartProduct[];
-    removeProduct: (cartItemId: number) => void;
-    updateProductQuantity: (cartItemId: number, quantity: number) => void;
+    items: OrderItem[];
+    removeProduct: (itemId: string) => void;
+    updateProductQuantity: (itemId: string, quantity: number) => void;
 }
 
-const OrderCart = ({ products, removeProduct, updateProductQuantity }: OrderCartProps) => {
+const OrderCart = ({ items, removeProduct, updateProductQuantity }: OrderCartProps) => {
     const navigate = useNavigate();
     const theme = useTheme();
 
@@ -29,18 +29,18 @@ const OrderCart = ({ products, removeProduct, updateProductQuantity }: OrderCart
                 My Order
             </Typography>
             <Box flex='1 1 auto' overflow='auto' my={3}>
-                {products.length ? (
+                {items.length ? (
                     <Stack gap={2}>
-                        {products.map((item) => (
+                        {items.map((item) => (
                             <OrderProductCard
                                 key={item.product.id}
-                                img={item.product.img}
+                                imgUrl={item.product.imgUrl}
                                 price={item.product.price}
                                 title={item.product.title}
                                 quantity={item.quantity}
-                                onRemoveFromCart={() => removeProduct(item.cartItemId)}
+                                onRemoveFromCart={() => removeProduct(item.id)}
                                 onUpdateProductQuantity={(quantity) =>
-                                    updateProductQuantity(item.cartItemId, quantity)
+                                    updateProductQuantity(item.id, quantity)
                                 }
                             />
                         ))}
@@ -57,7 +57,7 @@ const OrderCart = ({ products, removeProduct, updateProductQuantity }: OrderCart
                     Total
                 </Typography>
                 <Typography variant='h6' fontWeight={700}>
-                    €{getTotalPrice(products)}
+                    €{getTotalPrice(items)}
                 </Typography>
             </Stack>
             <Button variant='contained' onClick={() => navigate('/cart')} sx={{ mt: 2 }}>

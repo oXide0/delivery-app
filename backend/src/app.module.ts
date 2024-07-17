@@ -5,6 +5,7 @@ import { TypeOrmModule } from '@nestjs/typeorm';
 import { DataSource } from 'typeorm';
 import { AuthGuard } from './auth/auth.guard';
 import { AuthModule } from './auth/auth.module';
+import { EmailModule } from './email/email.module';
 import { OrderItemModule } from './order-item/order-item.module';
 import { OrderModule } from './order/order.module';
 import { ProductModule } from './product/product.module';
@@ -14,7 +15,7 @@ import { UserModule } from './user/user.module';
 @Module({
     imports: [
         ConfigModule.forRoot({
-            envFilePath: '.development.env',
+            envFilePath: '.env',
             isGlobal: true,
         }),
         TypeOrmModule.forRoot({
@@ -33,6 +34,7 @@ import { UserModule } from './user/user.module';
         ProductModule,
         OrderModule,
         OrderItemModule,
+        EmailModule,
     ],
     providers: [{ provide: APP_GUARD, useClass: AuthGuard }],
 })

@@ -1,4 +1,4 @@
-import { Body, Controller, HttpCode, HttpStatus, Post } from '@nestjs/common';
+import { Body, Controller, Get, HttpCode, HttpStatus, Post, Query } from '@nestjs/common';
 import { CreateUserDto } from 'src/user/dto/create-user.dto';
 import { AuthService } from './auth.service';
 import { SignInUserDto } from './dto/signIn-user.dto';
@@ -12,17 +12,20 @@ export class AuthController {
     @HttpCode(HttpStatus.OK)
     @Post('login')
     signIn(@Body() signInDto: SignInUserDto) {
-        return this.authService.signIn(signInDto.email, signInDto.password);
+        return this.authService.signIn(signInDto);
     }
 
     @Public()
     @HttpCode(HttpStatus.OK)
     @Post('register')
     register(@Body() registerDto: CreateUserDto) {
-        return this.authService.register({
-            email: registerDto.email,
-            password: registerDto.password,
-            username: registerDto.username,
-        });
+        return this.authService.register(registerDto);
+    }
+
+    @Public()
+    @HttpCode(HttpStatus.OK)
+    @Get('exists')
+    checkUserExists(@Query('email') email: string) {
+        return this.authService.checkUserExists(email);
     }
 }

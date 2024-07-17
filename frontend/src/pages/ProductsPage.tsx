@@ -1,45 +1,39 @@
 import { Box, Typography } from '@mui/material';
-import { useEffect, useState } from 'react';
-import { addToCart, getCart, removeProductFromCart, updateProductQuantity } from '../api/cartApi';
-import { getProducts } from '../api/productApi';
+import { productsQuery } from '../api/productApi';
 import Loader from '../components/Loader';
 import OrderCart from '../components/OrderCart';
 import Products from '../components/Products';
 import PageLayout from '../components/layouts/PageLayout';
 import { useQuery } from '../hooks/useQuery';
-import { CartProduct, Product } from '../types';
+import { createOrderItemMutation, orderItemsQuery } from '../api/orderApi';
 
 const ProductsPage = () => {
-    const [products, setProducts] = useState<Product[] | null>(null);
-    const [cart, setCart] = useState<CartProduct[] | null>(null);
-    const { fetch, isLoading, error } = useQuery(async () => {
-        const products = await getProducts();
-        const cart = await getCart();
-        setProducts(products);
-        setCart(cart);
-    });
+    const { data, isLoading, error } = useQuery(productsQuery);
+    const {
+        data: cartData,
+        isLoading: isCartLoading,
+        error: cartError,
+    } = useQuery(() => orderItemsQuery('s'));
 
-    useEffect(() => {
-        fetch();
-    }, [fetch]);
+    // const addProductToCart = (productId: string) => createOrderItemMutation(productId);
+    // const updateProduct = (orderItemId: string, quantity: number) =>
+    //     updateProductQuantity({ orderItemId, quantity });
 
-    const addProductToCart = (productId: number) => addToCart(productId);
-    const updateProduct = (cartItemId: number, quantity: number) =>
-        updateProductQuantity({ cartItemId, quantity });
+    if (isLoading || isCartLoading || !data || !cartData) return <Loader />;
 
-    if (error)
+    if (error || cartError)
         return (
             <Typography variant='h3' maxWidth='100%' margin='0 auto' fontWeight={700} pt={10}>
                 Something went wrong
             </Typography>
         );
-    if (isLoading || !products || !cart) return <Loader />;
+
     return (
         <PageLayout noPadding>
             <Box sx={{ display: 'flex' }}>
-                <Products products={products} addProductToCart={addProductToCart} />
+                <Products products={data} onAddToCart={addProductToCart} />
                 <OrderCart
-                    products={cart}
+                    items={cartData}
                     removeProduct={removeProductFromCart}
                     updateProductQuantity={updateProduct}
                 />

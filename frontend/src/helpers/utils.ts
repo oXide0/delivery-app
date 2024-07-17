@@ -1,4 +1,4 @@
-import { CartProduct } from '../types';
+import { OrderItem } from '../types';
 
 export const formatTime = (seconds: number) => {
     const minutes = Math.floor(seconds / 60);
@@ -6,6 +6,8 @@ export const formatTime = (seconds: number) => {
     return `${minutes}:${remainingSeconds < 10 ? '0' : ''}${remainingSeconds}`;
 };
 
-export function getTotalPrice(products: CartProduct[]) {
-    return products.map((item) => item.product.price * item.quantity).reduce((a, b) => a + b, 0);
+export function getTotalPrice(products: OrderItem[]) {
+    return products
+        .map((item) => parseFloat(item.product.price) * item.quantity)
+        .reduce((a, b) => a + b, 0);
 }

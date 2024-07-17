@@ -10,6 +10,6 @@ import { OrderService } from './order.service';
     imports: [TypeOrmModule.forFeature([Order]), UserModule, forwardRef(() => OrderItemModule)],
     providers: [OrderService],
     controllers: [OrderController],
-    exports: [TypeOrmModule],
+    exports: [TypeOrmModule, OrderService],
 })
 export class OrderModule {}

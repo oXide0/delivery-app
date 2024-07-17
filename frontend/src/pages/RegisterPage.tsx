@@ -3,7 +3,8 @@ import { Formik } from 'formik';
 import { useEffect, useState } from 'react';
 import PinField from 'react-pin-field';
 import { Link, useNavigate } from 'react-router-dom';
-import { registerUser } from '../api/userApi';
+import { registerUser, checkUserExists } from '../api/authApi';
+import { sendCode, verifyCode } from '../api/emailApi';
 import BgFood from '../assets/bg-food.png';
 import Input from '../components/Input';
 import Wrapper from '../components/layouts/Wrapper';
@@ -22,33 +23,35 @@ interface PinFormValues {
 
 const RegisterPage = () => {
     const navigate = useNavigate();
-    const [userValues, setUserValues] = useState<SignUpFormValues | null>();
+    const [userValues, setUserValues] = useState<SignUpFormValues>();
     const [errorMessage, setErrorMessage] = useState<string>('');
     const [timer, setTimer] = useState<number>(600);
 
     const handleSubmit = async (values: SignUpFormValues) => {
-        const userExists = false;
+        const userExists = await checkUserExists(values.email);
         if (userExists) {
             setErrorMessage('User already exists');
             return;
         }
-        // await sendCode(values.email, values.username);
+        await sendCode(values.email, values.username);
         setUserValues(values);
     };
 
     const handlePinSubmit = async (values: PinFormValues) => {
         if (!userValues) return;
         try {
-            // await verifyCode(userValues.email, values.code);
-        } catch (error: any) {
+            await verifyCode(userValues.email, values.code);
+        } catch (error) {
             setErrorMessage('Invalid code');
+            return;
         }
 
         try {
-            const { id } = await registerUser(userValues);
-            localStorage.setItem('userId', id.toString());
+            const { accessToken, userId } = await registerUser(userValues);
+            localStorage.setItem('token', accessToken);
+            localStorage.setItem('userId', userId);
             navigate('/');
-        } catch (error: any) {
+        } catch (error) {
             setErrorMessage('Something went wrong');
         }
     };

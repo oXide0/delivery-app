@@ -1,33 +1,20 @@
-export interface User {
-    id: number;
-    name: string;
-    email: string;
-    password: string;
-}
-
-export interface Product {
-    id: number;
-    title: string;
-    price: number;
-    img: string;
-    category: Category;
-}
-
-export interface CartProduct {
-    cartItemId: number;
-    product: Product;
+export interface OrderItem {
+    id: string;
     quantity: number;
+    product: Product;
 }
 
 export interface Order {
-    id: number;
-    user: User;
+    id: string;
     totalPrice: number;
-    status: string;
-    date: string;
+    status: 'active' | 'completed';
+    createdAt: Date;
 }
 
-interface Category {
-    id: number;
-    name: 'Drinks' | 'Pizza' | 'Burgers' | 'Desserts';
+export interface Product {
+    id: string;
+    title: string;
+    price: string;
+    imgUrl: string;
+    category: 'burgers' | 'drinks' | 'pizzas' | 'desserts';
 }

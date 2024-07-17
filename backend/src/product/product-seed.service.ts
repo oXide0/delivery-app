@@ -80,7 +80,7 @@ export class ProductSeedService {
                 id: uuid(),
                 title: 'Coca‑Cola',
                 category: 'drinks',
-                imgUrl: 'https://www.diegovitagliano.it/wp-content/uploads/2023/03/diego-vitagliano-la-pizza-3.jpg',
+                imgUrl: 'https://www.coca-cola.com/content/dam/onexp/us/en/brands/coca-cola-local-tastes/v2/usa_coca-cola-peach-bottle_1100x1100.jpg/width1960.jpg',
                 price: 5.99,
                 orderItem: null,
             },
@@ -148,5 +148,10 @@ export class ProductSeedService {
         }
 
         console.log('Products have been seeded');
+    }
+
+    async clear() {
+        await this.productService.clear();
+        console.log('Products have been cleared');
     }
 }

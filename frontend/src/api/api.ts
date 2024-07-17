@@ -11,11 +11,18 @@ $api.interceptors.response.use(
     async (error) => {
         const navigate = useNavigate();
         if (error.response && error.response.status === 401) {
+            localStorage.removeItem('token');
             localStorage.removeItem('userId');
             navigate('/login');
         }
         return Promise.reject(error);
     }
 );
+
+$api.interceptors.request.use((config) => {
+    const token = localStorage.getItem('token');
+    config.headers.Authorization = `Bearer ${token}`;
+    return config;
+});
 
 export default $api;

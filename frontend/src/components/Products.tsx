@@ -11,18 +11,14 @@ interface TabPanelProps {
 
 interface ProductsProps {
     products: Product[];
-    addProductToCart: (productId: number) => void;
+    onAddToCart: (productId: string) => void;
 }
 
-const Products = ({ products, addProductToCart }: ProductsProps) => {
+const Products = ({ products, onAddToCart }: ProductsProps) => {
     const [value, setValue] = useState(0);
 
     const handleChange = (_: React.SyntheticEvent, newValue: number) => {
         setValue(newValue);
-    };
-
-    const onAddToCart = (productId: number) => {
-        addProductToCart(productId);
     };
 
     return (
@@ -39,11 +35,11 @@ const Products = ({ products, addProductToCart }: ProductsProps) => {
                 <Stack direction='row' flexWrap='wrap' gap={3}>
                     {products.map(
                         (product) =>
-                            product.category.name === 'Burgers' && (
+                            product.category === 'burgers' && (
                                 <ProductCard
                                     key={product.id}
                                     title={product.title}
-                                    img={product.img}
+                                    imgUrl={product.imgUrl}
                                     price={product.price}
                                     onAddToCart={() => onAddToCart(product.id)}
                                 />
@@ -55,11 +51,11 @@ const Products = ({ products, addProductToCart }: ProductsProps) => {
                 <Stack direction='row' flexWrap='wrap' gap={3}>
                     {products.map(
                         (product) =>
-                            product.category.name === 'Pizza' && (
+                            product.category === 'pizzas' && (
                                 <ProductCard
                                     key={product.id}
                                     title={product.title}
-                                    img={product.img}
+                                    imgUrl={product.imgUrl}
                                     price={product.price}
                                     onAddToCart={() => onAddToCart(product.id)}
                                 />
@@ -71,11 +67,11 @@ const Products = ({ products, addProductToCart }: ProductsProps) => {
                 <Stack direction='row' flexWrap='wrap' gap={3}>
                     {products.map(
                         (product) =>
-                            product.category.name === 'Drinks' && (
+                            product.category === 'drinks' && (
                                 <ProductCard
                                     key={product.id}
                                     title={product.title}
-                                    img={product.img}
+                                    imgUrl={product.imgUrl}
                                     price={product.price}
                                     onAddToCart={() => onAddToCart(product.id)}
                                 />
@@ -87,11 +83,11 @@ const Products = ({ products, addProductToCart }: ProductsProps) => {
                 <Stack direction='row' flexWrap='wrap' gap={3}>
                     {products.map(
                         (product) =>
-                            product.category.name === 'Desserts' && (
+                            product.category === 'desserts' && (
                                 <ProductCard
                                     key={product.id}
                                     title={product.title}
-                                    img={product.img}
+                                    imgUrl={product.imgUrl}
                                     price={product.price}
                                     onAddToCart={() => onAddToCart(product.id)}
                                 />

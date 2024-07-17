@@ -1,15 +1,15 @@
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 
-type CallbackFunction = () => Promise<any>;
-
-export const useQuery = (callback: CallbackFunction) => {
-    const [isLoading, setIsLoading] = useState(false);
-    const [error, setError] = useState('');
+export const useQuery = <T>(callback: () => Promise<T>) => {
+    const [data, setData] = useState<T | null>(null);
+    const [isLoading, setIsLoading] = useState<boolean>(false);
+    const [error, setError] = useState<string>('');
 
     const fetch = async () => {
         try {
             setIsLoading(true);
-            await callback();
+            const response = await callback();
+            setData(response);
         } catch (error) {
             if (error instanceof Error) {
                 setError(error.message);
@@ -19,5 +19,9 @@ export const useQuery = (callback: CallbackFunction) => {
         }
     };
 
-    return { fetch, isLoading, error };
+    useEffect(() => {
+        fetch();
+    }, []);
+
+    return { data, isLoading, error };
 };

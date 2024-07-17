@@ -14,7 +14,12 @@ export class OrderController {
         private readonly orderItemService: OrderItemService
     ) {}
 
-    @Get()
+    @Get(':id')
+    async getActiveOrder(@Param('id') userId: string) {
+        return this.orderService.findActiveOrderByUserId(userId);
+    }
+
+    @Get('history')
     async getAllOrders(@Query('userId') userId: string): Promise<Order[]> {
         return this.orderService.findAllByUserId(userId);
     }

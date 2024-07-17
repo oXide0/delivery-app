@@ -21,10 +21,20 @@ export class OrderService {
         });
     }
 
+    async findActiveOrderByUserId(userId: string): Promise<Order> {
+        return this.orderRepository.findOne({
+            where: {
+                user: { id: userId },
+                status: 'active',
+            },
+            relations: ['user'],
+        });
+    }
+
     async create(order: CreateOrderDto): Promise<Order> {
         const newOrder = this.orderRepository.create({
             id: uuid(),
-            totalPrice: order.totalPrice,
+            totalPrice: 0,
             status: 'active',
             createdAt: new Date(),
             user: { id: order.userId },

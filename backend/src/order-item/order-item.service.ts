@@ -23,7 +23,7 @@ export class OrderItemService {
     }
 
     async create(createOrderItemDto: CreateOrderItemDto): Promise<OrderItem> {
-        const { orderId, productId, quantity } = createOrderItemDto;
+        const { orderId, productId } = createOrderItemDto;
 
         const order = await this.orderRepository.findOne({ where: { id: orderId } });
         if (!order) {
@@ -38,7 +38,7 @@ export class OrderItemService {
         const orderItem = this.orderItemRepository.create({
             order,
             product,
-            quantity,
+            quantity: 1,
         });
 
         return this.orderItemRepository.save(orderItem);

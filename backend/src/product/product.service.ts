@@ -22,4 +22,8 @@ export class ProductService {
     async findProductsByCategory(category: ProductCategory): Promise<Product[]> {
         return this.productRepository.find({ where: { category } });
     }
+
+    async clear(): Promise<void> {
+        await this.productRepository.clear();
+    }
 }
