@@ -1,28 +1,34 @@
 import { Injectable } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
 import { Repository } from 'typeorm';
-import { Order } from './order.entity';
 import { v4 as uuid } from 'uuid';
+import { CreateOrderDto } from './dto/create-order.dto';
+import { Order } from './order.entity';
 
 @Injectable()
 export class OrderService {
     constructor(
         @InjectRepository(Order)
-        private ordersRepository: Repository<Order>
+        private orderRepository: Repository<Order>
     ) {}
 
-    async findAll(userId: string): Promise<Order[]> {
-        return this.ordersRepository.find({});
+    async findAllByUserId(userId: string): Promise<Order[]> {
+        return this.orderRepository.find({
+            where: {
+                user: { id: userId },
+            },
+            relations: ['user'],
+        });
     }
 
-    async create(order: Partial<Order>): Promise<Order> {
-        // const newOrder = this.ordersRepository.create({
-        //     id: uuid(),
-        //     createdAt: order.createdAt,
-        //     status: order.status,
-        //     totalPrice: order.totalPrice,
-        //     user: order.user,
-        // });
-        return this.ordersRepository.save(order);
+    async create(order: CreateOrderDto): Promise<Order> {
+        const newOrder = this.orderRepository.create({
+            id: uuid(),
+            totalPrice: order.totalPrice,
+            status: 'active',
+            createdAt: new Date(),
+            user: { id: order.userId },
+        });
+        return this.orderRepository.save(newOrder);
     }
 }

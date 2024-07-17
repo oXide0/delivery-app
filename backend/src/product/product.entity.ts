@@ -1,6 +1,7 @@
 import { IsNotEmpty } from 'class-validator';
-import { Order } from 'src/order/order.entity';
-import { Column, Entity, ManyToOne, PrimaryGeneratedColumn } from 'typeorm';
+import { OrderItem } from 'src/order-item/order-item.entity';
+import { Column, Entity, OneToOne, PrimaryGeneratedColumn } from 'typeorm';
+import { ProductCategory } from './interfaces/product.interface';
 
 @Entity()
 export class Product {
@@ -17,12 +18,12 @@ export class Product {
 
     @Column()
     @IsNotEmpty()
-    category: 'burgers' | 'pizzas' | 'drinks' | 'desserts';
+    category: ProductCategory;
 
     @Column()
     @IsNotEmpty()
     imgUrl: string;
 
-    @ManyToOne(() => Order, (order) => order.products)
-    order: Order;
+    @OneToOne(() => OrderItem, (order) => order.product)
+    orderItem: OrderItem;
 }

@@ -1,5 +1,5 @@
 import { IsNotEmpty } from 'class-validator';
-import { Product } from 'src/product/product.entity';
+import { OrderItem } from 'src/order-item/order-item.entity';
 import { Customer } from 'src/user/user.entity';
 import {
     Column,
@@ -9,6 +9,7 @@ import {
     OneToMany,
     PrimaryGeneratedColumn,
 } from 'typeorm';
+import { OrderStatus } from './interfaces/order.interface';
 
 @Entity()
 export class Order {
@@ -21,7 +22,7 @@ export class Order {
 
     @Column()
     @IsNotEmpty()
-    status: 'active' | 'completed';
+    status: OrderStatus;
 
     @CreateDateColumn()
     createdAt: Date;
@@ -29,6 +30,6 @@ export class Order {
     @ManyToOne(() => Customer, (customer) => customer.orders)
     user: Customer;
 
-    @OneToMany(() => Product, (product) => product.order)
-    products: Product[];
+    @OneToMany(() => OrderItem, (order) => order.order)
+    orderItems: OrderItem[];
 }
