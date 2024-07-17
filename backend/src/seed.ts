@@ -3,10 +3,10 @@ import { AppModule } from './app.module';
 import { ProductSeedService } from './product/product-seed.service';
 
 async function bootstrap() {
-    const app = await NestFactory.create(AppModule);
+    const app = await NestFactory.createApplicationContext(AppModule);
     const productSeedService = app.get(ProductSeedService);
     await productSeedService.seed();
-    app.setGlobalPrefix('api');
-    await app.listen(8080);
+    await app.close();
 }
+
 bootstrap();
