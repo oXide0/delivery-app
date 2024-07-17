@@ -1,9 +1,8 @@
-import { Box, Button, Divider, Grid, Stack, Typography } from '@mui/material';
+import { Box, Button, Divider, Grid, Stack, Typography, useTheme } from '@mui/material';
 import { Formik } from 'formik';
 import { useEffect, useState } from 'react';
 import PinField from 'react-pin-field';
-import { useNavigate } from 'react-router-dom';
-import { sendCode, verifyCode } from '../api/emailApi';
+import { Link, useNavigate } from 'react-router-dom';
 import { registerUser } from '../api/userApi';
 import BgFood from '../assets/bg-food.png';
 import Input from '../components/Input';
@@ -12,7 +11,7 @@ import { codeValidationSchema, registerValidationSchema } from '../helpers/schem
 import { formatTime } from '../helpers/utils';
 
 interface SignUpFormValues {
-    name: string;
+    username: string;
     email: string;
     password: string;
 }
@@ -33,14 +32,14 @@ const RegisterPage = () => {
             setErrorMessage('User already exists');
             return;
         }
-        await sendCode(values.email, values.name);
+        // await sendCode(values.email, values.username);
         setUserValues(values);
     };
 
     const handlePinSubmit = async (values: PinFormValues) => {
         if (!userValues) return;
         try {
-            await verifyCode(userValues.email, values.code);
+            // await verifyCode(userValues.email, values.code);
         } catch (error: any) {
             setErrorMessage('Invalid code');
         }
@@ -118,9 +117,11 @@ const RegisterPage = () => {
 };
 
 const SignUpForm = ({ onSubmit }: { onSubmit: (values: SignUpFormValues) => void }) => {
+    const theme = useTheme();
+
     return (
         <Formik
-            initialValues={{ name: '', email: '', password: '' }}
+            initialValues={{ username: '', email: '', password: '' }}
             onSubmit={(values) => onSubmit(values)}
             validationSchema={registerValidationSchema}
         >
@@ -128,12 +129,12 @@ const SignUpForm = ({ onSubmit }: { onSubmit: (values: SignUpFormValues) => void
                 <Box component='form' onSubmit={handleSubmit} display='flex' flexDirection='column'>
                     <Stack spacing={2}>
                         <Input
-                            name='name'
+                            name='username'
                             label='Your name'
-                            value={values.name}
+                            value={values.username}
                             onChange={handleChange}
-                            error={touched.name && Boolean(errors.name)}
-                            helperText={touched.name && errors.name}
+                            error={touched.username && Boolean(errors.username)}
+                            helperText={touched.username && errors.username}
                         />
                         <Input
                             name='email'
@@ -157,6 +158,18 @@ const SignUpForm = ({ onSubmit }: { onSubmit: (values: SignUpFormValues) => void
                     <Button type='submit' sx={{ mt: 5, p: 1 }}>
                         Sign up
                     </Button>
+                    <Typography textAlign='center' pt={4}>
+                        Already have an account?{' '}
+                        <Link
+                            to='/login'
+                            style={{
+                                textDecoration: 'underline',
+                                color: theme.palette.primary.main,
+                            }}
+                        >
+                            Login
+                        </Link>
+                    </Typography>
                 </Box>
             )}
         </Formik>

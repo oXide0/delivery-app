@@ -3,6 +3,8 @@
         "module": "NodeNext",
         "esModuleInterop": true,
         "allowSyntheticDefaultImports": true,
-        "strict": true
+        "strict": true,
+        "outDir": "./build",
+        "baseUrl": "src/*"
     }
 }

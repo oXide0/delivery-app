@@ -10,7 +10,7 @@ $api.interceptors.response.use(
     (response) => response,
     async (error) => {
         const navigate = useNavigate();
-        if (error.response && error.response.status === 403) {
+        if (error.response && error.response.status === 401) {
             localStorage.removeItem('userId');
             navigate('/login');
         }

@@ -1,14 +1,15 @@
-import { Box, Button, Container, Divider, Grid, Stack, Typography, useTheme } from '@mui/material';
+import { Box, Button, Divider, Grid, Stack, Typography, useTheme } from '@mui/material';
 import { Formik } from 'formik';
 import { useState } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
+import { loginUser } from '../api/userApi';
 import BgFood from '../assets/bg-food.png';
 import Input from '../components/Input';
+import Wrapper from '../components/layouts/Wrapper';
 import { loginValidationSchema } from '../helpers/schemes';
-import { loginUser } from '../api/userApi';
 
 interface LoginFormValues {
-    username: string;
+    email: string;
     password: string;
 }
 
@@ -22,12 +23,12 @@ const LoginPage = () => {
             localStorage.setItem('userId', JSON.stringify(id));
             navigate('/products');
         } catch (err) {
-            setErrorMessage('Invalid username or password');
+            setErrorMessage('Invalid email or password');
         }
     };
 
     return (
-        <Container>
+        <Wrapper>
             <Grid container height='100vh'>
                 <Grid item xs={6}>
                     <img
@@ -44,8 +45,8 @@ const LoginPage = () => {
                         height='100%'
                         p={6}
                     >
-                        <Typography variant='h3' fontWeight={700}>
-                            Login
+                        <Typography variant='h3' textAlign='center' fontWeight={700}>
+                            Login to your account
                         </Typography>
                         <Stack my={5}>
                             {errorMessage && (
@@ -60,7 +61,7 @@ const LoginPage = () => {
                     </Box>
                 </Grid>
             </Grid>
-        </Container>
+        </Wrapper>
     );
 };
 
@@ -69,23 +70,21 @@ const LoginForm = ({ onSubmit }: { onSubmit: (values: LoginFormValues) => void }
 
     return (
         <Formik
-            initialValues={{ username: '', password: '' }}
-            onSubmit={(values) =>
-                onSubmit({ username: values.username, password: values.password })
-            }
+            initialValues={{ email: '', password: '' }}
+            onSubmit={(values) => onSubmit({ email: values.email, password: values.password })}
             validationSchema={loginValidationSchema}
         >
             {({ values, handleChange, handleSubmit, errors, touched }) => (
                 <Box component='form' onSubmit={handleSubmit} display='flex' flexDirection='column'>
                     <Stack spacing={2}>
                         <Input
-                            name='username'
-                            label='Username Address'
-                            type='username'
-                            value={values.username}
+                            name='email'
+                            label='Email Address'
+                            type='email'
+                            value={values.email}
                             onChange={handleChange}
-                            error={touched.username && Boolean(errors.username)}
-                            helperText={touched.username && errors.username}
+                            error={touched.email && Boolean(errors.email)}
+                            helperText={touched.email && errors.email}
                         />
                         <Input
                             name='password'
@@ -102,7 +101,7 @@ const LoginForm = ({ onSubmit }: { onSubmit: (values: LoginFormValues) => void }
                     </Button>
 
                     <Typography textAlign='center' pt={4}>
-                        Don't have account yet?
+                        Don't have account yet?{' '}
                         <Link
                             to='/register'
                             style={{
