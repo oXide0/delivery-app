@@ -1,0 +1,11 @@
+{
+    "extends": "./tsconfig.json",
+    "files": [],
+    "references": [
+        { "path": "./packages/api" },
+        { "path": "./packages/frontend" },
+        { "path": "./packages/network" },
+        { "path": "./packages/storybook" },
+        { "path": "./packages/uploads" }
+    ]
+}
