@@ -6,6 +6,7 @@ import { TypeOrmModule } from '@nestjs/typeorm';
 import { DataSource } from 'typeorm';
 import { AuthGuard } from './auth/auth.guard';
 import { AuthModule } from './auth/auth.module';
+import { environment } from './config/environment';
 import { EmailModule } from './email/email.module';
 import { OrderItem } from './order-item/order-item.entity';
 import { OrderItemModule } from './order-item/order-item.module';
@@ -24,16 +25,16 @@ import { UserModule } from './user/user.module';
         }),
         TypeOrmModule.forRoot({
             type: 'postgres',
-            host: process.env.DB_HOST,
-            port: parseInt(process.env.DB_PORT),
-            username: process.env.DB_USER,
-            password: process.env.DB_PASS,
-            database: process.env.DB_NAME,
+            host: environment.dbHost,
+            port: environment.dbPort,
+            username: environment.dbUser,
+            password: environment.dbPass,
+            database: environment.dbName,
             entities: [Customer, Product, Order, OrderItem],
             synchronize: true,
             autoLoadEntities: true,
         }),
-        MongooseModule.forRoot(process.env.MONGO_URI),
+        MongooseModule.forRoot(environment.mongoUri),
         AuthModule,
         UserModule,
         ProductModule,

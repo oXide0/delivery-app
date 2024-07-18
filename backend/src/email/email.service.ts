@@ -7,6 +7,7 @@ import * as path from 'path';
 import { SendCodeDto } from './dto/send-code.dto';
 import { VerifyCodeDto } from './dto/verify-code.dto';
 import { EmailVerificationCode } from './email-verification-code.model';
+import { environment } from 'src/config/environment';
 
 @Injectable()
 export class EmailService {
@@ -23,7 +24,7 @@ export class EmailService {
             .replace('{{ USER_NAME }}', sendCodeDto.username);
 
         const mailOptions: SendMailOptions = {
-            from: process.env.EMAIL,
+            from: environment.email,
             to: sendCodeDto.email,
             subject: 'Access Code',
             html: modifiedHTML,
@@ -38,8 +39,8 @@ export class EmailService {
         const transporter = createTransport({
             service: 'gmail',
             auth: {
-                user: process.env.EMAIL,
-                pass: process.env.EMAIL_PASSWORD,
+                user: environment.email,
+                pass: environment.emailPassword,
             },
         });
 
