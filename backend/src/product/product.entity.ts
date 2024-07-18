@@ -1,6 +1,5 @@
 import { IsNotEmpty } from 'class-validator';
-import { OrderItem } from 'src/order-item/order-item.entity';
-import { Column, Entity, OneToOne, PrimaryGeneratedColumn } from 'typeorm';
+import { Column, Entity, PrimaryGeneratedColumn } from 'typeorm';
 import { ProductCategory } from './interfaces/product.interface';
 
 @Entity()
@@ -23,7 +22,4 @@ export class Product {
     @Column()
     @IsNotEmpty()
     imgUrl: string;
-
-    @OneToOne(() => OrderItem, (order) => order.product)
-    orderItem: OrderItem;
 }

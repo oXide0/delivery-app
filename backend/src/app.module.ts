@@ -6,8 +6,11 @@ import { DataSource } from 'typeorm';
 import { AuthGuard } from './auth/auth.guard';
 import { AuthModule } from './auth/auth.module';
 import { EmailModule } from './email/email.module';
+import { OrderItem } from './order-item/order-item.entity';
 import { OrderItemModule } from './order-item/order-item.module';
+import { Order } from './order/order.entity';
 import { OrderModule } from './order/order.module';
+import { Product } from './product/product.entity';
 import { ProductModule } from './product/product.module';
 import { Customer } from './user/user.entity';
 import { UserModule } from './user/user.module';
@@ -25,7 +28,7 @@ import { UserModule } from './user/user.module';
             username: process.env.DB_USER,
             password: process.env.DB_PASS,
             database: process.env.DB_NAME,
-            entities: [Customer],
+            entities: [Customer, Product, Order, OrderItem],
             synchronize: true,
             autoLoadEntities: true,
         }),

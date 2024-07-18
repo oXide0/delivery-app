@@ -1,21 +1,19 @@
 import { Injectable, NotFoundException } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
+import { OrderService } from 'src/order/order.service';
+import { ProductService } from 'src/product/product.service';
 import { Repository } from 'typeorm';
-import { OrderItem } from './order-item.entity';
 import { CreateOrderItemDto } from './dto/create-order-item.dto';
 import { UpdateOrderItemDto } from './dto/update-order-item.dto';
-import { Order } from '../order/order.entity';
-import { Product } from '../product/product.entity';
+import { OrderItem } from './order-item.entity';
 
 @Injectable()
 export class OrderItemService {
     constructor(
         @InjectRepository(OrderItem)
         private orderItemRepository: Repository<OrderItem>,
-        @InjectRepository(Order)
-        private orderRepository: Repository<Order>,
-        @InjectRepository(Product)
-        private productRepository: Repository<Product>
+        private orderService: OrderService,
+        private productService: ProductService
     ) {}
 
     async findAllByOrderId(orderId: string): Promise<OrderItem[]> {
@@ -25,19 +23,18 @@ export class OrderItemService {
     async create(createOrderItemDto: CreateOrderItemDto): Promise<OrderItem> {
         const { orderId, productId } = createOrderItemDto;
 
-        const order = await this.orderRepository.findOne({ where: { id: orderId } });
+        const order = await this.orderService.findOne(orderId);
         if (!order) {
             throw new NotFoundException('Order not found');
         }
 
-        const product = await this.productRepository.findOne({ where: { id: productId } });
+        const product = await this.productService.findOne(productId);
         if (!product) {
             throw new NotFoundException('Product not found');
         }
 
         const orderItem = this.orderItemRepository.create({
             order,
-            product,
             quantity: 1,
         });
 
@@ -50,16 +47,12 @@ export class OrderItemService {
             throw new NotFoundException('OrderItem not found');
         }
 
-        const order = await this.orderRepository.findOne({
-            where: { id: updateOrderItemDto.orderId },
-        });
+        const order = await this.orderService.findOne(updateOrderItemDto.orderId);
         if (!order) {
             throw new NotFoundException('Order not found');
         }
 
-        const product = await this.productRepository.findOne({
-            where: { id: updateOrderItemDto.productId },
-        });
+        const product = await this.productService.findOne(updateOrderItemDto.productId);
         if (!product) {
             throw new NotFoundException('Product not found');
         }
