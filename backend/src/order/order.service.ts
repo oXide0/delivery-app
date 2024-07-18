@@ -22,13 +22,14 @@ export class OrderService {
     }
 
     async findActiveOrderByUserId(userId: string): Promise<Order> {
-        return this.orderRepository.findOne({
+        const res = await this.orderRepository.findOne({
             where: {
                 user: { id: userId },
                 status: 'active',
             },
-            relations: ['user'],
+            relations: ['orderItems'],
         });
+        return res;
     }
 
     async create(order: CreateOrderDto): Promise<Order> {

@@ -1,11 +1,10 @@
-import { Controller, Get, Post, Put, Delete, Body, Query, Param } from '@nestjs/common';
-import { OrderService } from './order.service';
-import { OrderItemService } from '../order-item/order-item.service';
-import { Order } from './order.entity';
-import { CreateOrderDto } from './dto/create-order.dto';
+import { Body, Controller, Delete, Get, Param, Post, Put, Query } from '@nestjs/common';
 import { CreateOrderItemDto } from '../order-item/dto/create-order-item.dto';
 import { UpdateOrderItemDto } from '../order-item/dto/update-order-item.dto';
 import { OrderItem } from '../order-item/order-item.entity';
+import { OrderItemService } from '../order-item/order-item.service';
+import { Order } from './order.entity';
+import { OrderService } from './order.service';
 
 @Controller('orders')
 export class OrderController {
@@ -14,24 +13,14 @@ export class OrderController {
         private readonly orderItemService: OrderItemService
     ) {}
 
-    @Get(':id')
-    async getActiveOrder(@Param('id') userId: string) {
+    @Get('active')
+    async getActiveOrder(@Query('userId') userId: string) {
         return this.orderService.findActiveOrderByUserId(userId);
     }
 
     @Get('history')
     async getAllOrders(@Query('userId') userId: string): Promise<Order[]> {
         return this.orderService.findAllByUserId(userId);
-    }
-
-    @Post('create')
-    async createOrder(@Body() createOrderDto: CreateOrderDto): Promise<Order> {
-        return this.orderService.create(createOrderDto);
-    }
-
-    @Get('items')
-    async getAllOrderItems(@Query('orderId') orderId: string): Promise<OrderItem[]> {
-        return this.orderItemService.findAllByOrderId(orderId);
     }
 
     @Post('items')

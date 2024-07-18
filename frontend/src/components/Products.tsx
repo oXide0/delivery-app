@@ -11,10 +11,10 @@ interface TabPanelProps {
 
 interface ProductsProps {
     products: Product[];
-    onAddToCart: (productId: string) => void;
+    onAddToOrder: (productId: string) => void;
 }
 
-const Products = ({ products, onAddToCart }: ProductsProps) => {
+const Products = ({ products, onAddToOrder }: ProductsProps) => {
     const [value, setValue] = useState(0);
 
     const handleChange = (_: React.SyntheticEvent, newValue: number) => {
@@ -41,7 +41,7 @@ const Products = ({ products, onAddToCart }: ProductsProps) => {
                                     title={product.title}
                                     imgUrl={product.imgUrl}
                                     price={product.price}
-                                    onAddToCart={() => onAddToCart(product.id)}
+                                    onAddToOrder={() => onAddToOrder(product.id)}
                                 />
                             )
                     )}
@@ -57,7 +57,7 @@ const Products = ({ products, onAddToCart }: ProductsProps) => {
                                     title={product.title}
                                     imgUrl={product.imgUrl}
                                     price={product.price}
-                                    onAddToCart={() => onAddToCart(product.id)}
+                                    onAddToOrder={() => onAddToOrder(product.id)}
                                 />
                             )
                     )}
@@ -73,7 +73,7 @@ const Products = ({ products, onAddToCart }: ProductsProps) => {
                                     title={product.title}
                                     imgUrl={product.imgUrl}
                                     price={product.price}
-                                    onAddToCart={() => onAddToCart(product.id)}
+                                    onAddToOrder={() => onAddToOrder(product.id)}
                                 />
                             )
                     )}
@@ -89,7 +89,7 @@ const Products = ({ products, onAddToCart }: ProductsProps) => {
                                     title={product.title}
                                     imgUrl={product.imgUrl}
                                     price={product.price}
-                                    onAddToCart={() => onAddToCart(product.id)}
+                                    onAddToOrder={() => onAddToOrder(product.id)}
                                 />
                             )
                     )}

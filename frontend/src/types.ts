@@ -9,6 +9,7 @@ export interface Order {
     totalPrice: number;
     status: 'active' | 'completed';
     createdAt: Date;
+    orderItems: OrderItem[];
 }
 
 export interface Product {

@@ -1,27 +1,28 @@
 import { Box, Typography } from '@mui/material';
+import {
+    activeOrderQuery,
+    createOrderItemMutation,
+    removeOrderItemMutation,
+    updateOrderItemMutation,
+} from '../api/orderApi';
 import { productsQuery } from '../api/productApi';
 import Loader from '../components/Loader';
 import OrderCart from '../components/OrderCart';
 import Products from '../components/Products';
 import PageLayout from '../components/layouts/PageLayout';
 import { useQuery } from '../hooks/useQuery';
-import { createOrderItemMutation, orderItemsQuery } from '../api/orderApi';
 
 const ProductsPage = () => {
     const { data, isLoading, error } = useQuery(productsQuery);
     const {
-        data: cartData,
-        isLoading: isCartLoading,
-        error: cartError,
-    } = useQuery(() => orderItemsQuery('s'));
+        data: orderData,
+        isLoading: isOrderLoading,
+        error: orderError,
+    } = useQuery(activeOrderQuery);
 
-    // const addProductToCart = (productId: string) => createOrderItemMutation(productId);
-    // const updateProduct = (orderItemId: string, quantity: number) =>
-    //     updateProductQuantity({ orderItemId, quantity });
+    if (isLoading || isOrderLoading || !data || !orderData) return <Loader />;
 
-    if (isLoading || isCartLoading || !data || !cartData) return <Loader />;
-
-    if (error || cartError)
+    if (error || orderError)
         return (
             <Typography variant='h3' maxWidth='100%' margin='0 auto' fontWeight={700} pt={10}>
                 Something went wrong
@@ -31,11 +32,18 @@ const ProductsPage = () => {
     return (
         <PageLayout noPadding>
             <Box sx={{ display: 'flex' }}>
-                <Products products={data} onAddToCart={addProductToCart} />
+                <Products
+                    products={data}
+                    onAddToOrder={(productId) =>
+                        createOrderItemMutation({ orderId: orderData.id, productId: productId })
+                    }
+                />
                 <OrderCart
-                    items={cartData}
-                    removeProduct={removeProductFromCart}
-                    updateProductQuantity={updateProduct}
+                    items={orderData.orderItems}
+                    removeItem={(id) => removeOrderItemMutation(id)}
+                    updateItemQuantity={(id, quantity) =>
+                        updateOrderItemMutation({ id: id, quantity: quantity })
+                    }
                 />
             </Box>
         </PageLayout>

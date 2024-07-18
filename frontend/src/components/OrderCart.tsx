@@ -6,11 +6,11 @@ import OrderProductCard from './OrderProductCard';
 
 interface OrderCartProps {
     items: OrderItem[];
-    removeProduct: (itemId: string) => void;
-    updateProductQuantity: (itemId: string, quantity: number) => void;
+    removeItem: (itemId: string) => void;
+    updateItemQuantity: (itemId: string, quantity: number) => void;
 }
 
-const OrderCart = ({ items, removeProduct, updateProductQuantity }: OrderCartProps) => {
+const OrderCart = ({ items, removeItem, updateItemQuantity }: OrderCartProps) => {
     const navigate = useNavigate();
     const theme = useTheme();
 
@@ -38,9 +38,9 @@ const OrderCart = ({ items, removeProduct, updateProductQuantity }: OrderCartPro
                                 price={item.product.price}
                                 title={item.product.title}
                                 quantity={item.quantity}
-                                onRemoveFromCart={() => removeProduct(item.id)}
+                                onRemoveFromCart={() => removeItem(item.id)}
                                 onUpdateProductQuantity={(quantity) =>
-                                    updateProductQuantity(item.id, quantity)
+                                    updateItemQuantity(item.id, quantity)
                                 }
                             />
                         ))}

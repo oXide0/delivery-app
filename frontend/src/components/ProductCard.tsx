@@ -5,10 +5,16 @@ interface ProductCardProps {
     title: string;
     imgUrl: string;
     price: string;
-    onAddToCart: () => void;
+    onAddToOrder: () => void;
 }
 
-const ProductCard = ({ title, price, imgUrl, type = 'product', onAddToCart }: ProductCardProps) => {
+const ProductCard = ({
+    title,
+    price,
+    imgUrl,
+    type = 'product',
+    onAddToOrder,
+}: ProductCardProps) => {
     return (
         <Card sx={{ width: 345, borderRadius: 4 }}>
             {type === 'product' && <CardMedia sx={{ height: 140 }} image={imgUrl} title={title} />}
@@ -22,7 +28,7 @@ const ProductCard = ({ title, price, imgUrl, type = 'product', onAddToCart }: Pr
             </CardContent>
             {type === 'product' && (
                 <CardActions>
-                    <Button size='small' variant='contained' onClick={onAddToCart}>
+                    <Button size='small' variant='contained' onClick={onAddToOrder}>
                         Add to cart
                     </Button>
                 </CardActions>

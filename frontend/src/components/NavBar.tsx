@@ -6,7 +6,7 @@ import { ThemeModeContext } from '../providers/ThemeContext';
 import { useContext } from 'react';
 
 const NavBar = () => {
-    const routeMatch = useRouteMatch(['/orders', '/products', '/cart']);
+    const routeMatch = useRouteMatch(['/orders', '/', '/cart']);
     const currentTab = routeMatch?.pattern?.path || false;
     const { mode, setMode } = useContext(ThemeModeContext);
     const navigate = useNavigate();
@@ -49,9 +49,9 @@ const NavBar = () => {
                 />
                 <Tab
                     component={Link}
-                    value='/products'
+                    value='/'
                     icon={<Home sx={{ width: '30px', height: '30px' }} />}
-                    to='/products'
+                    to='/'
                     disableRipple
                     sx={{ mt: 1 }}
                 />
