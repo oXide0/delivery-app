@@ -15,12 +15,12 @@ import { useQuery } from '../hooks/useQuery';
 const ProductsPage = () => {
     const { data, isLoading, error } = useQuery(productsQuery);
     const {
-        data: orderData,
+        data: order,
         isLoading: isOrderLoading,
         error: orderError,
     } = useQuery(activeOrderQuery);
 
-    if (isLoading || isOrderLoading || !data || !orderData) return <Loader />;
+    if (isLoading || isOrderLoading || !data || !order) return <Loader />;
 
     if (error || orderError)
         return (
@@ -35,15 +35,13 @@ const ProductsPage = () => {
                 <Products
                     products={data}
                     onAddToOrder={(productId) =>
-                        createOrderItemMutation({ orderId: orderData.id, productId: productId })
+                        createOrderItemMutation({ orderId: order.id, productId })
                     }
                 />
                 <OrderCart
-                    items={orderData.orderItems}
+                    items={order.orderItems}
                     removeItem={(id) => removeOrderItemMutation(id)}
-                    updateItemQuantity={(id, quantity) =>
-                        updateOrderItemMutation({ id: id, quantity: quantity })
-                    }
+                    updateItemQuantity={(id, quantity) => updateOrderItemMutation({ id, quantity })}
                 />
             </Box>
         </PageLayout>
