@@ -16,7 +16,7 @@ const ProductsPage = () => {
     const products = useQuery(productsQuery);
     const order = useQuery(activeOrderQuery);
 
-    if (products.isLoading || order.isLoading || !products.data || !order.data) return <Loader />;
+    if (products.isLoading || order.isLoading) return <Loader />;
 
     if (products.error || order.error)
         return (
@@ -29,19 +29,22 @@ const ProductsPage = () => {
         <PageLayout noPadding>
             <Box sx={{ display: 'flex' }}>
                 <Products
-                    products={products.data}
-                    onAddToOrder={(productId) => {
-                        createOrderItemMutation({ orderId: order.data!.id, productId });
+                    products={products.data ?? []}
+                    onAddToOrder={async (productId) => {
+                        await createOrderItemMutation({ orderId: order.data!.id, productId });
                         order.refetch();
                     }}
                 />
                 <OrderCart
-                    items={order.data.orderItems}
-                    removeItem={(id) => {
-                        removeOrderItemMutation(id);
+                    items={order.data?.orderItems ?? []}
+                    removeItem={async (id) => {
+                        await removeOrderItemMutation(id);
                         order.refetch();
                     }}
-                    updateItemQuantity={(id, quantity) => updateOrderItemMutation({ id, quantity })}
+                    updateItemQuantity={async (id, quantity) => {
+                        await updateOrderItemMutation({ id, quantity });
+                        order.refetch();
+                    }}
                 />
             </Box>
         </PageLayout>

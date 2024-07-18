@@ -14,14 +14,14 @@ const OrdersPage = () => {
                 Something went wrong
             </Typography>
         );
-    if (isLoading || !data) return <Loader />;
+    if (isLoading) return <Loader />;
     return (
         <PageLayout>
             <Typography variant='h3' fontWeight={700}>
                 Orders History
             </Typography>
             <Stack direction='row' flexWrap='wrap' gap={2} pt={6}>
-                {data.map((order) => (
+                {data?.map((order) => (
                     <OrderCard
                         key={order.id}
                         date={order.createdAt}

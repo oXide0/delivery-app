@@ -10,7 +10,8 @@ const Layout = () => {
 
     useEffect(() => {
         const token = localStorage.getItem('token');
-        if (!token) {
+        const userId = localStorage.getItem('userId');
+        if (!token || !userId) {
             navigate('/login');
         }
     }, []);

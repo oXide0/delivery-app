@@ -25,12 +25,23 @@ export class OrderController {
 
     @Post('items')
     async createOrderItem(@Body() createOrderItemDto: CreateOrderItemDto): Promise<OrderItem> {
+        const existingOrderItem = await this.orderItemService.findItemByProductId(
+            createOrderItemDto.orderId,
+            createOrderItemDto.productId
+        );
+        if (existingOrderItem) {
+            return this.updateOrderItem(existingOrderItem.id, {
+                orderId: createOrderItemDto.orderId,
+                productId: createOrderItemDto.productId,
+                quantity: existingOrderItem.quantity + 1,
+            });
+        }
         return this.orderItemService.create(createOrderItemDto);
     }
 
     @Post('items/status/:id')
-    async updateOrderStatus(@Param('id') id: string): Promise<Order> {
-        return this.orderService.updateStatus(id);
+    async completeOrder(@Param('id') id: string): Promise<Order> {
+        return this.orderService.completeOrder(id);
     }
 
     @Put('items/:id')

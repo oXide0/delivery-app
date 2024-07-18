@@ -20,6 +20,7 @@ export class OrderService {
         return this.orderRepository.find({
             where: {
                 user: { id: userId },
+                status: 'completed',
             },
             relations: ['user'],
         });
@@ -47,9 +48,18 @@ export class OrderService {
         return this.orderRepository.save(newOrder);
     }
 
-    async updateStatus(id: string): Promise<Order> {
-        const order = await this.orderRepository.findOne({ where: { id } });
+    async completeOrder(id: string): Promise<Order> {
+        const order = await this.orderRepository.findOne({
+            where: { id },
+            relations: ['orderItems', 'user'],
+        });
+
         order.status = 'completed';
+        order.totalPrice = order.orderItems
+            .map((item) => item.product.price * item.quantity)
+            .reduce((a, b) => a + b, 0);
+
+        await this.create({ userId: order.user.id });
         return this.orderRepository.save(order);
     }
 }

@@ -33,7 +33,7 @@ const OrderCart = ({ items, removeItem, updateItemQuantity }: OrderCartProps) =>
                     <Stack gap={2}>
                         {items.map((item) => (
                             <OrderProductCard
-                                key={item.product.id}
+                                key={item.id}
                                 imgUrl={item.product.imgUrl}
                                 price={item.product.price}
                                 title={item.product.title}

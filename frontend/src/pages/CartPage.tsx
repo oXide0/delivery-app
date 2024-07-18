@@ -27,11 +27,12 @@ import { OrderItem } from '../types';
 
 const CartPage = () => {
     const [open, setOpen] = useState(false);
-    const { data, isLoading, error } = useQuery(activeOrderQuery);
+    const { data, isLoading, error, refetch } = useQuery(activeOrderQuery);
 
     const handleSubmit = async () => {
         if (!data) return;
         await updateOrderStatusMutation(data.id);
+        refetch();
         setOpen(true);
     };
 
@@ -43,7 +44,7 @@ const CartPage = () => {
                 Something went wrong
             </Typography>
         );
-    if (isLoading || !data) return <Loader />;
+    if (isLoading) return <Loader />;
     return (
         <PageLayout>
             <Typography variant='h3' fontWeight={700}>
@@ -51,10 +52,10 @@ const CartPage = () => {
             </Typography>
             <Grid container pt={5} columnSpacing={4} height='90%'>
                 <Grid item xs={12} sm={9}>
-                    <ProductsTable products={data.orderItems} />
+                    <ProductsTable products={data?.orderItems ?? []} />
                 </Grid>
                 <Grid item xs={12} sm={3}>
-                    <PaymentForm onSubmit={handleSubmit} products={data.orderItems} />
+                    <PaymentForm onSubmit={handleSubmit} products={data?.orderItems ?? []} />
                 </Grid>
             </Grid>
             <Snackbar

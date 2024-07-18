@@ -15,6 +15,7 @@ const NavBar = () => {
     const toggleMode = () => setMode(mode === 'light' ? 'dark' : 'light');
     const onLogout = () => {
         localStorage.removeItem('userId');
+        localStorage.removeItem('token');
         navigate('/login');
     };
 

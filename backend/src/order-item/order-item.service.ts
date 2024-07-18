@@ -20,6 +20,12 @@ export class OrderItemService {
         return this.orderItemRepository.find({ where: { order: { id: orderId } } });
     }
 
+    async findItemByProductId(orderId: string, productId: string): Promise<OrderItem> {
+        return this.orderItemRepository.findOne({
+            where: { order: { id: orderId }, product: { id: productId } },
+        });
+    }
+
     async create(createOrderItemDto: CreateOrderItemDto): Promise<OrderItem> {
         const { orderId, productId } = createOrderItemDto;
 

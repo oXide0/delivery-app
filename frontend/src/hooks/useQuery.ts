@@ -1,27 +1,46 @@
-import { useEffect, useState } from 'react';
+import { useCallback, useEffect, useState } from 'react';
 
-export const useQuery = <T>(callback: () => Promise<T>) => {
+interface QueryResult<T> {
+    data: T | null;
+    isLoading: boolean;
+    error: string | null;
+    refetch: () => void;
+}
+
+export const useQuery = <T>(
+    callback: () => Promise<T>,
+    dependencies: any[] = []
+): QueryResult<T> => {
     const [data, setData] = useState<T | null>(null);
     const [isLoading, setIsLoading] = useState<boolean>(false);
-    const [error, setError] = useState<string>('');
+    const [error, setError] = useState<string | null>(null);
 
-    const fetch = async () => {
+    const fetch = useCallback(async () => {
+        setIsLoading(true);
+        setError(null);
         try {
-            setIsLoading(true);
             const response = await callback();
             setData(response);
-        } catch (error) {
-            if (error instanceof Error) {
-                setError(error.message);
+        } catch (err) {
+            if (err instanceof Error) {
+                setError(err.message);
+            } else {
+                setError('An unknown error occurred');
             }
         } finally {
             setIsLoading(false);
         }
-    };
+    }, [callback]);
 
     useEffect(() => {
         fetch();
-    }, []);
 
-    return { data, isLoading, error, refetch: fetch };
+        // Cleanup function to avoid setting state after unmount
+        return () => {
+            setIsLoading(false);
+            setError(null);
+        };
+    }, [fetch, ...dependencies]);
+
+    return { data, isLoading: !data ? true : isLoading, error, refetch: fetch };
 };
