@@ -28,6 +28,11 @@ export class OrderController {
         return this.orderItemService.create(createOrderItemDto);
     }
 
+    @Post('items/status/:id')
+    async updateOrderStatus(@Param('id') id: string): Promise<Order> {
+        return this.orderService.updateStatus(id);
+    }
+
     @Put('items/:id')
     async updateOrderItem(
         @Param('id') id: string,

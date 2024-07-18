@@ -1,22 +1,12 @@
 import { Stack, Typography } from '@mui/material';
-import { useEffect, useState } from 'react';
-import { getOrders } from '../api/orderApi';
+import { historyOrdersQuery } from '../api/orderApi';
 import Loader from '../components/Loader';
 import OrderCard from '../components/OrderCard';
 import PageLayout from '../components/layouts/PageLayout';
 import { useQuery } from '../hooks/useQuery';
-import { Order } from '../types';
 
 const OrdersPage = () => {
-    const [data, setData] = useState<Order[]>([]);
-    const { fetch, isLoading, error } = useQuery(async () => {
-        const orders = await getOrders();
-        setData(orders);
-    });
-
-    useEffect(() => {
-        fetch();
-    }, [fetch]);
+    const { data, isLoading, error } = useQuery(historyOrdersQuery);
 
     if (error)
         return (
@@ -32,7 +22,11 @@ const OrdersPage = () => {
             </Typography>
             <Stack direction='row' flexWrap='wrap' gap={2} pt={6}>
                 {data.map((order) => (
-                    <OrderCard key={order.id} date={order.date} totalPrice={order.totalPrice} />
+                    <OrderCard
+                        key={order.id}
+                        date={order.createdAt}
+                        totalPrice={order.totalPrice}
+                    />
                 ))}
             </Stack>
         </PageLayout>

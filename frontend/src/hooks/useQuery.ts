@@ -23,5 +23,5 @@ export const useQuery = <T>(callback: () => Promise<T>) => {
         fetch();
     }, []);
 
-    return { data, isLoading, error };
+    return { data, isLoading, error, refetch: fetch };
 };

@@ -11,11 +11,17 @@ const OrderCard = ({ date, totalPrice }: OrderCardProps) => {
     return (
         <Card sx={{ minWidth: 345, borderRadius: 4 }}>
             <CardContent
-                sx={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between' }}
+                sx={{
+                    display: 'flex',
+                    alignItems: 'center',
+                    justifyContent: 'space-between',
+                    gap: 2,
+                }}
             >
                 <Typography variant='h5' component='div'>
-                    {date.toLocaleDateString()}
+                    {formatDate(date)}
                 </Typography>
+                <span>---</span>
                 <Typography variant='h5'>€{totalPrice}</Typography>
             </CardContent>
         </Card>
@@ -23,3 +29,15 @@ const OrderCard = ({ date, totalPrice }: OrderCardProps) => {
 };
 
 export default OrderCard;
+
+const formatDate = (isoString) => {
+    const date = new Date(isoString);
+    return date.toLocaleDateString('en-US', {
+        year: 'numeric',
+        month: 'long',
+        day: 'numeric',
+        hour: '2-digit',
+        minute: '2-digit',
+        second: '2-digit',
+    });
+};

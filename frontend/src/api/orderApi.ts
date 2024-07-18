@@ -35,3 +35,13 @@ export const updateOrderItemMutation = async ({
 export const removeOrderItemMutation = async (id: string): Promise<void> => {
     await $api.delete(`/orders/items/${id}`);
 };
+
+export const updateOrderStatusMutation = async (id: string): Promise<void> => {
+    await $api.post(`/orders/items/status/${id}`);
+};
+
+export const historyOrdersQuery = async (): Promise<Order[]> => {
+    const userId = localStorage.getItem('userId');
+    const response = await $api.get(`/orders/history?userId=${userId}`);
+    return response.data;
+};

@@ -13,16 +13,12 @@ import PageLayout from '../components/layouts/PageLayout';
 import { useQuery } from '../hooks/useQuery';
 
 const ProductsPage = () => {
-    const { data, isLoading, error } = useQuery(productsQuery);
-    const {
-        data: order,
-        isLoading: isOrderLoading,
-        error: orderError,
-    } = useQuery(activeOrderQuery);
+    const products = useQuery(productsQuery);
+    const order = useQuery(activeOrderQuery);
 
-    if (isLoading || isOrderLoading || !data || !order) return <Loader />;
+    if (products.isLoading || order.isLoading || !products.data || !order.data) return <Loader />;
 
-    if (error || orderError)
+    if (products.error || order.error)
         return (
             <Typography variant='h3' maxWidth='100%' margin='0 auto' fontWeight={700} pt={10}>
                 Something went wrong
@@ -33,14 +29,18 @@ const ProductsPage = () => {
         <PageLayout noPadding>
             <Box sx={{ display: 'flex' }}>
                 <Products
-                    products={data}
-                    onAddToOrder={(productId) =>
-                        createOrderItemMutation({ orderId: order.id, productId })
-                    }
+                    products={products.data}
+                    onAddToOrder={(productId) => {
+                        createOrderItemMutation({ orderId: order.data!.id, productId });
+                        order.refetch();
+                    }}
                 />
                 <OrderCart
-                    items={order.orderItems}
-                    removeItem={(id) => removeOrderItemMutation(id)}
+                    items={order.data.orderItems}
+                    removeItem={(id) => {
+                        removeOrderItemMutation(id);
+                        order.refetch();
+                    }}
                     updateItemQuantity={(id, quantity) => updateOrderItemMutation({ id, quantity })}
                 />
             </Box>

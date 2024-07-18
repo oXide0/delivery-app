@@ -46,4 +46,10 @@ export class OrderService {
         });
         return this.orderRepository.save(newOrder);
     }
+
+    async updateStatus(id: string): Promise<Order> {
+        const order = await this.orderRepository.findOne({ where: { id } });
+        order.status = 'completed';
+        return this.orderRepository.save(order);
+    }
 }

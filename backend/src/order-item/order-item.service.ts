@@ -35,6 +35,7 @@ export class OrderItemService {
 
         const orderItem = this.orderItemRepository.create({
             order,
+            product,
             quantity: 1,
         });
 

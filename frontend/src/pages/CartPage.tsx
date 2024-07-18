@@ -15,33 +15,23 @@ import {
     Typography,
 } from '@mui/material';
 import { Formik } from 'formik';
-import { useEffect, useState } from 'react';
-import { getCart, removeProductFromCart } from '../api/cartApi';
-import { createOrder } from '../api/orderApi';
+import { useState } from 'react';
+import { activeOrderQuery, updateOrderStatusMutation } from '../api/orderApi';
 import Input from '../components/Input';
 import Loader from '../components/Loader';
 import PageLayout from '../components/layouts/PageLayout';
 import { paymentValidationSchema } from '../helpers/schemes';
 import { getTotalPrice } from '../helpers/utils';
 import { useQuery } from '../hooks/useQuery';
-import { CartProduct } from '../types';
+import { OrderItem } from '../types';
 
 const CartPage = () => {
     const [open, setOpen] = useState(false);
-    const [data, setData] = useState<CartProduct[] | null>(null);
-    const { fetch, isLoading, error } = useQuery(async () => {
-        const cart = await getCart();
-        setData(cart);
-    });
-
-    useEffect(() => {
-        fetch();
-    }, [fetch]);
+    const { data, isLoading, error } = useQuery(activeOrderQuery);
 
     const handleSubmit = async () => {
         if (!data) return;
-        await createOrder(getTotalPrice(data));
-        data.forEach((item) => removeProductFromCart(item.cartItemId));
+        await updateOrderStatusMutation(data.id);
         setOpen(true);
     };
 
@@ -61,10 +51,10 @@ const CartPage = () => {
             </Typography>
             <Grid container pt={5} columnSpacing={4} height='90%'>
                 <Grid item xs={12} sm={9}>
-                    <ProductsTable products={data} />
+                    <ProductsTable products={data.orderItems} />
                 </Grid>
                 <Grid item xs={12} sm={3}>
-                    <PaymentForm onSubmit={handleSubmit} products={data} />
+                    <PaymentForm onSubmit={handleSubmit} products={data.orderItems} />
                 </Grid>
             </Grid>
             <Snackbar
@@ -81,7 +71,7 @@ const CartPage = () => {
 
 export default CartPage;
 
-const ProductsTable = ({ products }: { products: CartProduct[] }) => {
+const ProductsTable = ({ products }: { products: OrderItem[] }) => {
     return (
         <TableContainer component={Paper} sx={{ maxHeight: '500px' }}>
             <Table>
@@ -96,7 +86,7 @@ const ProductsTable = ({ products }: { products: CartProduct[] }) => {
                 <TableBody>
                     {products.map((item) => (
                         <TableRow
-                            key={item.cartItemId}
+                            key={item.id}
                             sx={{ '&:last-child td, &:last-child th': { border: 0 } }}
                         >
                             <TableCell component='th' scope='row'>
@@ -105,7 +95,7 @@ const ProductsTable = ({ products }: { products: CartProduct[] }) => {
                             <TableCell align='center'>€{item.product.price}</TableCell>
                             <TableCell align='center'>{item.quantity}</TableCell>
                             <TableCell align='center'>
-                                €{item.quantity * item.product.price}
+                                €{item.quantity * parseFloat(item.product.price)}
                             </TableCell>
                         </TableRow>
                     ))}
@@ -115,7 +105,7 @@ const ProductsTable = ({ products }: { products: CartProduct[] }) => {
     );
 };
 
-const PaymentForm = ({ onSubmit, products }: { onSubmit: () => void; products: CartProduct[] }) => {
+const PaymentForm = ({ onSubmit, products }: { onSubmit: () => void; products: OrderItem[] }) => {
     return (
         <Formik
             initialValues={{ cardNumber: '', date: '', cvc: '', name: '', coupon: '' }}
