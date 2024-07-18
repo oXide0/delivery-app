@@ -1,6 +1,7 @@
 import { Module } from '@nestjs/common';
 import { ConfigModule } from '@nestjs/config';
 import { APP_GUARD } from '@nestjs/core';
+import { MongooseModule } from '@nestjs/mongoose';
 import { TypeOrmModule } from '@nestjs/typeorm';
 import { DataSource } from 'typeorm';
 import { AuthGuard } from './auth/auth.guard';
@@ -32,6 +33,7 @@ import { UserModule } from './user/user.module';
             synchronize: true,
             autoLoadEntities: true,
         }),
+        MongooseModule.forRoot(process.env.MONGO_URI),
         AuthModule,
         UserModule,
         ProductModule,

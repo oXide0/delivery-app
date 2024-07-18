@@ -10,6 +10,6 @@ import { ProductSeedService } from './product-seed.service';
     imports: [TypeOrmModule.forFeature([Product]), forwardRef(() => OrderItemModule)],
     providers: [ProductService, ProductSeedService],
     controllers: [ProductController],
-    exports: [TypeOrmModule, ProductSeedService],
+    exports: [TypeOrmModule, ProductSeedService, ProductService],
 })
 export class ProductModule {}

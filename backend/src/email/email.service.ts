@@ -2,8 +2,8 @@ import { Injectable } from '@nestjs/common';
 import { InjectModel } from '@nestjs/mongoose';
 import { Model } from 'mongoose';
 import { createTransport, SendMailOptions, SentMessageInfo } from 'nodemailer';
-import fs from 'fs';
-import path from 'path';
+import * as fs from 'fs';
+import * as path from 'path';
 import { SendCodeDto } from './dto/send-code.dto';
 import { VerifyCodeDto } from './dto/verify-code.dto';
 import { EmailVerificationCode } from './email-verification-code.model';
@@ -17,7 +17,7 @@ export class EmailService {
 
     async sendCode(sendCodeDto: SendCodeDto): Promise<{ message: string }> {
         const code = this.generateSixDigitCode();
-        const htmlTemplate = this.readHTMLTemplate('./template/template.html');
+        const htmlTemplate = this.readHTMLTemplate('template.html');
         const modifiedHTML = htmlTemplate
             .replace('{{ ACCESS_CODE }}', code)
             .replace('{{ USER_NAME }}', sendCodeDto.username);
@@ -38,8 +38,8 @@ export class EmailService {
         const transporter = createTransport({
             service: 'gmail',
             auth: {
-                user: process.env.email,
-                pass: process.env.emailPassword,
+                user: process.env.EMAIL,
+                pass: process.env.EMAIL_PASSWORD,
             },
         });
 
@@ -80,7 +80,7 @@ export class EmailService {
     }
 
     private readHTMLTemplate(templateName: string): string {
-        const templatePath = path.join(__dirname, templateName);
+        const templatePath = path.resolve(__dirname, 'templates', templateName);
         return fs.readFileSync(templatePath, 'utf-8');
     }
 }
