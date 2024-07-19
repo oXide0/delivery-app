@@ -1,8 +1,6 @@
-FROM node:20.10.0
+FROM node
 
 WORKDIR /app
-
-RUN apt-get update && apt-get install -y xdg-utils
 
 COPY package*.json .
 
@@ -12,5 +10,4 @@ COPY . .
 
 EXPOSE 8080
 
-CMD ["npm", "run", "dev"]
-
+CMD ["npm", "run", "preview"]
