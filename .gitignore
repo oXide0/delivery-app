@@ -58,7 +58,6 @@ dist-ssr
 # Runtime data
 pids
 *.pid
-*.seed
 *.pid.lock
 
 # Diagnostic reports (https://nodejs.org/api/report.html)

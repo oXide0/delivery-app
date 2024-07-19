@@ -1,4 +1,4 @@
-FROM node
+FROM node:18 AS build
 
 WORKDIR /app
 
@@ -8,6 +8,13 @@ RUN npm install
 
 COPY . .
 
+RUN npm run build
+
+FROM nginx:stable-alpine
+
+COPY --from=build /app/dist /usr/share/nginx/html
+COPY nginx.conf /etc/nginx/conf.d/nginx.conf
+
 EXPOSE 8080
 
-CMD ["npm", "run", "preview"]
+CMD ["nginx", "-g", "daemon off;"]

@@ -5,7 +5,20 @@ services:
         ports:
             - '8000:8000'
         env_file:
-            - ./backend/.env
+            - ./backend/.production.env
+        depends_on:
+            - postgres
+        command: /bin/sh -c "npm run seed:prod && npm run start:prod"
+
+    postgres:
+        image: postgres
+        environment:
+            POSTGRES_USER: postgres
+            POSTGRES_PASSWORD: '111418'
+            POSTGRES_DB: delivery
+        volumes:
+            - postgres_data:/var/lib/postgresql/data
+
     frontend:
         build: ./frontend
         ports:
@@ -16,3 +29,6 @@ services:
         tty: true
         depends_on:
             - backend
+
+volumes:
+    postgres_data:
