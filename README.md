@@ -5,15 +5,29 @@ A full-stack delivery application with a React frontend and a NestJS backend, co
 ## Table of Contents
 
 1. [Overview](#overview)
-2. [Features](#features)
-3. [Technologies](#technologies)
-4. [Setup](#setup)
-5. [Running the Application](#running-the-application)
-6. [Docker](#docker)
+2. [Images](#images)
+3. [Features](#features)
+4. [Technologies](#technologies)
+5. [Setup](#setup)
+6. [Running the Application](#running-the-application)
+7. [Docker](#docker)
 
 ## Overview
 
 This is a delivery application built with React on the frontend and NestJS on the backend. It supports managing products, orders, and user authentication. Docker is used to containerize both the frontend and backend applications.
+
+## Images
+
+Here are some visual representations of the application:
+
+-   **Database Diagram**:
+    ![Database Diagram](https://github.com/oXide0/delivery-app/blob/main/diagram.png)
+
+-   **Frontend Screenshot**:
+    ![Frontend Screenshot](https://github.com/oXide0/delivery-app/blob/main/dark-main.png)
+
+-   **User Flow**:
+    ![User Flow](https://github.com/oXide0/delivery-app/blob/main/user-flow.png)
 
 ## Features
 
