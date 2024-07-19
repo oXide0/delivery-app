@@ -1,65 +1,155 @@
-# Delivery App Website
+# Delivery App
 
-## Introduction
+A full-stack delivery application with a React frontend and a NestJS backend, containerized using Docker.
 
-Welcome to the Delivery App Website repository. This modern web application, built with React, Redux Toolkit, and RTK Query, is designed to provide a seamless delivery service experience. It features secure authentication with JWT tokens and leverages Vite for an efficient development environment.
+## Table of Contents
+
+1. [Overview](#overview)
+2. [Features](#features)
+3. [Technologies](#technologies)
+4. [Setup](#setup)
+5. [Running the Application](#running-the-application)
+6. [Docker](#docker)
+
+## Overview
+
+This is a delivery application built with React on the frontend and NestJS on the backend. It supports managing products, orders, and user authentication. Docker is used to containerize both the frontend and backend applications.
 
 ## Features
 
--   **User-Friendly Interface:** Easy to use interface for placing and tracking delivery orders.
--   **Secure Authentication:** Implements JWT tokens for a secure and reliable authentication system.
--   **State Management:** Utilizes Redux Toolkit for consistent and predictable state management.
--   **Efficient Data Handling:** Employs RTK Query for efficient data fetching and caching.
+-   **Frontend**:
 
-![main page](https://github.com/oXide0/Delivery-App/blob/main/main.png)
+    -   Product catalog with search and filter options
+    -   Shopping cart management
+    -   User authentication and registration
+    -   Order management
 
-## Backend Repository
+-   **Backend**:
+    -   RESTful API with NestJS
+    -   Authentication using JWT
+    -   MongoDB for data storage
+    -   Email verification and order management
 
-For backend services, please refer to the following repository: [Delivery App Backend](https://github.com/KyryloBulyk/delivery).
+## Technologies
 
-## Prerequisites
+-   **Frontend**: React, Material-UI
+-   **Backend**: NestJS, TypeScript
+-   **Database**: MongoDB
+-   **Authentication**: JWT
+-   **Email**: Nodemailer
+-   **Containerization**: Docker, Docker Compose
 
-Before you begin, ensure you have met the following requirements:
+## Setup
 
--   Node.js (latest stable version recommended)
--   PostgreSQL
--   IntelliJ IDEA or another Java IDE for backend setup
+### Prerequisites
 
-## Installation and Setup
+-   Docker and Docker Compose installed
+-   Node.js (for local development)
 
-1. **Clone the frontend repository:**
+### Backend Setup
 
-`git clone git@github.com:oXide0/Delivery-App.git`
+1. Navigate to the backend directory:
 
-2. **Clone the backend repository:**
+```bash
+    cd backend
+```
 
-`git clone git@github.com:KyryloBulyk/delivery.git`
+2. Navigate to the backend directory:
 
-3. **Backend Setup:**
+```bash
+   npm install
+```
 
-You will find it in [backend repo](https://github.com/KyryloBulyk/delivery) README
+3. Create a .env file in the backend directory with the following environment variables:
 
-4. **Frontend Setup:**
+```bash
+    JWT_SECRET=your_jwt_secret
+    PORT=8000
+    DB_HOST=localhost
+    DB_USER=postgres
+    DB_NAME=delivery
+    DB_PASS=your_db_password
+    DB_PORT=5432
+    CLIENT_URL=http://localhost:8080
+    MONGO_URI=mongodb://your_mongo_uri
+    EMAIL=your_email
+    EMAIL_PASSWORD=your_email_password
+```
 
--   Navigate to the frontend project directory:
--   `cd Delivery-App`
--   Install dependencies:
--   `npm install`
--   Start the development server:
--   `npm run dev`
+### Frontend Setup
 
-The application will be available at [http://localhost:3000](http://localhost:3000).
+1. Navigate to the frontend directory:
 
-## Usage
+```bash
+   cd frontend
+```
 
-Once the application is running, users can:
+2. Install dependencies:
 
--   Register and log in using secure authentication.
--   Place new delivery orders.
--   Enjoy tailored features based on user roles such as customer or admin.
+```bash
+   npm install
+```
 
-![dark main page](https://github.com/oXide0/Delivery-App/blob/main/dark-main.png)
+3. Start the frontend development server:
 
-## Contributing
+```bash
+   npm run dev
+```
 
-Contributions are welcomed and appreciated. If you have suggestions for improvement or new features, please fork the repository, create a pull request, or open an issue with the "enhancement" tag.
+### Running the Application
+
+## Using Docker
+
+1. Build and run the Docker containers using Docker Compose:
+
+```bash
+    docker-compose up --build
+```
+
+2.  Access the application:
+
+-   Frontend: http://localhost:8080
+-   Backend: http://localhost:8000
+
+## Without Docker
+
+1. Navigate to the backend directory and run:
+
+-   Navigate to the backend directory and run:
+
+```bash
+    npm run start:dev
+```
+
+2. Start Frontend:
+
+-   Navigate to the frontend directory and run:
+
+```bash
+    npm start
+```
+
+## Docker
+
+-   Dockerfile: Located in the frontend and backend directories.
+-   docker-compose.yml: Located in the root directory. Defines services for the frontend, backend, and database.
+
+## Docker Commands
+
+-   Build Docker images:
+
+```bash
+    docker-compose build
+```
+
+-   Start Docker containers:
+
+```bash
+    docker-compose up
+```
+
+-   Stop Docker containers:
+
+```bash
+    docker-compose down
+```
