@@ -24,7 +24,7 @@ Here are some visual representations of the application:
     ![Database Diagram](https://github.com/oXide0/delivery-app/blob/main/diagram.png)
 
 -   **Frontend Screenshot**:
-    ![Frontend Screenshot](https://github.com/oXide0/delivery-app/blob/main/dark-main.png)
+    ![Frontend Screenshot](https://github.com/oXide0/delivery-app/blob/main/main.png)
 
 -   **User Flow**:
     ![User Flow](https://github.com/oXide0/delivery-app/blob/main/user-flow.png)
